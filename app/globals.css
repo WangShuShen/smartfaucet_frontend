@@ -5,3 +5,20 @@
 .custom-gradient {
   background-image: linear-gradient(to right, #0ea5e9, #0C659E);
 }
+
+/* 在您的 CSS 文件中 */
+.underline-animation {
+  position: relative;
+  color: #118BBB; /* 初始文字顏色 */
+  overflow: hidden;
+}
+
+.underline-animation::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 70%;
+  height: 2px; /* 底線厚度 */
+  background: #118BBB; /* 初始底線顏色 */
+}
