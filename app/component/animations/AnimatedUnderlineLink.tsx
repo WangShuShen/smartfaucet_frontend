@@ -8,12 +8,8 @@ interface AnimatedLinkProps {
 }
 
 const underlineVariants = {
-  initial: {
-    width: "20%",
-  },
   hover: {
-    width: "100%",
-    backgroundColor: "#02253C",
+    color: "#02253C", // 文字顏色改變
     transition: { duration: 0.3 },
   },
 };
@@ -21,13 +17,23 @@ const underlineVariants = {
 const AnimatedLink: React.FC<AnimatedLinkProps> = ({ href, children }) => (
   <motion.div
     className="underline-animation"
-    variants={underlineVariants}
-    initial="initial"
     whileHover="hover"
   >
-    <a href={href} className="flex font-semibold my-7 mx-4 text-lg">
+    <motion.a
+      href={href}
+      className="flex font-bold my-7 mx-4 text-lg"
+      variants={underlineVariants}
+      initial={{ color: "#118BBB" }} // 初始文字顏色
+      whileHover={{ color: "#02253C" }} // 懸停時文字顏色變化
+    >
       {children}
-    </a>
+    </motion.a>
+    <motion.div
+      className="absolute bottom-5 left-4 h-0.5"
+      initial={{ backgroundColor: "#118BBB",width:'70%' }} // 初始文字顏色
+      whileHover={{ backgroundColor: "#02253C",width:'80%' }} // 懸停時文字顏色變化
+      variants={underlineVariants}
+    />
   </motion.div>
 );
 
