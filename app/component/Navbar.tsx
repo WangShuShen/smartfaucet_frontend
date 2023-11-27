@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from "react";
 import Images from "next/image";
@@ -16,7 +17,7 @@ const Navbar = () => {
         onClick={() => setIsOpen(false)}
       ></div>
 
-      <nav className="custom-gradient shadow-lg relative z-20 h-16">
+      <nav className="custom-gradient shadow-lg relative z-20 w-full lg:h-14 md:h-16 sm:h-12 xs:h-10">
         <div className="flex justify-between items-center h-full px-4">
           {/* 將漢堡按鈕和Logo放在同一個容器內 */}
           <div className="flex items-center">
@@ -25,38 +26,47 @@ const Navbar = () => {
               className="outline-none mobile-menu-button mx-2"
               onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
             >
-              <Images
+              <img
+                className="w-auto xs:h-16 sm:h-12 md:h-8 lg:h-8" // 不同斷點的高度調整
                 src="/hamburger_icon.svg"
-                width={20}
-                height={20}
-                alt="hamburger_button"
+                alt="hamburger_icon"
               />
             </button>
             <button
               className="outline-none mobile-menu-button mx-2"
               onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
             >
-              <Images
+              <img
+                className="w-auto xs:h-20 sm:h-16 md:h-12 lg:h-12" // 不同斷點的高度調整
                 src="/icon__home.svg"
-                width={30}
-                height={30}
-                alt="hamburger_button"
+                alt="icon__home"
               />
             </button>
             {/* Website Logo */}
             <a href="" className="flex items-center py-4 px-4">
-              {/* <span className="font-semibold text-gray-500 text-lg">Logo</span> */}
-              <Images
+              <img
+                className="w-auto xs:h-20 sm:h-16 md:h-12 lg:h-12" // 不同斷點的高度調整
                 src="/logo.svg"
-                width={100}
-                height={50}
-                alt="home_button"
-                priority="1"
+                alt="logo"
               />
             </a>
           </div>
+          <div className="flex justify-between -mt-3 -mr-20">
+            <img
+              className="w-auto xs:h-52 sm:h-48 md:h-36 lg:h-32" // 不同斷點的高度調整
+              src="/navbar_design_icon.svg"
+              alt="navbar_icon"
+            />
+            <div className="avatar">
+              <div className="w-10 mask mask-squircle absolute bottom-9 right-80">
+                <img src="/testphoto.jpg" />
+              </div>
+            </div>
+            <button className="bg-sky-200	hover:bg-sky-600 absolute bottom-2 right-0 mt-4 mr-4 px-4 py-2 rounded-full">
+              登出
+            </button>
+          </div>
         </div>
-
         {/* Mobile Menu */}
         <AnimatedMenu isOpen={isOpen}>
           <div className="my-20">
