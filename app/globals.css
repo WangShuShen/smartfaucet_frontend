@@ -17,14 +17,16 @@
   min-height: 100vh; /* 使 div 至少有視窗的高度 */
   width: 100%; /* 確保寬度為視窗寬度 */
 }
+.bg-page-title {
+  background-image: url('/page_title.svg');
+  background-repeat: no-repeat;
+  color: #FFFFFF;
+}
 /* 在您的 CSS 文件中 */
 .underline-animation {
   position: relative;
-  /* color: #118BBB; */
-  /* 初始文字顏色 */
   overflow: hidden;
   background-color: #ffffff;
-  /* 背景色始終保持白色 */
 }
 
 .underline-animation::after {
@@ -35,7 +37,4 @@
   width: 50%;
   height: 1px;
   background-color: #118bbb;
-  /* 初始底線顏色 */
-  /* transition: background-color 0.3s; */
-  /* 底線顏色過渡效果 */
 }

@@ -1,15 +1,12 @@
-import Image from "next/image";
 import Navbar from "./component/Navbar";
-export default function Home() {
+import Title from './component/Title';
+export default function Home_Page() {
   return (
-    <div
-      // style={{
-      //   backgroundImage:
-      //     "linear-gradient(to bottom, #0ea5e9, #0e71a8, #0c659e)",
-      // }}
-      className="bg-bg-gradient"
-    >
-      <Navbar></Navbar>
-    </div>
+    <>
+      <div className="bg-bg-gradient">
+        <Navbar></Navbar>
+         <Title text="專案設定" />
+      </div>
+    </>
   );
 }

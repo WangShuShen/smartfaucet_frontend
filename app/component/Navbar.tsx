@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from "react";
-import Images from "next/image";
 import AnimatedLink from "./animations/AnimatedUnderlineLink";
 import AnimatedMenu from "./animations/AnimatedMenu";
+import AnimatedAccountSetting from "./animations/AnimatedAccountSetting";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +27,7 @@ const Navbar = () => {
               onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
             >
               <img
-                className="w-auto xs:h-16 sm:h-12 md:h-8 lg:h-8" // 不同斷點的高度調整
+                className="w-auto xs:h-6 sm:h-6 md:h-8 lg:h-8" // 不同斷點的高度調整
                 src="/hamburger_icon.svg"
                 alt="hamburger_icon"
               />
@@ -37,15 +37,15 @@ const Navbar = () => {
               onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
             >
               <img
-                className="w-auto xs:h-20 sm:h-16 md:h-12 lg:h-12" // 不同斷點的高度調整
-                src="/icon__home.svg"
-                alt="icon__home"
+                className="w-auto xs:h-10 sm:h-8 md:h-12 lg:h-12" // 不同斷點的高度調整
+                src="/home_icon.svg"
+                alt="home_icon"
               />
             </button>
             {/* Website Logo */}
             <a href="" className="flex items-center py-4 px-4">
               <img
-                className="w-auto xs:h-20 sm:h-16 md:h-12 lg:h-12" // 不同斷點的高度調整
+                className="w-auto xs:h-8 sm:h-8 md:h-12 lg:h-12" // 不同斷點的高度調整
                 src="/logo.svg"
                 alt="logo"
               />
@@ -53,16 +53,17 @@ const Navbar = () => {
           </div>
           <div className="flex justify-between -mt-3 -mr-20">
             <img
-              className="w-auto xs:h-52 sm:h-48 md:h-36 lg:h-32" // 不同斷點的高度調整
+              className="w-auto xs:display-none sm:display-none md:h-46 lg:h-32" // 不同斷點的高度調整
               src="/navbar_design_icon.svg"
               alt="navbar_icon"
             />
             <div className="avatar">
-              <div className="w-10 mask mask-squircle absolute lg:bottom-9 lg:right-80 md:bottom-10 lg:right-80">
-                <img src="/testphoto.jpg" />
+              <div className="w-10 mask mask-squircle absolute lg:bottom-9 lg:right-80 md:bottom-10 lg:right-80 sm:hidden xs:hidden">
+                <img src="/human_photo.jpg" />
               </div>
             </div>
-            <button className="bg-sky-200	hover:bg-sky-600 absolute bottom-2 right-0 mt-4 mr-4 px-4 py-2 rounded-full">
+            <div className="text-black mr-30">123</div>
+            <button className="bg-sky-200	hover:bg-sky-600 absolute bottom-2 right-0 lg:mb-1 md:mb-2 sm:-mb-0 xs:-mb-1 mr-4 px-4 py-2 rounded-full font-bold">
               登出
             </button>
           </div>
@@ -71,14 +72,11 @@ const Navbar = () => {
         <AnimatedMenu isOpen={isOpen}>
           <div className="my-20 overflow-y-auto max-h-200">
             {/* 可以在這裡添加Mobile Menu的連結 */}
-            <AnimatedLink href="">專案設定</AnimatedLink>
-            <AnimatedLink href="">水龍頭控制狀態</AnimatedLink>
+            <AnimatedLink href="/">專案設定</AnimatedLink>
+            <AnimatedLink href="/faucet-ctrl">水龍頭控制狀態</AnimatedLink>
             <AnimatedLink href="">用水和碳排數據</AnimatedLink>
             <AnimatedLink href="">系統人員設定資訊</AnimatedLink>
-
-            <div className="mt-8 ml-4">
-              <button className="block text-center">帳號設定</button>
-            </div>
+            <AnimatedAccountSetting href="">帳號設定</AnimatedAccountSetting>
           </div>
         </AnimatedMenu>
       </nav>
