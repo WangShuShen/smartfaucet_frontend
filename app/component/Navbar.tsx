@@ -58,7 +58,7 @@ const Navbar = () => {
               alt="navbar_icon"
             />
             <div className="avatar">
-              <div className="w-10 mask mask-squircle absolute bottom-9 right-80">
+              <div className="w-10 mask mask-squircle absolute lg:bottom-9 lg:right-80 md:bottom-10 lg:right-80">
                 <img src="/testphoto.jpg" />
               </div>
             </div>
