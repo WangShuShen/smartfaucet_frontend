@@ -2,28 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-.custom-gradient {
-  background-image: linear-gradient(to right, #0ea5e9, #0E71A8, #0C659E);
+.navbar-bg-gradient {
+  background-image: linear-gradient(to right, #0ea5e9, #0e71a8, #0c659e);
 }
-
+.bg-bg-gradient {
+  background-image: linear-gradient(
+    to bottom,
+    #a9cfd9,
+    #bad4da,
+    #cdd9dc,
+    #dcdddd,
+    #d8dcdd
+  );
+  min-height: 100vh; /* 使 div 至少有視窗的高度 */
+  width: 100%; /* 確保寬度為視窗寬度 */
+}
 /* 在您的 CSS 文件中 */
 .underline-animation {
   position: relative;
   /* color: #118BBB; */
   /* 初始文字顏色 */
   overflow: hidden;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   /* 背景色始終保持白色 */
 }
 
 .underline-animation::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
   width: 50%;
   height: 1px;
-  background-color: #118BBB;
+  background-color: #118bbb;
   /* 初始底線顏色 */
   /* transition: background-color 0.3s; */
   /* 底線顏色過渡效果 */

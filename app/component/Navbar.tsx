@@ -17,8 +17,8 @@ const Navbar = () => {
         onClick={() => setIsOpen(false)}
       ></div>
 
-      <nav className="custom-gradient shadow-lg relative z-20 w-full lg:h-14 md:h-16 sm:h-12 xs:h-10">
-        <div className="flex justify-between items-center h-full px-4">
+      <nav className="navbar-bg-gradient shadow-lg relative z-20 w-full lg:h-14 md:h-16 sm:h-12 xs:h-10">
+        <div className="flex justify-between items-center h-full px-4 w-full">
           {/* 將漢堡按鈕和Logo放在同一個容器內 */}
           <div className="flex items-center">
             {/* Mobile menu button */}
@@ -69,12 +69,16 @@ const Navbar = () => {
         </div>
         {/* Mobile Menu */}
         <AnimatedMenu isOpen={isOpen}>
-          <div className="my-20">
+          <div className="my-20 overflow-y-auto max-h-200">
             {/* 可以在這裡添加Mobile Menu的連結 */}
             <AnimatedLink href="">專案設定</AnimatedLink>
             <AnimatedLink href="">水龍頭控制狀態</AnimatedLink>
             <AnimatedLink href="">用水和碳排數據</AnimatedLink>
             <AnimatedLink href="">系統人員設定資訊</AnimatedLink>
+
+            <div className="mt-8 ml-4">
+              <button className="block text-center">帳號設定</button>
+            </div>
           </div>
         </AnimatedMenu>
       </nav>
