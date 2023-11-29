@@ -51,23 +51,25 @@ const Navbar = () => {
               />
             </a>
           </div>
-          <div className="flex justify-between -mt-3 -mr-20">
+          <img
+            src="/navbar_design_icon.svg"
+            className="absolute -top-10 -right-10 lg:h-32 md:h-36 z-0"
+            alt="navbar_design_icon"
+          />
+          <div className="relative flex items-center">
+            {" "}
+            {/* 移除了 flex-auto 和 -right-20 类 */}
             <img
-              className="w-auto xs:display-none sm:display-none md:h-46 lg:h-32" // 不同斷點的高度調整
-              src="/navbar_design_icon.svg"
-              alt="navbar_icon"
+              src="/human_photo.jpg"
+              className="rounded-full w-10 h-10 z-12"
+              alt="human_photo"
             />
-            <div className="avatar">
-              <div className="w-10 mask mask-squircle absolute lg:bottom-9 lg:right-80 md:bottom-10 lg:right-80 sm:hidden xs:hidden">
-                <img src="/human_photo.jpg" />
-              </div>
-            </div>
-            <div className="text-black mr-30">123</div>
-            <button className="bg-sky-200	hover:bg-sky-600 absolute bottom-2 right-0 lg:mb-1 md:mb-2 sm:-mb-0 xs:-mb-1 mr-4 px-4 py-2 rounded-full font-bold">
+            <button className="bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-auto">
               登出
             </button>
           </div>
         </div>
+
         {/* Mobile Menu */}
         <AnimatedMenu isOpen={isOpen}>
           <div className="my-20 overflow-y-auto max-h-200">

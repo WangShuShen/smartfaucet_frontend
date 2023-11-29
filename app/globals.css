@@ -18,9 +18,7 @@
   width: 100%; /* 確保寬度為視窗寬度 */
 }
 .bg-page-title {
-  background-image: url('/page_title.svg');
-  background-repeat: no-repeat;
-  color: #FFFFFF;
+  background-image: url("/page_title.svg");
 }
 /* 在您的 CSS 文件中 */
 .underline-animation {
