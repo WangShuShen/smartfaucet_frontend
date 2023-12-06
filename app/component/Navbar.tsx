@@ -27,7 +27,7 @@ const Navbar = () => {
               onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
             >
               <img
-                className="w-auto xs:h-6 sm:h-6 md:h-8 lg:h-8" // 不同斷點的高度調整
+                className="w-full xs:h-6 sm:h-6 md:h-8 lg:h-8" // 不同斷點的高度調整
                 src="/hamburger_icon.svg"
                 alt="hamburger_icon"
               />
@@ -53,7 +53,7 @@ const Navbar = () => {
           </div>
           <img
             src="/navbar_design_icon.svg"
-            className="absolute -top-10 -right-10 lg:h-32 md:h-36 z-0"
+            className="absolute lg:-top-10 lg:-right-10 lg:flex md:hidden sm:hidden xs:hidden lg:h-32 md:h-36 z-0"
             alt="navbar_design_icon"
           />
           <div className="relative flex items-center">
@@ -64,7 +64,7 @@ const Navbar = () => {
               className="rounded-full w-10 h-10 z-12"
               alt="human_photo"
             />
-            <button className="bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-auto">
+            <button className="bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-24 lg:text-lg md:text-md sm:text-sm xs:text-xs">
               登出
             </button>
           </div>

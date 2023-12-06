@@ -26,8 +26,8 @@ const AnimatedLink: React.FC<AnimatedLinkProps> = ({ href, children }) => (
       {children}
       <motion.div
         className="absolute bottom-5 left-4 h-0.5"
-        initial={{ backgroundColor: "#118BBB", width: "19%" }} // 初始文字顏色
-        whileHover={{ backgroundColor: "#02253C", width: "25%" }} // 懸停時文字顏色變化
+        initial={{ backgroundColor: "#118BBB", width: "25%" }} // 初始文字顏色
+        whileHover={{ backgroundColor: "#02253C", width: "30%" }} // 懸停時文字顏色變化
         variants={underlineVariants}
       />
     </motion.a>
