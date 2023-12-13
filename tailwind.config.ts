@@ -30,6 +30,10 @@ module.exports = {
       maxWidth: {
         "10xl": "1680px",
       },
+      fontFamily: {
+        sans: ["Helvetica", "Arial", "sans-serif"],
+        serif: ["ui-serif", "Georgia"],
+      },
     },
   },
   plugins: [require("daisyui")],

@@ -37,7 +37,7 @@ export default function FaucetListBlock_Component() {
 
   return (
     <>
-      <div className="bg-[#EFEFEF] w-11/12 flex overflow-x-auto rounded-md ml-2">
+      <div className="bg-[#EFEFEF] w-1/2 flex overflow-x-auto rounded-md ml-2 mr-4">
         <div className="flex flex-nowrap">
           {Faucetlist.map((faucet, index) => (
             <div

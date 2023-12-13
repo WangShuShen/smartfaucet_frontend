@@ -9,7 +9,7 @@ export default function DashboardLayout({
 }) {
   return (
     <section>
-      <div className="bg-bg-gradient">
+      <div className="bg-bg-gradient w-auto">
         <Navbar></Navbar>
         <div className="flex justify-between items-center">
           <Title text="水龍頭控制狀態" />
