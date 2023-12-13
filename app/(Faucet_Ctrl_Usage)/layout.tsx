@@ -1,0 +1,22 @@
+import Navbar from "../component/Navbar";
+import Title from "./component/Title";
+import BackButton from "../component/BackButton";
+
+export default function DashboardLayout({
+  children, // will be a page or nested layout
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <section>
+      <div className="bg-bg-gradient">
+        <Navbar></Navbar>
+        <div className="flex justify-between items-center">
+          <Title text="水龍頭控制狀態" />
+          <BackButton />
+        </div>
+        {children}
+      </div>
+    </section>
+  );
+}
