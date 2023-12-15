@@ -31,7 +31,7 @@ module.exports = {
         "10xl": "1680px",
       },
       fontFamily: {
-        sans: ["Helvetica", "Arial", "sans-serif"],
+        sans: ["Arial", "sans-serif"],
         serif: ["ui-serif", "Georgia"],
       },
     },

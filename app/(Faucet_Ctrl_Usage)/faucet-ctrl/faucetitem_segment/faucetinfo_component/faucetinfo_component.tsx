@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 export default function FaucetInfo() {
   return (
-    <div className="card w-96 shadow-xl h-72">
-      <div className="flex px-10 pt-10">
+    <div className="card w-96 h-72">
+      <div className="flex px-10 pt-2">
         <img
           src="faucetexample_outlook.svg"
           alt="faucetexample_outlook"
@@ -18,12 +18,32 @@ export default function FaucetInfo() {
           </p>
         </div>
       </div>
-      <div className="card-body items-center text-center">
-        <h2 className="card-title">Shoes!</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        {/* <div className="card-actions">
-          <button className="btn btn-primary">Buy Now</button>
-        </div> */}
+      <div className="block ml-11">
+        <p className="text-[#118BBB] font-sans font-bold ">FACILITY BY WEEK</p>
+        <div className="bg-[#118BBB] h-0.5 w-5/6"></div>
+      </div>
+      <div className="block ml-11 mt-2">
+        <div className="flex mt-2">
+          <p className="text-[#5F6162] font-sans font-bold text-xs">
+            啟動次數 ▸
+          </p>
+          <p className="text-[#118BBB] font-sans font-bold text-xs">5222</p>
+        </div>
+        <div className="flex mt-2">
+          <p className="text-[#5F6162] font-sans font-bold text-xs">
+            累計出水時間(min) ▸
+          </p>
+          <p className="text-[#118BBB] font-sans font-bold text-xs">5222</p>
+        </div>
+        <div className="flex mt-2">
+          <p className="text-[#5F6162] font-sans font-bold text-xs">
+            累計流水量(gal) ▸
+          </p>
+          <p className="text-[#118BBB] font-sans font-bold text-xs">5222</p>
+        </div>
+      </div>
+      <div className="card-body items-center text-center -mt-7">
+        <button className="btn btn-wide bg-[#118BBB]">GPM</button>
       </div>
     </div>
   );
