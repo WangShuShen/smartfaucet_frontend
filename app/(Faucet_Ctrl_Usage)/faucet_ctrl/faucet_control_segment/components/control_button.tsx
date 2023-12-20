@@ -1,4 +1,5 @@
 // components/faucet_control_segment.tsx
+import React from 'react';
 import { useState } from 'react';
 
 interface ButtonOption {
@@ -15,13 +16,13 @@ export default function ControlButton({ options, segmentTitle }: ControlButtonPr
   const [selected, setSelected] = useState<string>('');
 
   return (
-    <div className="p-4">
-      {segmentTitle && <h2 className="text-stone-600 text-lg font-bold mb-2">{segmentTitle}</h2>}
+    <div className="p-3">
+      {segmentTitle && <h2 className="text-stone-600 text-lg font-bold mb-2 text-lg sm:text-xs md:sm lg:text-lg">{segmentTitle}</h2>}
       <div className="flex divide-x divide-transparent">
         {options.map((option, index) => (
           <button
             key={option.value}
-            className={`px-4 py-2 text-sm font-medium rounded transition-colors ${
+            className={`px-2 sm:px-0.5 md:px-1.5 lg:px-2.5 py-2 sm:py-0.5 md:py-1 lg:py-2 text-xs sm:text-xxs md:xs lg:text-sm font-medium rounded transition-colors ${
               selected === option.value
                 ? 'text-stone-600'
                 : 'text-stone-600'

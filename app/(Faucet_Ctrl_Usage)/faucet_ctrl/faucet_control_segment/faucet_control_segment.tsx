@@ -81,7 +81,7 @@ export default function Faucet_Control_Segment() {
   };
   return (
     <div className="container mx-auto flex justify-center items-center w-full min-h-screen">
-      <div className="flex flex-wrap w-[90%] bg-white">
+      <div className="flex flex-wrap w-[87%] bg-white">
         <div className="w-full sm:w-1/3 sm:flex-none p-4">
           <Slider min={10} max={25} label="紅外線距離調整(公分)" />
           <ControlButton options={waterShutoffDelayOptions} segmentTitle="離開紅外線偵測後止水時間" />
