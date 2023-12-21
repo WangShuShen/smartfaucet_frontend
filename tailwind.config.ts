@@ -34,6 +34,10 @@ module.exports = {
         sans: ["Arial", "sans-serif"],
         serif: ["ui-serif", "Georgia"],
       },
+      fontSize: {
+        xxs: '0.625rem',      
+        xxxs: '0.5rem', 
+      },
     },
   },
   plugins: [require("daisyui")],
