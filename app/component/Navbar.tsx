@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AnimatedLink from "./animations/AnimatedUnderlineLink";
 import AnimatedMenu from "./animations/AnimatedMenu";
 import AnimatedAccountSetting from "./animations/AnimatedAccountSetting";
+import Link from "next/link";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,24 +33,25 @@ const Navbar = () => {
                 alt="hamburger_icon"
               />
             </button>
-            <button
-              className="outline-none mobile-menu-button mx-2"
-              onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
-            >
-              <img
-                className="w-auto xs:h-10 sm:h-8 md:h-12 lg:h-12" // 不同斷點的高度調整
-                src="/home_icon.svg"
-                alt="home_icon"
-              />
-            </button>
+            <Link href="/">
+              <button className="outline-none mobile-menu-button mx-2">
+                <img
+                  className="w-auto xs:h-10 sm:h-8 md:h-12 lg:h-12" // 不同斷點的高度調整
+                  src="/home_icon.svg"
+                  alt="home_icon"
+                />
+              </button>
+            </Link>
             {/* Website Logo */}
-            <a href="" className="flex items-center py-4 px-4">
-              <img
-                className="w-auto xs:h-8 sm:h-8 md:h-12 lg:h-12" // 不同斷點的高度調整
-                src="/logo.svg"
-                alt="logo"
-              />
-            </a>
+            <Link href="/">
+              <button className="flex items-center py-4 px-4">
+                <img
+                  className="w-auto xs:h-8 sm:h-8 md:h-12 lg:h-12" // 不同斷點的高度調整
+                  src="/logo.svg"
+                  alt="logo"
+                />
+              </button>
+            </Link>
           </div>
           <img
             src="/navbar_design_icon.svg"
@@ -64,9 +66,11 @@ const Navbar = () => {
               className="rounded-full w-10 h-10 z-12"
               alt="human_photo"
             />
-            <button className="btn bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-24 lg:text-lg md:text-md sm:text-sm xs:text-xs">
-              登出
-            </button>
+            <Link href="/">
+              <button className="btn bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-24 lg:text-lg md:text-md sm:text-sm xs:text-xs">
+                登出
+              </button>
+            </Link>
           </div>
         </div>
 

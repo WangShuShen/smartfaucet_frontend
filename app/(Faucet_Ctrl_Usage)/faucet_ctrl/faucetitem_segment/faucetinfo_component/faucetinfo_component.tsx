@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export default function FaucetInfo() {
   return (
     <div className="card w-96 h-72">
-      <div className="flex px-10 pt-2">
+      <div className="flex pt-2">
         <img
           src="faucetexample_outlook.svg"
           alt="faucetexample_outlook"
@@ -18,11 +18,11 @@ export default function FaucetInfo() {
           </p>
         </div>
       </div>
-      <div className="block ml-11">
+      <div className="block ">
         <p className="text-[#118BBB] font-sans font-bold ">FACILITY BY WEEK</p>
         <div className="bg-[#118BBB] h-0.5 w-5/6"></div>
       </div>
-      <div className="block ml-11 mt-2">
+      <div className="block mt-2">
         <div className="flex mt-2">
           <p className="text-[#5F6162] font-sans font-bold text-xs">
             啟動次數 ▸
@@ -42,7 +42,7 @@ export default function FaucetInfo() {
           <p className="text-[#118BBB] font-sans font-bold text-xs">5222</p>
         </div>
       </div>
-      <div className="card-body items-center text-center -mt-7">
+      <div className="card-body justify-center text-center -mt-7">
         <button className="btn btn-wide bg-[#118BBB]">GPM</button>
       </div>
     </div>
