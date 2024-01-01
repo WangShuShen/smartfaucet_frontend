@@ -1,11 +1,15 @@
-// store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import faucetReducer from "./Faucet_Ctrl_Usage/faucet-ctrl";
+import faucetsReducer from "./faucet_ctrl/faucetlistblock";
+import faucetDetailsReducer from "./faucet_ctrl/faucet_control";
+export const makeStore = () => {
+  return configureStore({
+    reducer: {
+      faucets: faucetsReducer,
+      faucetDetails: faucetDetailsReducer,
+    },
+  });
+};
 
-export const store = configureStore({
-  reducer: {
-    faucet: faucetReducer,
-  },
-});
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
