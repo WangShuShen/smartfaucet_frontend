@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.7.17",
     "@reduxjs/toolkit": "^2.0.1",
     "apexcharts": "^3.45.0",
+    "axios": "^1.6.3",
     "framer-motion": "^10.16.5",
     "next": "^14.0.4",
     "preline": "^2.0.2",
