@@ -22,8 +22,9 @@ const initialState: FaucetUsageUpdateState = {
 export const fetchLatestUsage = createAsyncThunk(
   'faucetUsage/fetchLatest',
   async (faucetUid: string) => {
-    const response = await axios.post(`https://your-api-endpoint/retrieve_update`, {
-      faucet_uid: faucetUid
+    const response = await axios.post('http://34.150.84.59:34749/api/0.1/faucet/FaucetConsumptionManager/retrieve_update', {
+      // faucet_uid: faucetUid
+      faucet_uid: "TAP230003"
     });
     return response.data as FaucetUsageUpdate;
   }

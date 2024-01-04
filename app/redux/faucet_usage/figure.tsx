@@ -26,14 +26,16 @@ const initialState: FigureFaucetUsageState = {
   error: null,
 };
 
-const fetchEndpoint = (timeframe: string, faucetUid: string) => 
-  `https://your-api-endpoint/v1/faucet_info/${timeframe}?faucet_uid=${faucetUid}`;
-
+const fetchEndpoint = (timeframe: string) => 
+  `http://34.150.84.59:34749/api/0.1/faucet/FaucetConsumptionManager/${timeframe}`;
 
 export const fetchFigureWeeklyUsage = createAsyncThunk(
   'figureFaucetUsage/fetchWeekly',
   async (faucetUid: string) => {
-    const response = await axios.post(fetchEndpoint('retrieve_week', faucetUid));
+    const response = await axios.post(fetchEndpoint('retrieve_week'), {
+      // faucet_uid: faucetUid
+      faucet_uid: "TAP230003"
+    });
     return response.data as FigureFaucetUsageData[];
   }
 );
@@ -41,7 +43,10 @@ export const fetchFigureWeeklyUsage = createAsyncThunk(
 export const fetchFigureMonthlyUsage = createAsyncThunk(
   'figureFaucetUsage/fetchMonthly',
   async (faucetUid: string) => {
-    const response = await axios.post(fetchEndpoint('retrieve_month', faucetUid));
+    const response = await axios.post(fetchEndpoint('retrieve_month'), {
+      // faucet_uid: faucetUid
+      faucet_uid: "TAP230003"
+    });
     return response.data as FigureFaucetUsageData[];
   }
 );
@@ -49,7 +54,10 @@ export const fetchFigureMonthlyUsage = createAsyncThunk(
 export const fetchFigureYearlyUsage = createAsyncThunk(
   'figureFaucetUsage/fetchYearly',
   async (faucetUid: string) => {
-    const response = await axios.post(fetchEndpoint('retrieve_year', faucetUid));
+    const response = await axios.post(fetchEndpoint('retrieve_year'), {
+      // faucet_uid: faucetUid
+      faucet_uid: "TAP230003"
+    });
     return response.data as FigureFaucetUsageData[];
   }
 );
