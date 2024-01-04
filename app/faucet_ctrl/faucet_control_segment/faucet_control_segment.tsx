@@ -129,7 +129,7 @@ export default function Faucet_Control_Segment(faucetUid: string) {
     console.log("OnClick!");
   };
 
-  const { faucetDetail, loading, error } = useFaucetInfo(faucetUid);
+  const { faucetDetail, loading, error } =  (faucetUid);
   if (loading)
     return (
       <div className="flex justify-center">
