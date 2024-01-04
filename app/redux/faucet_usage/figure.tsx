@@ -26,14 +26,14 @@ const initialState: FigureFaucetUsageState = {
   error: null,
 };
 
-const fetchEndpoint = (timeframe: string, faucetUid: string) => 
-  `https://your-api-endpoint/v1/faucet_info/${timeframe}?faucet_uid=${faucetUid}`;
+
 
 
 export const fetchFigureWeeklyUsage = createAsyncThunk(
   'figureFaucetUsage/fetchWeekly',
   async (faucetUid: string) => {
-    const response = await axios.post(fetchEndpoint('retrieve_week', faucetUid));
+    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FIGURE_WEEKLY_USAGE_API as string;
+    const response = await axios.post(apiUrl,{faucetuid:faucetUid});
     return response.data as FigureFaucetUsageData[];
   }
 );
@@ -41,7 +41,8 @@ export const fetchFigureWeeklyUsage = createAsyncThunk(
 export const fetchFigureMonthlyUsage = createAsyncThunk(
   'figureFaucetUsage/fetchMonthly',
   async (faucetUid: string) => {
-    const response = await axios.post(fetchEndpoint('retrieve_month', faucetUid));
+    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FIGURE_MONTHLY_USAGE_API as string;
+    const response = await axios.post(apiUrl,{faucetuid:faucetUid});
     return response.data as FigureFaucetUsageData[];
   }
 );
@@ -49,7 +50,8 @@ export const fetchFigureMonthlyUsage = createAsyncThunk(
 export const fetchFigureYearlyUsage = createAsyncThunk(
   'figureFaucetUsage/fetchYearly',
   async (faucetUid: string) => {
-    const response = await axios.post(fetchEndpoint('retrieve_year', faucetUid));
+    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FIGURE_YEARLY_USAGE_API as string;
+    const response = await axios.post(apiUrl,{faucetuid:faucetUid});
     return response.data as FigureFaucetUsageData[];
   }
 );
@@ -100,5 +102,5 @@ const figureFaucetUsageReducer = createSlice({
   },
 });
 
-export const { setSelectedTimeFrame } = figureFaucetUsageReducer.actions;
+// export const { setSelectedTimeFrame } = figureFaucetUsageReducer.actions;
 export default figureFaucetUsageReducer.reducer;

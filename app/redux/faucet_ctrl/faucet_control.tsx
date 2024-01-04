@@ -2,12 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
 
-type FaucetInfo = {
-  activation_count: number;
-  total_water_time: string;
-  total_flow_volume: string;
-};
-
 type FaucetControl = {
   waterShutoffDelay: string;
   flowRate: string;
@@ -17,48 +11,67 @@ type FaucetControl = {
   carbonCreditReduction: string;
   energySavingMode: string;
   autoFlushing12hr: string;
-  irSensingDuration: string;
-  dropdownOptions: string;
+  irSensingTest: string;
+  firmwareUpdate: string;
+  infraredDistance: string;
+  energySavingValue: string;
 };
 
 type FaucetDetail = {
-  faucet_uid: string;
-  faucet_info: FaucetInfo;
   faucet_ctrl: FaucetControl;
 };
 
 type FaucetDetailsState = {
   faucetDetail: FaucetDetail | null;
-  loading: boolean;
-  error: string | null;
+  loading_detail: boolean;
+  error_detail: string | null;
 };
 
 const initialFaucetDetailsState: FaucetDetailsState = {
   faucetDetail: null,
-  loading: false,
-  error: null,
+  loading_detail: false,
+  error_detail: null,
 };
 
-export const fetchFaucetDetails = createAsyncThunk<
+export const fetchFaucetSetting = createAsyncThunk<
   FaucetDetail,
   string,
   { state: RootState }
 >("faucets/fetchFaucetDetails", async (faucetUid: string, thunkAPI) => {
+  if (!faucetUid) {
+    return thunkAPI.rejectWithValue("faucetUid is null or empty");
+  }
   try {
-    const response = await axios.post(
-      `https://3c379020-cf73-4412-8fc0-afb38993ffbd.mock.pstmn.io/v1/faucet_info?faucet_uid=${faucetUid}`,
-      //postman mock api暫時沒辦法用
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "no-cache, no-store, must-revalidate", // 禁用緩存
-          Pragma: "no-cache",
-          Expires: "0",
-        },
+    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FAUCET_SETTING_API as string;
+    const response = await axios.post(apiUrl, {
+      faucet_uid: faucetUid,
+    });
+    let energySavingMode = "";
+    let energySavingValue = "";
+    if (response.data.energy_saving_mode) {
+      const modeValue = response.data.energy_saving_mode.split(" ");
+      if (modeValue.length > 0) {
+        energySavingMode = modeValue[0]; // 取 "ON"
+        if (modeValue.length > 1) {
+          energySavingValue = modeValue[1]; // 取 "10"
+        }
       }
-    );
-    console.log(response.data);
-    return response.data;
+    }
+    const faucetControlData: FaucetControl = {
+      waterShutoffDelay: response.data.water_shutoff_delay,
+      flowRate: response.data.flow_rate,
+      solenoidActivationDuration: response.data.solenoid_activation_duration,
+      maxIRWaterCheckDuration: response.data.max_water_check_duration,
+      auto1secStartStopSwitch: response.data.auto1sec_start_stop_switch,
+      carbonCreditReduction: response.data.carbon_credit_reduction,
+      autoFlushing12hr: response.data.auto_flushing12hr,
+      irSensingTest: response.data.infrared_test,
+      firmwareUpdate: response.data.firmware_update,
+      infraredDistance: response.data.infrared_distance,
+      energySavingMode, // 分配 "ON"
+      energySavingValue,
+    };
+    return { ...response.data, faucet_ctrl: faucetControlData };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return thunkAPI.rejectWithValue(
@@ -70,24 +83,25 @@ export const fetchFaucetDetails = createAsyncThunk<
   }
 });
 
-const faucetsDetailsSlice = createSlice({
-  name: "faucetDetails",
+const faucetSettingSlice = createSlice({
+  name: "faucetSetting",
   initialState: initialFaucetDetailsState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchFaucetDetails.pending, (state) => {
-        state.loading = true;
+      .addCase(fetchFaucetSetting.pending, (state) => {
+        state.loading_detail = true;
       })
-      .addCase(fetchFaucetDetails.fulfilled, (state, action) => {
+      .addCase(fetchFaucetSetting.fulfilled, (state, action) => {
         state.faucetDetail = action.payload;
-        state.loading = false;
+        state.loading_detail = false;
       })
-      .addCase(fetchFaucetDetails.rejected, (state, action) => {
-        state.error = action.error.message || "Error fetching faucet details";
-        state.loading = false;
+      .addCase(fetchFaucetSetting.rejected, (state, action) => {
+        state.error_detail =
+          action.error.message || "Error fetching faucet details";
+        state.loading_detail = false;
       });
   },
 });
 
-export default faucetsDetailsSlice.reducer;
+export default faucetSettingSlice.reducer;

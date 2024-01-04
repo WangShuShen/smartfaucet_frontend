@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { useFaucetData } from "./service/faucetlistblock_hooks";
-import { useFaucetInfo } from "../faucetinfo_component/service/faucetinfo_hooks";
+import { useFaucetListBlock } from "./service/faucetlistblock_hooks";
+import {
+  useFaucetInfo,
+  useFaucetUsage,
+} from "../faucetinfo_component/service/faucetinfo_hooks";
+import { useFaucetSetting } from "../../faucet_control_segment/service/faucet_control_segment_hook";
 // Define a type for the faucet object
 type Faucet = {
   faucet_uid: string;
@@ -16,9 +20,11 @@ export default function FaucetListBlock_Component() {
   const [selectedFaucetUid, setSelectedFaucetUid] = useState<string | null>(
     null
   );
-  const { faucets, loading, error } = useFaucetData();
-  const faucetInfo = useFaucetInfo(selectedFaucetUid || "");
+  const { faucets, loading, error } = useFaucetListBlock();
 
+  const faucetInfo = useFaucetInfo(selectedFaucetUid || "");
+  const faucetusage = useFaucetUsage(selectedFaucetUid || "");
+  const faucetsetting = useFaucetSetting(selectedFaucetUid || "");
   const handleFaucetClick = (faucetUid: string, index: number) => {
     setSelectedCard(index);
     setSelectedFaucetUid(faucetUid); // 更新選中的水龍頭 UID
@@ -52,7 +58,7 @@ export default function FaucetListBlock_Component() {
             d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        <span>Error! Task failed successfully.</span>
+        <span>Error! Task failed.</span>
       </div>
     );
   return (

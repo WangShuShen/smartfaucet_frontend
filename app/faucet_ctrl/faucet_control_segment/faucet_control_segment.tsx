@@ -5,7 +5,7 @@ import Slider from "./components/slider";
 import DropdownButton from "./components/dropdown_button";
 import InputButton from "./components/input_button";
 import Button from "./components/button";
-import { useFaucetInfo } from "./service/faucet_control_segment_hook";
+import { useFaucetSetting } from "./service/faucet_control_segment_hook";
 
 const waterShutoffDelayOptions = [
   { label: "1sec", value: "1" },
@@ -41,8 +41,8 @@ const maxIRWaterCheckDurationOptions = [
 ];
 
 const auto1secStartStopSwitchOptions = [
-  { label: "ON", value: "on" },
-  { label: "OFF", value: "off" },
+  { label: "ON", value: "ON" },
+  { label: "OFF", value: "OFF" },
 ];
 
 const carbonCreditReductionOptions = [
@@ -53,21 +53,21 @@ const carbonCreditReductionOptions = [
 ];
 
 const energySavingModeOptions = [
-  { label: "ON", value: "on" },
-  { label: "OFF", value: "off" },
+  { label: "ON", value: "ON" },
+  { label: "OFF", value: "OFF" },
 ];
 
 const autoFlushing12hrOptions = [
-  { label: "ON", value: "on" },
-  { label: "OFF", value: "off" },
+  { label: "ON", value: "ON" },
+  { label: "OFF", value: "OFF" },
 ];
 
-const irSensingDurationOptions = [
-  { label: "ON", value: "on" },
-  { label: "OFF", value: "off" },
+const irSensingTestOptions = [
+  { label: "ON", value: "ON" },
+  { label: "OFF", value: "OFF" },
 ];
 
-const dropdownOptions = [
+const energySavingValueOptions = [
   { label: "10 mins", value: "10" },
   { label: "20 mins", value: "20" },
   { label: "30 mins", value: "30" },
@@ -88,8 +88,8 @@ type OptionsMap = {
   carbonCreditReduction: Option[];
   energySavingMode: Option[];
   autoFlushing12hr: Option[];
-  irSensingDuration: Option[];
-  dropdownOptions: Option[];
+  irSensingTest: Option[];
+  energySavingValue: Option[];
 };
 
 function createDropdownOptions(
@@ -105,8 +105,8 @@ function createDropdownOptions(
     carbonCreditReduction: [],
     energySavingMode: [],
     autoFlushing12hr: [],
-    irSensingDuration: [],
-    dropdownOptions: [],
+    irSensingTest: [],
+    energySavingValue: [],
   };
 
   if (!details || !details.faucet_ctrl) {
@@ -129,14 +129,15 @@ export default function Faucet_Control_Segment(faucetUid: string) {
     console.log("OnClick!");
   };
 
-  const { faucetDetail, loading, error } =  (faucetUid);
-  if (loading)
+  const { faucetDetail, loading_detail, error_detail } =
+    useFaucetSetting(faucetUid);
+  if (loading_detail)
     return (
       <div className="flex justify-center">
         <span className="loading loading-bars loading-lg mt-24"></span>
       </div>
     );
-  if (error)
+  if (error_detail)
     return (
       <div role="alert" className="alert alert-error">
         <svg
@@ -164,19 +165,27 @@ export default function Faucet_Control_Segment(faucetUid: string) {
     carbonCreditReduction: carbonCreditReductionOptions,
     energySavingMode: energySavingModeOptions,
     autoFlushing12hr: autoFlushing12hrOptions,
-    irSensingDuration: irSensingDurationOptions,
-    dropdownOptions: dropdownOptions,
+    irSensingTest: irSensingTestOptions,
+    energySavingValue: energySavingValueOptions,
   };
 
   if (faucetDetail) {
     updatedOptionsMap = createDropdownOptions(faucetDetail, updatedOptionsMap);
   }
 
+  const infraredDistanceValue = faucetDetail
+    ? Number(faucetDetail?.faucet_ctrl.infraredDistance)
+    : 10;
   return (
     <div className="flex justify-center items-center mt-2 justify-around">
       <div className="flex flex-wrap bg-white w-[85%]">
         <div className="w-full sm:w-1/3 sm:flex-none p-4">
-          <Slider min={10} max={25} label="紅外線距離調整(公分)" />
+          <Slider
+            min={10}
+            max={25}
+            label="紅外線距離調整(公分)"
+            val={infraredDistanceValue}
+          />
           <ControlButton
             options={updatedOptionsMap.waterShutoffDelay}
             segmentTitle="離開紅外線偵測後止水時間"
@@ -216,7 +225,7 @@ export default function Faucet_Control_Segment(faucetUid: string) {
                   <div className="flex-1 "></div>
                   <div className="flex-1 flex  ">
                     <DropdownButton
-                      options={updatedOptionsMap.dropdownOptions}
+                      options={updatedOptionsMap.energySavingValue}
                     />
                   </div>
                 </div>
@@ -228,8 +237,8 @@ export default function Faucet_Control_Segment(faucetUid: string) {
                 segmentTitle="12小時自動沖水時間"
               />
               <ControlButton
-                options={updatedOptionsMap.irSensingDuration}
-                segmentTitle="紅外線感應時間"
+                options={updatedOptionsMap.irSensingTest}
+                segmentTitle="紅外線感應測試"
               />
               <InputButton
                 label="維護明細"

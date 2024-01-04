@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFaucets } from "../../../../redux/faucet_ctrl/faucetlistblock";
 import type { RootState } from "../../../../redux/store"; // 導入 RootState 類型
 import type { AppDispatch } from "../../../../redux/store";
-export const useFaucetData = () => {
+export const useFaucetListBlock = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { faucets, loading, error } = useSelector(
     (state: RootState) => state.faucets
@@ -12,7 +12,7 @@ export const useFaucetData = () => {
 
   useEffect(() => {
     dispatch(fetchFaucets());
-  }, [dispatch]);
+  }, []);
 
   return { faucets, loading, error };
 };

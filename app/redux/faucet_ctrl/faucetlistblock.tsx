@@ -29,14 +29,10 @@ export const fetchFaucets = createAsyncThunk<
   { state: RootState }
 >("faucets/fetchFaucets", async (_, thunkAPI) => {
   try {
-    const response = await axios.post(
-      "https://3c379020-cf73-4412-8fc0-afb38993ffbd.mock.pstmn.io/v1/faucet_group",
-      {
-        faucet_group: "test",
-      }
-    );
+    const apiUrl = process.env.NEXT_PUBLIC_FACUETLIST_API as string;
+    const response = await axios.post(apiUrl);
 
-    return response.data.faucet_group_item_details.map((item: any) => ({
+    return response.data.map((item: any) => ({
       faucet_uid: item.faucet_uid,
       faucet_status: item.faucet_status,
     }));
