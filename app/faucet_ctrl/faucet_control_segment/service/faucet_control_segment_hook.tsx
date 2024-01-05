@@ -1,20 +1,23 @@
 // faucetinfo_hooks.ts
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFaucetDetails } from "../../../redux/faucet_ctrl/faucet_control";
+import { fetchFaucetSetting } from "../../../redux/faucet_ctrl/faucet_control";
 import type { RootState, AppDispatch } from "../../../redux/store";
 
-export const useFaucetInfo = (faucetUid: string) => {
+export const useFaucetSetting = (faucetUid: string) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { faucetDetail, loading, error } = useSelector(
-    (state: RootState) => state.faucetDetails
+  const { faucetDetail, loading_detail, error_detail } = useSelector(
+    (state: RootState) => state.faucetSetting
   );
 
   useEffect(() => {
-    if (faucetUid) {
-      dispatch(fetchFaucetDetails(faucetUid));
+    if (
+      faucetUid &&
+      !(typeof faucetUid === "object" && Object.keys(faucetUid).length === 0)
+    ) {
+      dispatch(fetchFaucetSetting(faucetUid));
     }
   }, [dispatch, faucetUid]);
 
-  return { faucetDetail, loading, error };
+  return { faucetDetail, loading_detail, error_detail };
 };

@@ -1,10 +1,12 @@
 import React from "react";
-import { useFaucetInfo } from "./service/faucetinfo_hooks";
+import { useFaucetInfo, useFaucetUsage } from "./service/faucetinfo_hooks";
 export default function FaucetInfo(faucetUid: string) {
-  const { faucetDetail, loading, error } = useFaucetInfo(faucetUid);
-  if (loading)
+  const { faucet_info, loading_info, error_info } = useFaucetInfo(faucetUid);
+  const { latestUpdate, loading_usage, error_usage } =
+    useFaucetUsage(faucetUid);
+  if (loading_info || loading_usage)
     return <span className="loading loading-bars loading-lg mt-24"></span>;
-  if (error)
+  if (error_info || error_usage)
     return (
       <div role="alert" className="alert alert-error">
         <svg
@@ -20,9 +22,10 @@ export default function FaucetInfo(faucetUid: string) {
             d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        <span>Error! Task failed successfully.</span>
+        <span>Error! Task failed.</span>
       </div>
     );
+
   return (
     <div className="flex card w-1/2 h-72 ml-10">
       <div className="flex pt-2">
@@ -32,12 +35,18 @@ export default function FaucetInfo(faucetUid: string) {
           className="rounded-xl"
         />
         <div className="flex flex-col">
-          <p className="text-[#0C659E] font-sans font-bold object-center">
-            台積電/Ｃ棟/01樓/女廁
-          </p>
-          <p className="text-[#0C659E] font-sans font-bold object-center mt-12">
-            ID :{faucetDetail?.faucet_uid}
-          </p>
+          {faucet_info ? (
+            <>
+              <p className="text-[#0C659E] font-sans font-bold object-center">
+                {faucet_info.faucet_hierarchy}
+              </p>
+              <p className="text-[#0C659E] font-sans font-bold object-center mt-12">
+                ID :{faucet_info.faucet_uid}
+              </p>
+            </>
+          ) : (
+            <p>Loading or no faucet info available...</p>
+          )}
         </div>
       </div>
       <div className="block ">
@@ -50,7 +59,7 @@ export default function FaucetInfo(faucetUid: string) {
             啟動次數 ▸
           </p>
           <p className="text-[#118BBB] font-sans font-bold text-xs">
-            {faucetDetail?.faucet_info.activation_count}
+            {latestUpdate?.total_usage_count}
           </p>
         </div>
         <div className="flex mt-2">
@@ -58,7 +67,7 @@ export default function FaucetInfo(faucetUid: string) {
             累計出水時間(min) ▸
           </p>
           <p className="text-[#118BBB] font-sans font-bold text-xs">
-            {faucetDetail?.faucet_info.total_water_time}
+            {latestUpdate?.total_usage_time}
           </p>
         </div>
         <div className="flex mt-2">
@@ -66,7 +75,7 @@ export default function FaucetInfo(faucetUid: string) {
             累計流水量(gal) ▸
           </p>
           <p className="text-[#118BBB] font-sans font-bold text-xs">
-            {faucetDetail?.faucet_info.total_flow_volume}
+            {latestUpdate?.total_usage_water}
           </p>
         </div>
       </div>
