@@ -19,6 +19,7 @@ const initialState: FaucetUsageUpdateState = {
   error_usage: null,
 };
 
+
 export const fetchLatestUsage = createAsyncThunk<
   FaucetUsageUpdate,
   string,
@@ -42,6 +43,7 @@ export const fetchLatestUsage = createAsyncThunk<
       console.error("Unexpected error:", error);
       return thunkAPI.rejectWithValue("An unknown error occurred");
     }
+
   }
 });
 
