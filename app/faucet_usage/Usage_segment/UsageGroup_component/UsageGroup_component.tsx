@@ -29,10 +29,10 @@ import React from 'react';
 import { useFaucetUsageData } from './service/UsageGroup_hooks';
 
 export default function UsageGroup_Component() {
-  const { latestUpdate, loading, error } = useFaucetUsageData();
+  const { latestUpdate, loading_usage, error_usage } = useFaucetUsageData();
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading_usage) return <div>Loading...</div>;
+  if (error_usage) return <div>Error: {error_usage}</div>;
 
   return (
     <div className="stats bg-[#EFEFEF] rounded-full h-18 border-[#118BBB] border-2 mr-4 h-16">

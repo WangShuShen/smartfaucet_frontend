@@ -6,11 +6,13 @@ import type { RootState, AppDispatch } from "../../../../redux/store";
 
 export const useFaucetUsageData = () => {
 const dispatch = useDispatch<AppDispatch>();
-  const { latestUpdate, loading, error } = useSelector((state: RootState) => state.faucetUsage);
-    
+  const { latestUpdate, loading_usage, error_usage } = useSelector((state: RootState) => state.faucetUsage);
+  const { faucet_info, loading_info, error_info } = useSelector(
+    (state: RootState) => state.faucetinfo
+  );  
   useEffect(() => {
-    dispatch(fetchLatestUsage('your-faucet-uid'));
+    dispatch(fetchLatestUsage(faucet_info?.faucet_uid));
   }, [dispatch]);
 
-  return { latestUpdate, loading, error };
+  return { latestUpdate, loading_usage, error_usage };
 };

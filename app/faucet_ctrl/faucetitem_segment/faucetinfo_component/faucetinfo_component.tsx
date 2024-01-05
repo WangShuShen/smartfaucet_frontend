@@ -1,4 +1,5 @@
 import React from "react";
+import Link from 'next/link'
 import { useFaucetInfo, useFaucetUsage } from "./service/faucetinfo_hooks";
 export default function FaucetInfo(faucetUid: string) {
   const { faucet_info, loading_info, error_info } = useFaucetInfo(faucetUid);
@@ -80,7 +81,9 @@ export default function FaucetInfo(faucetUid: string) {
         </div>
       </div>
       <div className="card-body justify-center text-center -mt-7">
+        <Link href="/faucet_usage">
         <button className="btn btn-wide bg-[#118BBB]">GPM</button>
+        </Link>
       </div>
     </div>
   );
