@@ -1,9 +1,9 @@
 // faucetinfo_hooks.ts
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFaucetInfo } from "../../../../redux/faucet_ctrl/faucet_info";
-import { fetchLatestUsage } from "../../../../redux/faucet_usage/usage";
-import type { RootState, AppDispatch } from "../../../../redux/store";
+import { fetchFaucetInfo } from "@/app/redux/faucet_ctrl/faucet_info";
+import { fetchLatestUsage } from "@/app/redux/faucet_usage/usage";
+import type { RootState, AppDispatch } from "@/app/redux/store";
 
 export const useFaucetUsage = (faucetUid: string) => {
   const dispatch = useDispatch<AppDispatch>();

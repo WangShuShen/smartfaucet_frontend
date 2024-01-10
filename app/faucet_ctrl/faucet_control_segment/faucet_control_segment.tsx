@@ -6,7 +6,9 @@ import DropdownButton from "./components/dropdown_button";
 import InputButton from "./components/input_button";
 import Button from "./components/button";
 import { useFaucetSetting } from "./service/faucet_control_segment_hook";
-
+import { saveFaucetSettings } from "./service/faucet_control_segment_hook";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/redux/store";
 const waterShutoffDelayOptions = [
   { label: "1sec", value: "1" },
   { label: "10sec", value: "10" },
@@ -116,19 +118,34 @@ function createDropdownOptions(
   const controlDetails = details.faucet_ctrl;
 
   Object.keys(optionsMap).forEach((key) => {
+    // 確保每個鍵都有一個有效的值
+    const controlValue = controlDetails[key] ?? "";
     updatedOptions[key] = optionsMap[key].map((option) => ({
       ...option,
-      selected: option.value === controlDetails[key],
+      selected: option.value === controlValue,
     }));
   });
 
   return updatedOptions;
 }
 export default function Faucet_Control_Segment(faucetUid: string) {
+  const faucetuid = useSelector(
+    (state: RootState) => state.faucetinfo.faucet_info?.faucet_uid
+  );
+
   const handleClick = () => {
     console.log("OnClick!");
   };
-
+  const handleSaveClick = () => {
+    const faucetSettings = faucetDetail?.faucet_ctrl;
+    if (faucetUid && faucetSettings) {
+      saveFaucetSettings(faucetuid, faucetSettings).then(() => {
+        // Handle any post-save actions
+      });
+    } else {
+      console.error("No faucet setting to save.");
+    }
+  };
   const { faucetDetail, loading_detail, error_detail } =
     useFaucetSetting(faucetUid);
   if (loading_detail)
@@ -185,18 +202,22 @@ export default function Faucet_Control_Segment(faucetUid: string) {
             max={25}
             label="紅外線距離調整(公分)"
             val={infraredDistanceValue}
+            settingKey="infraredDistance"
           />
           <ControlButton
             options={updatedOptionsMap.waterShutoffDelay}
             segmentTitle="離開紅外線偵測後止水時間"
+            settingKey="waterShutoffDelay"
           />
           <ControlButton
             options={updatedOptionsMap.flowRate}
             segmentTitle="選擇水波器功能"
+            settingKey="flowRate"
           />
           <ControlButton
             options={updatedOptionsMap.solenoidActivationDuration}
             segmentTitle="電磁閥啟動時間"
+            settingKey="solenoidActivationDuration"
           />
         </div>
         <div className="w-full sm:w-2/3 sm:flex-none  p-4 flex flex-col">
@@ -204,6 +225,7 @@ export default function Faucet_Control_Segment(faucetUid: string) {
             <ControlButton
               options={updatedOptionsMap.maxIRWaterCheckDuration}
               segmentTitle="最常感應水確認時間"
+              settingKey="maxIRWaterCheckDuration"
             />
           </div>
           <div className="flex-3  p-4 flex w-full ">
@@ -211,21 +233,25 @@ export default function Faucet_Control_Segment(faucetUid: string) {
               <ControlButton
                 options={updatedOptionsMap.auto1secStartStopSwitch}
                 segmentTitle="啟動1S/S自動開關"
+                settingKey="auto1secStartStopSwitch"
               />
               <ControlButton
                 options={updatedOptionsMap.carbonCreditReduction}
                 segmentTitle="減少多少碳權"
+                settingKey="carbonCreditReduction"
               />
               <div className="flex justify-start items-center">
                 <ControlButton
                   options={updatedOptionsMap.energySavingMode}
                   segmentTitle="進入省電時間"
+                  settingKey="energySavingMode"
                 />
                 <div className="flex flex-col h-full">
                   <div className="flex-1 "></div>
                   <div className="flex-1 flex  ">
                     <DropdownButton
                       options={updatedOptionsMap.energySavingValue}
+                      settingKey="energySavingValue"
                     />
                   </div>
                 </div>
@@ -235,10 +261,12 @@ export default function Faucet_Control_Segment(faucetUid: string) {
               <ControlButton
                 options={updatedOptionsMap.autoFlushing12hr}
                 segmentTitle="12小時自動沖水時間"
+                settingKey="autoFlushing12hr"
               />
               <ControlButton
                 options={updatedOptionsMap.irSensingTest}
                 segmentTitle="紅外線感應測試"
+                settingKey="irSensingTest"
               />
               <InputButton
                 label="維護明細"
@@ -248,7 +276,7 @@ export default function Faucet_Control_Segment(faucetUid: string) {
             </div>
             <div className="flex flex-grow-1 p-2 flex-col h-full justify-end items-start ">
               <Button label="回復原廠設定" onClick={handleClick} />
-              <Button label="存檔" onClick={handleClick} />
+              <Button label="存檔" onClick={handleSaveClick} />
             </div>
           </div>
         </div>

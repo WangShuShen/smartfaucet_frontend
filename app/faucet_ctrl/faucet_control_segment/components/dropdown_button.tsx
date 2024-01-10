@@ -1,7 +1,9 @@
 // components/dropdown_button.tsx
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
 import { Listbox } from "@headlessui/react";
+import { updateFaucetSetting } from "@/app/redux/faucet_ctrl/faucet_control";
 interface DropdownOption {
   label: string;
   value: string;
@@ -10,22 +12,33 @@ interface DropdownOption {
 
 interface DropdownButtonProps {
   options: DropdownOption[];
+  settingKey: string;
 }
 
-export default function DropdownButton({ options }: DropdownButtonProps) {
+export default function DropdownButton({
+  options,
+  settingKey,
+}: DropdownButtonProps) {
+  const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState<DropdownOption>(
     options.find((o) => o.selected) || options[0]
   );
-
+  const findSelectedOption = () =>
+    options.find((option) => option.value === currentSetting) || options[0];
+  const currentSetting = useSelector(
+    (state: RootState) =>
+      state.faucetSetting.faucetDetail?.faucet_ctrl[settingKey]
+  );
+  const handleSelectionChange = (option: DropdownOption) => {
+    setSelectedOption(option);
+    dispatch(updateFaucetSetting({ key: settingKey, value: option.value }));
+  };
   useEffect(() => {
-    const selectedInOptions = options.find((option) => option.selected);
-    if (selectedInOptions) {
-      setSelectedOption(selectedInOptions);
-    }
-  }, [options]);
+    setSelectedOption(findSelectedOption());
+  }, [currentSetting, options]);
   return (
     <div className="px-0 py-0.5 md:px-0 md:py-0.5 w-auto md:max-w-[6.25rem] mx-auto">
-      <Listbox value={selectedOption} onChange={setSelectedOption}>
+      <Listbox value={selectedOption} onChange={handleSelectionChange}>
         {({ open }) => (
           <div className="relative mt-1">
             <Listbox.Button className="relative w-full py-1 pl-2 pr-5 text-left bg-white rounded-full text-stone-600 font-bold border border-zinc-400 cursor-default focus:outline-none focus:ring-2 focus:ring-sky-500 text-xxxs md:text-xxs">
