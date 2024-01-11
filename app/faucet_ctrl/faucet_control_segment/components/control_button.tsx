@@ -21,9 +21,6 @@ export default function ControlButton({
   settingKey,
 }: ControlButtonProps) {
   const dispatch = useDispatch();
-  const faucetDetail = useSelector(
-    (state: RootState) => state.faucetSetting.faucetDetail
-  );
   const initialSelected =
     options.find((option) => option.selected)?.value || "";
   const [selected, setSelected] = useState<string>(initialSelected);

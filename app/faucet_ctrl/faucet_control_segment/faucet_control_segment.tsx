@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useState } from "react";
 import ControlButton from "./components/control_button";
 import Slider from "./components/slider";
 import DropdownButton from "./components/dropdown_button";
@@ -132,16 +133,34 @@ export default function Faucet_Control_Segment(faucetUid: string) {
   const faucetuid = useSelector(
     (state: RootState) => state.faucetinfo.faucet_info?.faucet_uid
   );
-
+  const faucet_status = useSelector(
+    (state: RootState) => state.faucetinfo.faucet_info?.faucet_status
+  );
+  const disabledStyle = {
+    opacity:
+      faucet_status === "electromagneticvalve_status" ||
+      faucet_status === "errorconnection_status"
+        ? 0.5
+        : 1,
+    pointerEvents:
+      faucet_status === "electromagneticvalve_status" ||
+      faucet_status === "errorconnection_status"
+        ? "none"
+        : "auto",
+  };
+  // const isStatusUnclear =
+  //   !faucet_status ||
+  //   faucet_status.electromagneticvalve_status === undefined ||
+  //   faucet_status.errorconnection_status === undefined;
+  const [savebuttonisOpen, setsavebuttonIsOpen] = useState(false);
   const handleClick = () => {
     console.log("OnClick!");
   };
   const handleSaveClick = () => {
     const faucetSettings = faucetDetail?.faucet_ctrl;
     if (faucetUid && faucetSettings) {
-      saveFaucetSettings(faucetuid, faucetSettings).then(() => {
-        // Handle any post-save actions
-      });
+      setsavebuttonIsOpen(!savebuttonisOpen);
+      saveFaucetSettings(faucetuid, faucetSettings).then(() => {});
     } else {
       console.error("No faucet setting to save.");
     }
@@ -194,7 +213,10 @@ export default function Faucet_Control_Segment(faucetUid: string) {
     ? Number(faucetDetail?.faucet_ctrl.infraredDistance)
     : 10;
   return (
-    <div className="flex justify-center items-center mt-2 justify-around">
+    <div
+      className="flex justify-center items-center mt-2 justify-around"
+      style={disabledStyle}
+    >
       <div className="flex flex-wrap bg-white w-[85%]">
         <div className="w-full sm:w-1/3 sm:flex-none p-4">
           <Slider

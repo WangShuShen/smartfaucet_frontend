@@ -1,7 +1,37 @@
 import React from "react";
-import Link from 'next/link'
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useFaucetInfo, useFaucetUsage } from "./service/faucetinfo_hooks";
+import { motion } from "framer-motion";
+const LoadingScreen = () => {
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <motion.div
+        className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
+        style={{ borderTopColor: "transparent" }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity }}
+      />
+    </div>
+  );
+};
 export default function FaucetInfo(faucetUid: string) {
+  const [isNavigating, setIsNavigating] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setIsNavigating(false);
+    };
+
+    // router.events.on("routeChangeComplete", handleRouteChange);
+    // router.events.on("routeChangeError", handleRouteChange);
+
+    return () => {
+      // router.events.off("routeChangeComplete", handleRouteChange);
+      // router.events.off("routeChangeError", handleRouteChange);
+    };
+  }, [router]);
   const { faucet_info, loading_info, error_info } = useFaucetInfo(faucetUid);
   const { latestUpdate, loading_usage, error_usage } =
     useFaucetUsage(faucetUid);
@@ -26,7 +56,13 @@ export default function FaucetInfo(faucetUid: string) {
         <span>Error! Task failed.</span>
       </div>
     );
-
+  if (isNavigating) {
+    return <LoadingScreen />;
+  }
+  const handleClick = () => {
+    setIsNavigating(true);
+    router.push("/faucet_usage"); // 使用 router.push 跳转
+  };
   return (
     <div className="flex card w-1/2 h-72 ml-10">
       <div className="flex pt-2">
@@ -80,9 +116,11 @@ export default function FaucetInfo(faucetUid: string) {
           </p>
         </div>
       </div>
-      <div className="card-body justify-center text-center -mt-7">
+      <div className="card-body justify-center text-center -mt-6 -ml-8">
         <Link href="/faucet_usage">
-        <button className="btn btn-wide bg-[#118BBB]">GPM</button>
+          <button className="btn w-full bg-[#118BBB]" onClick={handleClick}>
+            GPM
+          </button>
         </Link>
       </div>
     </div>
