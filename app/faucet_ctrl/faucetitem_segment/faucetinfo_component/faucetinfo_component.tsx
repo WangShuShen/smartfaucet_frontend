@@ -1,42 +1,33 @@
+"use client";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useFaucetInfo, useFaucetUsage } from "./service/faucetinfo_hooks";
-import { motion } from "framer-motion";
-const LoadingScreen = () => {
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <motion.div
-        className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
-        style={{ borderTopColor: "transparent" }}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity }}
-      />
-    </div>
-  );
-};
+import { setLoading } from "@/app/redux/app/app";
+import { useDispatch } from "react-redux";
+import { usePathname } from "next/navigation";
 export default function FaucetInfo(faucetUid: string) {
-  const [isNavigating, setIsNavigating] = useState(false);
+  const pathname = usePathname();
+  const dispatch = useDispatch();
   const router = useRouter();
   useEffect(() => {
-    const handleRouteChange = () => {
-      setIsNavigating(false);
-    };
+    if (!faucetUid) {
+      // Handle the case where faucetUid is not provided
+      console.error("No faucetUid provided");
+      return;
+    }
 
-    // router.events.on("routeChangeComplete", handleRouteChange);
-    // router.events.on("routeChangeError", handleRouteChange);
-
-    return () => {
-      // router.events.off("routeChangeComplete", handleRouteChange);
-      // router.events.off("routeChangeError", handleRouteChange);
-    };
-  }, [router]);
+    // You can dispatch actions or do other effects here
+    // For example, dispatch(setLoading(true));
+  }, [faucetUid]);
   const { faucet_info, loading_info, error_info } = useFaucetInfo(faucetUid);
   const { latestUpdate, loading_usage, error_usage } =
     useFaucetUsage(faucetUid);
+
   if (loading_info || loading_usage)
     return <span className="loading loading-bars loading-lg mt-24"></span>;
+
   if (error_info || error_usage)
     return (
       <div role="alert" className="alert alert-error">
@@ -56,12 +47,10 @@ export default function FaucetInfo(faucetUid: string) {
         <span>Error! Task failed.</span>
       </div>
     );
-  if (isNavigating) {
-    return <LoadingScreen />;
-  }
+
   const handleClick = () => {
-    setIsNavigating(true);
-    router.push("/faucet_usage"); // 使用 router.push 跳转
+    // dispatch(setLoading(true));
+    router.push("/faucet_usage");
   };
   return (
     <div className="flex card w-1/2 h-72 ml-10">

@@ -148,10 +148,7 @@ export default function Faucet_Control_Segment(faucetUid: string) {
         ? "none"
         : "auto",
   };
-  // const isStatusUnclear =
-  //   !faucet_status ||
-  //   faucet_status.electromagneticvalve_status === undefined ||
-  //   faucet_status.errorconnection_status === undefined;
+
   const [savebuttonisOpen, setsavebuttonIsOpen] = useState(false);
   const handleClick = () => {
     console.log("OnClick!");
@@ -217,7 +214,7 @@ export default function Faucet_Control_Segment(faucetUid: string) {
       className="flex justify-center items-center mt-2 justify-around"
       style={disabledStyle}
     >
-      <div className="flex flex-wrap bg-white w-[85%]">
+      <div className="flex flex-wrap bg-white w-[85%] h-1/8">
         <div className="w-full sm:w-1/3 sm:flex-none p-4">
           <Slider
             min={10}

@@ -1,6 +1,6 @@
 import Navbar from "../component/Navbar";
 import Title from "./component/Title";
-import BackButton from "../component/BackButton";
+import BackButton from "@/app/component/BackButton";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
