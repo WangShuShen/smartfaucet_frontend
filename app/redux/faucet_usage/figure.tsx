@@ -26,18 +26,13 @@ const initialState: FigureFaucetUsageState = {
   error: null,
 };
 
-
-const fetchEndpoint = (timeframe: string) => 
-  `http://34.150.84.59:34749/api/0.1/faucet/FaucetConsumptionManager/${timeframe}`;
-
-
 export const fetchFigureWeeklyUsage = createAsyncThunk(
   'figureFaucetUsage/fetchWeekly',
   async (faucetUid: string) => {
-
-    const response = await axios.post(fetchEndpoint('retrieve_week'), {
+    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FIGURE_WEEKLY_USAGE_API as string;
+    const response = await axios.post(apiUrl, {
       // faucet_uid: faucetUid
-      faucet_uid: "TAP230003"
+      faucet_uid: faucetUid
     });
 
     return response.data as FigureFaucetUsageData[];
@@ -47,10 +42,9 @@ export const fetchFigureWeeklyUsage = createAsyncThunk(
 export const fetchFigureMonthlyUsage = createAsyncThunk(
   'figureFaucetUsage/fetchMonthly',
   async (faucetUid: string) => {
-
-    const response = await axios.post(fetchEndpoint('retrieve_month'), {
-      // faucet_uid: faucetUid
-      faucet_uid: "TAP230003"
+    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FIGURE_MONTHLY_USAGE_API as string;
+    const response = await axios.post(apiUrl, {
+      faucet_uid: faucetUid
     });
 
     return response.data as FigureFaucetUsageData[];
@@ -60,10 +54,10 @@ export const fetchFigureMonthlyUsage = createAsyncThunk(
 export const fetchFigureYearlyUsage = createAsyncThunk(
   'figureFaucetUsage/fetchYearly',
   async (faucetUid: string) => {
-
-    const response = await axios.post(fetchEndpoint('retrieve_year'), {
+    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FIGURE_YEARLY_USAGE_API as string;
+    const response = await axios.post(apiUrl, {
       // faucet_uid: faucetUid
-      faucet_uid: "TAP230003"
+      faucet_uid: faucetUid
     });
 
     return response.data as FigureFaucetUsageData[];
@@ -116,5 +110,5 @@ const figureFaucetUsageReducer = createSlice({
   },
 });
 
-// export const { setSelectedTimeFrame } = figureFaucetUsageReducer.actions;
+export const { setSelectedTimeFrame } = figureFaucetUsageReducer.actions;
 export default figureFaucetUsageReducer.reducer;

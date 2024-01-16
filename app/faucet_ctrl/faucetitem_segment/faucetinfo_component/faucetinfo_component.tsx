@@ -1,11 +1,33 @@
+"use client";
 import React from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useFaucetInfo, useFaucetUsage } from "./service/faucetinfo_hooks";
+import { setLoading } from "@/app/redux/app/app";
+import { useDispatch } from "react-redux";
+import { usePathname } from "next/navigation";
 export default function FaucetInfo(faucetUid: string) {
+  const pathname = usePathname();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  useEffect(() => {
+    if (!faucetUid) {
+      // Handle the case where faucetUid is not provided
+      console.error("No faucetUid provided");
+      return;
+    }
+
+    // You can dispatch actions or do other effects here
+    // For example, dispatch(setLoading(true));
+  }, [faucetUid]);
   const { faucet_info, loading_info, error_info } = useFaucetInfo(faucetUid);
   const { latestUpdate, loading_usage, error_usage } =
     useFaucetUsage(faucetUid);
+
   if (loading_info || loading_usage)
     return <span className="loading loading-bars loading-lg mt-24"></span>;
+
   if (error_info || error_usage)
     return (
       <div role="alert" className="alert alert-error">
@@ -26,6 +48,10 @@ export default function FaucetInfo(faucetUid: string) {
       </div>
     );
 
+  const handleClick = () => {
+    // dispatch(setLoading(true));
+    router.push("/faucet_usage");
+  };
   return (
     <div className="flex card w-1/2 h-72 ml-10">
       <div className="flex pt-2">
@@ -79,8 +105,12 @@ export default function FaucetInfo(faucetUid: string) {
           </p>
         </div>
       </div>
-      <div className="card-body justify-center text-center -mt-7">
-        <button className="btn btn-wide bg-[#118BBB]">GPM</button>
+      <div className="card-body justify-center text-center -mt-6 -ml-8">
+        <Link href="/faucet_usage">
+          <button className="btn w-full bg-[#118BBB]" onClick={handleClick}>
+            GPM
+          </button>
+        </Link>
       </div>
     </div>
   );

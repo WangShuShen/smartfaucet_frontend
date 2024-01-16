@@ -1,7 +1,8 @@
 // components/faucet_control_segment.tsx
-import React from "react";
-import { useState, useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateFaucetSetting } from "@/app/redux/faucet_ctrl/faucet_control";
+import { RootState } from "@/app/redux/store";
 interface ButtonOption {
   label: string;
   value: string;
@@ -10,21 +11,33 @@ interface ButtonOption {
 
 interface ControlButtonProps {
   options: ButtonOption[];
-  segmentTitle?: string; // Optional prop for the segment title
+  segmentTitle?: string;
+  settingKey: string;
 }
 
 export default function ControlButton({
   options,
   segmentTitle,
+  settingKey,
 }: ControlButtonProps) {
-  // 在組件掛載時，找到應該被選中的選項
+  const dispatch = useDispatch();
   const initialSelected =
     options.find((option) => option.selected)?.value || "";
   const [selected, setSelected] = useState<string>(initialSelected);
+
+  const handleButtonClick = (value: string) => {
+    if (typeof settingKey === "undefined") {
+      console.error("settingKey is undefined for value", value);
+    } else {
+      setSelected(value);
+      dispatch(updateFaucetSetting({ key: settingKey, value }));
+    }
+  };
+
   useEffect(() => {
     const newSelected = options.find((option) => option.selected)?.value || "";
     setSelected(newSelected);
-  }, [options]);
+  }, []);
   return (
     <div className="p-3">
       {segmentTitle && (
@@ -51,7 +64,7 @@ export default function ControlButton({
                 ? "rounded-l-none"
                 : "rounded-none"
             }`}
-            onClick={() => setSelected(option.value)}
+            onClick={() => handleButtonClick(option.value)}
             style={{
               margin: "0 2px",
               backgroundColor:

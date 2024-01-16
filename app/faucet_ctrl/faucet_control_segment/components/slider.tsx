@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-
+import { updateFaucetSetting } from "@/app/redux/faucet_ctrl/faucet_control";
+import { useDispatch, useSelector } from "react-redux";
 interface SliderProps {
   min: number;
   max: number;
   step?: number; // Optional prop to define the step size
   label: string;
   val: number;
+  settingKey: string;
 }
 
 export default function Slider({
@@ -14,10 +16,18 @@ export default function Slider({
   step = 1,
   label,
   val,
+  settingKey,
 }: SliderProps) {
+  const dispatch = useDispatch();
   const [value, setValue] = useState(val); // 使用 val 來初始化 value
+  const handleSliderChange = (newValue: number) => {
+    setValue(newValue);
+    // 更新 Redux 状态
+    dispatch(
+      updateFaucetSetting({ key: settingKey, value: newValue.toString() })
+    );
+  };
 
-  // 當 val 變化時，更新 value
   useEffect(() => {
     setValue(val);
   }, [val]);
@@ -41,7 +51,7 @@ export default function Slider({
             max={max}
             step={step}
             value={value}
-            onChange={(e) => setValue(Number(e.target.value))}
+            onChange={(e) => handleSliderChange(Number(e.target.value))}
             className="slider w-full h-2 bg-black rounded-lg appearance-none cursor-pointer"
             style={{
               backgroundColor: "black",

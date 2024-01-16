@@ -3,8 +3,8 @@ import { useFaucetListBlock } from "./service/faucetlistblock_hooks";
 import {
   useFaucetInfo,
   useFaucetUsage,
-} from "../faucetinfo_component/service/faucetinfo_hooks";
-import { useFaucetSetting } from "../../faucet_control_segment/service/faucet_control_segment_hook";
+} from "@/app/faucet_ctrl/faucetitem_segment/faucetinfo_component/service/faucetinfo_hooks";
+import { useFaucetSetting } from "@/app/faucet_ctrl/faucet_control_segment/service/faucet_control_segment_hook";
 // Define a type for the faucet object
 type Faucet = {
   faucet_uid: string;
@@ -63,7 +63,7 @@ export default function FaucetListBlock_Component() {
     );
   return (
     <div className="flex">
-      <div className="flex bg-[#EFEFEF] overflow-x-auto rounded-md h-72">
+      <div className="flex bg-[#EFEFEF] overflow-x-auto rounded-md h-76">
         <div className="flex flex-nowrap">
           {faucets.map((faucet: Faucet, index) => (
             <div

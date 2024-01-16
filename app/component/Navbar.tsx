@@ -18,7 +18,7 @@ const Navbar = () => {
         onClick={() => setIsOpen(false)}
       ></div>
 
-      <nav className="navbar-bg-gradient shadow-lg relative z-20 w-full lg:h-14 md:h-16 sm:h-12 xs:h-10">
+      <nav className="navbar-bg-gradient shadow-lg relative z-20 w-full ">
         <div className="flex justify-between items-center h-full px-4 w-full">
           {/* 將漢堡按鈕和Logo放在同一個容器內 */}
           <div className="flex items-center">
@@ -53,14 +53,16 @@ const Navbar = () => {
               </button>
             </Link>
           </div>
-          <img
-            src="/navbar_design_icon.svg"
-            className="absolute lg:-top-10 lg:-right-10 lg:flex md:hidden sm:hidden xs:hidden lg:h-32 md:h-36 z-0"
-            alt="navbar_design_icon"
-          />
+          {/* <div className="overflow-hidden">
+            <img
+              src="/navbar_design_icon.svg"
+              className="absolute lg:-top-10 lg:-right-10 lg:flex md:hidden sm:hidden xs:hidden lg:h-32 md:h-36 z-0"
+              alt="navbar_design_icon"
+            />
+          </div> */}
+
           <div className="relative flex items-center">
             {" "}
-            {/* 移除了 flex-auto 和 -right-20 类 */}
             <img
               src="/human_photo.jpg"
               className="rounded-full w-10 h-10 z-12"
@@ -80,9 +82,9 @@ const Navbar = () => {
             {/* 可以在這裡添加Mobile Menu的連結 */}
             <AnimatedLink href="/">專案設定</AnimatedLink>
             <AnimatedLink href="/faucet_ctrl">水龍頭控制狀態</AnimatedLink>
-            <AnimatedLink href="">用水和碳排數據</AnimatedLink>
-            <AnimatedLink href="">系統人員設定資訊</AnimatedLink>
-            <AnimatedAccountSetting href="">帳號設定</AnimatedAccountSetting>
+            <AnimatedLink href="/">用水和碳排數據</AnimatedLink>
+            <AnimatedLink href="/">系統人員設定資訊</AnimatedLink>
+            <AnimatedAccountSetting href="/">帳號設定</AnimatedAccountSetting>
           </div>
         </AnimatedMenu>
       </nav>

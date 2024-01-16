@@ -71,7 +71,7 @@ export const fetchFaucetSetting = createAsyncThunk<
       energySavingMode, // 分配 "ON"
       energySavingValue,
     };
-    return { ...response.data, faucet_ctrl: faucetControlData };
+    return { faucet_ctrl: faucetControlData };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return thunkAPI.rejectWithValue(
@@ -86,7 +86,19 @@ export const fetchFaucetSetting = createAsyncThunk<
 const faucetSettingSlice = createSlice({
   name: "faucetSetting",
   initialState: initialFaucetDetailsState,
-  reducers: {},
+  reducers: {
+    updateFaucetSetting: (state, action) => {
+      const { key, value } = action.payload;
+      if (key) {
+        state.faucetDetail.faucet_ctrl[key] = value;
+      } else {
+        console.warn(
+          "Tried to update faucetSetting with undefined key",
+          action.payload
+        );
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchFaucetSetting.pending, (state) => {
@@ -103,5 +115,5 @@ const faucetSettingSlice = createSlice({
       });
   },
 });
-
+export const { updateFaucetSetting } = faucetSettingSlice.actions;
 export default faucetSettingSlice.reducer;

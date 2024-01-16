@@ -4,6 +4,7 @@ import faucetDetailsReducer from "./faucet_ctrl/faucet_control";
 import faucetUsageReducer from "./faucet_usage/usage";
 import figureFaucetUsageReducer from "./faucet_usage/figure";
 import faucetInfoReducer from "./faucet_ctrl/faucet_info";
+import appReducer from "./app/app";
 export const makeStore = () => {
   return configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const makeStore = () => {
       faucetUsage: faucetUsageReducer,
       faucetFigure: figureFaucetUsageReducer,
       faucetinfo: faucetInfoReducer,
+      app: appReducer,
     },
   });
 };

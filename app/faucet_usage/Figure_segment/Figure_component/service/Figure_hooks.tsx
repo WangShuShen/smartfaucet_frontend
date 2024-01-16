@@ -1,20 +1,21 @@
 // useChartData.js
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../redux/store';
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
 
 export const useChartData = () => {
-  const { weeklyData, monthlyData, yearlyData, selectedTimeFrame } = useSelector((state: RootState) => state.faucetFigure);
+  const { weeklyData, monthlyData, yearlyData, selectedTimeFrame } =
+    useSelector((state: RootState) => state.faucetFigure);
 
-  let data : any[] = [];
+  let data: any[] = [];
 
   switch (selectedTimeFrame) {
-    case '周':
+    case "周":
       data = weeklyData;
       break;
-    case '月':
+    case "月":
       data = monthlyData;
       break;
-    case '年':
+    case "年":
       data = yearlyData;
       break;
     default:
