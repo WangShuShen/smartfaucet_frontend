@@ -1,26 +1,15 @@
 "use client";
 import React from "react";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useFaucetInfo, useFaucetUsage } from "./service/faucetinfo_hooks";
 import { setLoading } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
-import { usePathname } from "next/navigation";
+
 export default function FaucetInfo(faucetUid: string) {
-  const pathname = usePathname();
   const dispatch = useDispatch();
   const router = useRouter();
-  useEffect(() => {
-    if (!faucetUid) {
-      // Handle the case where faucetUid is not provided
-      console.error("No faucetUid provided");
-      return;
-    }
 
-    // You can dispatch actions or do other effects here
-    // For example, dispatch(setLoading(true));
-  }, [faucetUid]);
   const { faucet_info, loading_info, error_info } = useFaucetInfo(faucetUid);
   const { latestUpdate, loading_usage, error_usage } =
     useFaucetUsage(faucetUid);
@@ -49,7 +38,7 @@ export default function FaucetInfo(faucetUid: string) {
     );
 
   const handleClick = () => {
-    // dispatch(setLoading(true));
+    dispatch(setLoading(true));
     router.push("/faucet_usage");
   };
   return (

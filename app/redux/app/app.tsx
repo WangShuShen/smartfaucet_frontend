@@ -3,12 +3,14 @@ import { act } from "react-dom/test-utils";
 
 type AppState = {
   isLoading: boolean;
-  notification: boolean;
+  isNotification: boolean;
+  notificationMessage: string;
 };
 
 const initialState: AppState = {
   isLoading: false,
-  notification: false,
+  isNotification: false,
+  notificationMessage: "",
 };
 
 const appSlice = createSlice({
@@ -17,14 +19,21 @@ const appSlice = createSlice({
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
-      state.notification = false;
+      state.isNotification = false;
     },
-    setNotification: (state, action: PayloadAction<boolean>) => {
+    setNotification: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
-      state.notification = action.payload;
+      state.isNotification = true;
+      state.notificationMessage = action.payload;
+    },
+    hideNotification: (state) => {
+      state.isNotification = false;
+      state.isLoading = false;
+      state.notificationMessage = "";
     },
   },
 });
 
-export const { setLoading, setNotification } = appSlice.actions;
+export const { setLoading, setNotification, hideNotification } =
+  appSlice.actions;
 export default appSlice.reducer;

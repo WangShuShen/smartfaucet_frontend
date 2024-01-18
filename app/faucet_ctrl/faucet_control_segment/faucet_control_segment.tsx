@@ -10,6 +10,8 @@ import { useFaucetSetting } from "./service/faucet_control_segment_hook";
 import { saveFaucetSettings } from "./service/faucet_control_segment_hook";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/app/redux/store";
+import { setNotification } from "@/app/redux/app/app";
+import { useDispatch } from "react-redux";
 const waterShutoffDelayOptions = [
   { label: "1sec", value: "1" },
   { label: "10sec", value: "10" },
@@ -129,7 +131,8 @@ function createDropdownOptions(
 
   return updatedOptions;
 }
-export default function Faucet_Control_Segment(faucetUid: string) {
+export default function Faucet_Control_Segment() {
+  const dispatch = useDispatch();
   const faucetuid = useSelector(
     (state: RootState) => state.faucetinfo.faucet_info?.faucet_uid
   );
@@ -155,15 +158,17 @@ export default function Faucet_Control_Segment(faucetUid: string) {
   };
   const handleSaveClick = () => {
     const faucetSettings = faucetDetail?.faucet_ctrl;
-    if (faucetUid && faucetSettings) {
+    dispatch(setNotification("設定已儲存"));
+    if (faucetuid && faucetSettings) {
       setsavebuttonIsOpen(!savebuttonisOpen);
       saveFaucetSettings(faucetuid, faucetSettings).then(() => {});
     } else {
       console.error("No faucet setting to save.");
     }
   };
-  const { faucetDetail, loading_detail, error_detail } =
-    useFaucetSetting(faucetUid);
+  const { faucetDetail, loading_detail, error_detail } = useFaucetSetting(
+    faucetuid || ""
+  );
   if (loading_detail)
     return (
       <div className="flex justify-center">

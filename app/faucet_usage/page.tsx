@@ -1,16 +1,19 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Figure_Segment from "./Figure_segment/Figure_segment";
 import Usage_Segment from "./Usage_segment/Usage_segment";
 import SimpleLayout from "../simple-layout";
-import { Suspense } from "react";
+import { setLoading } from "@/app/redux/app/app";
+import { useDispatch } from "react-redux";
 export default function Faucet_usage_Page() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setLoading(false));
+  }, [dispatch]);
   return (
     <div className="block">
-      <Suspense fallback={<p>Loading ...</p>}>
-        <Usage_Segment />
-        <Figure_Segment />
-      </Suspense>
+      <Usage_Segment />
+      <Figure_Segment />
     </div>
   );
 }

@@ -5,19 +5,32 @@ import Faucet_Control from "./faucet_control_segment/faucet_control_segment";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/app/redux/store";
 import LoadingScreen from "@/app/component/LoadingScreen";
-import { Suspense } from "react";
+import Notification from "./component/Notification";
+import { hideNotification } from "@/app/redux/app/app";
+import { useDispatch } from "react-redux";
 export default function Faucet_Ctrl_Page() {
+  const dispatch = useDispatch();
   const loading_state = useSelector((state: RootState) => state.app.isLoading);
-  const faucet_uid = useSelector(
-    (state: RootState) => state.faucetinfo.faucet_info?.faucet_uid
-  );
   if (loading_state) return <LoadingScreen></LoadingScreen>;
+  const { isNotification, notificationMessage } = useSelector(
+    (state: RootState) => state.app
+  );
+
+  const handleCloseNotification = () => {
+    dispatch(hideNotification());
+  };
   return (
     <div className="block w-[100%] m-auto">
-      <Suspense fallback={<p>Loading ...</p>}>
-        <FaucetItem></FaucetItem>
-        <Faucet_Control></Faucet_Control>
-      </Suspense>
+      {isNotification && (
+        <div className="fixed inset-0 flex justify-center items-center">
+          <Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        </div>
+      )}
+      <FaucetItem></FaucetItem>
+      <Faucet_Control></Faucet_Control>
     </div>
   );
 }

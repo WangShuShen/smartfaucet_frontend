@@ -9,15 +9,17 @@ export const useFaucetSetting = (faucetUid: string) => {
   const { faucetDetail, loading_detail, error_detail } = useSelector(
     (state: RootState) => state.faucetSetting
   );
-
+  const faucetuid = useSelector(
+    (state: RootState) => state.faucetinfo.faucet_info?.faucet_uid
+  );
   useEffect(() => {
     if (
-      faucetUid &&
-      !(typeof faucetUid === "object" && Object.keys(faucetUid).length === 0)
+      faucetuid &&
+      !(typeof faucetuid === "object" && Object.keys(faucetuid).length === 0)
     ) {
-      dispatch(fetchFaucetSetting(faucetUid));
+      dispatch(fetchFaucetSetting(faucetuid));
     }
-  }, [dispatch, faucetUid]);
+  }, [dispatch, faucetuid]);
 
   return { faucetDetail, loading_detail, error_detail };
 };
