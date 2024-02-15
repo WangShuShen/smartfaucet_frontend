@@ -22,7 +22,7 @@ export default function Faucet_Ctrl_Page() {
   return (
     <div className="block w-[100%] m-auto">
       {isNotification && (
-        <div className="fixed inset-0 flex justify-center items-center">
+        <div className="fixed inset-0 flex justify-center items-center z-50">
           <Notification
             message={notificationMessage}
             onClose={handleCloseNotification}
