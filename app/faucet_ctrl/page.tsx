@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 export default function Faucet_Ctrl_Page() {
   const dispatch = useDispatch();
   const loading_state = useSelector((state: RootState) => state.app.isLoading);
-  if (loading_state) return <LoadingScreen></LoadingScreen>;
+
   const { isNotification, notificationMessage } = useSelector(
     (state: RootState) => state.app
   );
@@ -19,6 +19,7 @@ export default function Faucet_Ctrl_Page() {
   const handleCloseNotification = () => {
     dispatch(hideNotification());
   };
+  if (loading_state) return <LoadingScreen></LoadingScreen>;
   return (
     <div className="block w-[100%] m-auto">
       {isNotification && (
