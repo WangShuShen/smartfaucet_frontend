@@ -2,29 +2,61 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 
-// const projects = [];
-
 export default function ProjectListBlockComponent() {
   const [projects, setProjects] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const emptyRows = Math.max(5 - projects.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
+
   const handleSelectChange = (id) => {
     setSelectedId(id);
+
+    const selectedProject = projects.find((project) => project.id === id);
+    if (selectedProject) {
+      console.log("選中的項目資料：", selectedProject);
+    } else {
+      console.log("未找到選中的項目");
+    }
   };
+  const handleAddFloor = () => {};
   const companyValue = useSelector(
     (state: RootState) => state.project.companyValue
   );
+  const buildingValue = useSelector(
+    (state: RootState) => state.project.buildingValue
+  );
+
   useEffect(() => {
-    // 假設 companyValue 是一個包含公司名稱的字串陣列
-    // 每次 companyValue 更新時，將其添加到 projects 狀態中
     if (companyValue) {
+      const newId = projects.length + 1;
+
       setProjects((prevProjects) => [
         ...prevProjects,
-        { id: prevProjects.length + 1, company: companyValue },
+        {
+          id: newId,
+          company: companyValue,
+          building: "",
+          floor: "",
+          hub: "",
+          location: "",
+        },
       ]);
+
+      setSelectedId(newId);
     }
   }, [companyValue]);
+
+  useEffect(() => {
+    if (selectedId && buildingValue) {
+      setProjects((prevProjects) =>
+        prevProjects.map((project) =>
+          project.id === selectedId
+            ? { ...project, building: buildingValue }
+            : project
+        )
+      );
+    }
+  }, [buildingValue]);
   return (
     <div className="overflow-x-auto">
       <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
@@ -79,19 +111,44 @@ export default function ProjectListBlockComponent() {
                       </span>
                     </label>
                   </td>
-                  <td className="px-5 py-3 border-gray-200 text-sm">
+                  <td
+                    className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
+                    title={project.company}
+                  >
                     {project.company}
                   </td>
-                  <td className="px-5 py-3 border-gray-200 text-sm">
-                    {project.project}
+                  <td
+                    className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
+                    title={project.building}
+                  >
+                    {project.building}
                   </td>
-                  <td className="px-5 py-3 border-gray-200 text-sm">
+                  <td className="px-5 py-3 border-gray-200 text-sm text-center relative">
                     {project.floor}
+                    {project.building && (
+                      <button
+                        onClick={() => handleAddFloor()}
+                        className="absolute left-6 top-1/2 transform -translate-y-1/2"
+                        style={{ outline: "none" }}
+                      >
+                        <img
+                          src="add_icon.svg"
+                          alt="Add"
+                          className="w-4 h-4" // 調整圖標大小
+                        />
+                      </button>
+                    )}
                   </td>
-                  <td className="px-5 py-3 border-gray-200 text-sm">
+                  <td
+                    className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
+                    title={project.hub}
+                  >
                     {project.hub}
                   </td>
-                  <td className="px-5 py-3 border-gray-200 text-sm">
+                  <td
+                    className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
+                    title={project.location}
+                  >
                     {project.location}
                   </td>
                 </tr>

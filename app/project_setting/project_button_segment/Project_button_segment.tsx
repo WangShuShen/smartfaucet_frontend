@@ -6,12 +6,12 @@ import Project_managerment_Component from "./Project_managerment_component/Proje
 
 export default function Project_button_Segment() {
   const Create_Project_Data = [
-    { imgSrc: "/project_setting_create_company.svg", text: "專案/公司" },
-    { imgSrc: "/project_setting_create_building.svg", text: "任務/建築物" },
+    { imgSrc: "/project_setting_create_company.svg", text: "新增專案/公司" },
+    { imgSrc: "/project_setting_create_building.svg", text: "新增任務/建築物" },
   ];
   const Delete_Project_Data = [
-    { imgSrc: "/project_setting_delete_company.svg", text: "專案/公司" },
-    { imgSrc: "/project_setting_delete_building.svg", text: "任務/建築物" },
+    { imgSrc: "/project_setting_delete_company.svg", text: "刪除專案/公司" },
+    { imgSrc: "/project_setting_delete_building.svg", text: "刪除任務/建築物" },
   ];
 
   const Project_Managerment_Data = [
