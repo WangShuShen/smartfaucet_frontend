@@ -6,6 +6,7 @@ import Content_Management from "./content_management_segment/Content_Management_
 import LoadingScreen from "@/app/component/LoadingScreen";
 import Company_Notification from "./component/Company_Notification";
 import Building_Notification from "./component/Building_Notification";
+import Floor_Notification from "./component/Floor_Notification";
 import { hideNotification } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -22,6 +23,14 @@ export default function Project_setting_Page() {
     if (notificationMessage === "新增Building Management") {
       return (
         <Building_Notification
+          message={notificationMessage}
+          onClose={handleCloseNotification}
+        />
+      );
+    }
+    if (notificationMessage === "新增Floor Management") {
+      return (
+        <Floor_Notification
           message={notificationMessage}
           onClose={handleCloseNotification}
         />

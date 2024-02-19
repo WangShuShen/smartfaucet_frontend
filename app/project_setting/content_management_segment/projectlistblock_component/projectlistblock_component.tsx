@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { RootState } from "@/app/redux/store";
+import { setNotification } from "@/app/redux/app/app";
 
 export default function ProjectListBlockComponent() {
+  const dispatch = useDispatch();
   const [projects, setProjects] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const emptyRows = Math.max(5 - projects.length, 0);
@@ -18,14 +21,18 @@ export default function ProjectListBlockComponent() {
       console.log("未找到選中的項目");
     }
   };
-  const handleAddFloor = () => {};
+  const handleAddFloor = () => {
+    dispatch(setNotification("新增Floor Management"));
+  };
   const companyValue = useSelector(
     (state: RootState) => state.project.companyValue
   );
   const buildingValue = useSelector(
     (state: RootState) => state.project.buildingValue
   );
-
+  const FloorValue = useSelector(
+    (state: RootState) => state.project.floorValue
+  );
   useEffect(() => {
     if (companyValue) {
       const newId = projects.length + 1;
@@ -57,6 +64,17 @@ export default function ProjectListBlockComponent() {
       );
     }
   }, [buildingValue]);
+  useEffect(() => {
+    if (selectedId && FloorValue) {
+      setProjects((prevProjects) =>
+        prevProjects.map((project) =>
+          project.id === selectedId
+            ? { ...project, floor: FloorValue }
+            : project
+        )
+      );
+    }
+  }, [FloorValue]);
   return (
     <div className="overflow-x-auto">
       <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
@@ -125,7 +143,7 @@ export default function ProjectListBlockComponent() {
                   </td>
                   <td className="px-5 py-3 border-gray-200 text-sm text-center relative">
                     {project.floor}
-                    {project.building && (
+                    {project.building && !project.floor && (
                       <button
                         onClick={() => handleAddFloor()}
                         className="absolute left-6 top-1/2 transform -translate-y-1/2"
