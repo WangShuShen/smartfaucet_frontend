@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 type FigureFaucetUsageData = {
   total_usage_count: number;
@@ -12,7 +12,7 @@ type FigureFaucetUsageState = {
   weeklyData: FigureFaucetUsageData[];
   monthlyData: FigureFaucetUsageData[];
   yearlyData: FigureFaucetUsageData[];
-  selectedTimeFrame: '周' | '月' | '年' | null;
+  selectedTimeFrame: "周" | "月" | "年" | null;
   loading: boolean;
   error: string | null;
 };
@@ -27,45 +27,48 @@ const initialState: FigureFaucetUsageState = {
 };
 
 export const fetchFigureWeeklyUsage = createAsyncThunk(
-  'figureFaucetUsage/fetchWeekly',
+  "figureFaucetUsage/fetchWeekly",
   async (faucetUid: string) => {
-    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FIGURE_WEEKLY_USAGE_API as string;
+    const apiUrl = process.env
+      .NEXT_PUBLIC_FETCH_FIGURE_WEEKLY_USAGE_API as string;
     const response = await axios.post(apiUrl, {
       // faucet_uid: faucetUid
-      faucet_uid: faucetUid
+      faucet_uid: faucetUid,
     });
-
+    console.log(response);
     return response.data as FigureFaucetUsageData[];
   }
 );
 
 export const fetchFigureMonthlyUsage = createAsyncThunk(
-  'figureFaucetUsage/fetchMonthly',
+  "figureFaucetUsage/fetchMonthly",
   async (faucetUid: string) => {
-    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FIGURE_MONTHLY_USAGE_API as string;
+    const apiUrl = process.env
+      .NEXT_PUBLIC_FETCH_FIGURE_MONTHLY_USAGE_API as string;
     const response = await axios.post(apiUrl, {
-      faucet_uid: faucetUid
+      faucet_uid: faucetUid,
     });
-
+    console.log(response);
     return response.data as FigureFaucetUsageData[];
   }
 );
 
 export const fetchFigureYearlyUsage = createAsyncThunk(
-  'figureFaucetUsage/fetchYearly',
+  "figureFaucetUsage/fetchYearly",
   async (faucetUid: string) => {
-    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FIGURE_YEARLY_USAGE_API as string;
+    const apiUrl = process.env
+      .NEXT_PUBLIC_FETCH_FIGURE_YEARLY_USAGE_API as string;
     const response = await axios.post(apiUrl, {
       // faucet_uid: faucetUid
-      faucet_uid: faucetUid
+      faucet_uid: faucetUid,
     });
-
+    console.log(response);
     return response.data as FigureFaucetUsageData[];
   }
 );
 
 const figureFaucetUsageReducer = createSlice({
-  name: 'figureFaucetUsage',
+  name: "figureFaucetUsage",
   initialState,
   reducers: {
     setSelectedTimeFrame: (state, action) => {
@@ -82,7 +85,8 @@ const figureFaucetUsageReducer = createSlice({
         state.loading = false;
       })
       .addCase(fetchFigureWeeklyUsage.rejected, (state, action) => {
-        state.error = action.error.message || 'Error fetching weekly usage data';
+        state.error =
+          action.error.message || "Error fetching weekly usage data";
         state.loading = false;
       })
       .addCase(fetchFigureMonthlyUsage.pending, (state) => {
@@ -93,7 +97,8 @@ const figureFaucetUsageReducer = createSlice({
         state.loading = false;
       })
       .addCase(fetchFigureMonthlyUsage.rejected, (state, action) => {
-        state.error = action.error.message || 'Error fetching monthly usage data';
+        state.error =
+          action.error.message || "Error fetching monthly usage data";
         state.loading = false;
       })
       .addCase(fetchFigureYearlyUsage.pending, (state) => {
@@ -104,7 +109,8 @@ const figureFaucetUsageReducer = createSlice({
         state.loading = false;
       })
       .addCase(fetchFigureYearlyUsage.rejected, (state, action) => {
-        state.error = action.error.message || 'Error fetching yearly usage data';
+        state.error =
+          action.error.message || "Error fetching yearly usage data";
         state.loading = false;
       });
   },

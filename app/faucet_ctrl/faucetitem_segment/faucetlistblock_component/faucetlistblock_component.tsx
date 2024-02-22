@@ -9,7 +9,7 @@ import { useFaucetSetting } from "@/app/faucet_ctrl/faucet_control_segment/servi
 type Faucet = {
   faucet_uid: string;
   faucet_status:
-    | "electromagneticvalve_status"
+    | "solenoidfault_status"
     | "normalconnection_status"
     | "humanfixed_status"
     | "errorconnection_status";
@@ -34,7 +34,7 @@ export default function FaucetListBlock_Component() {
     isSelected: boolean
   ): string => {
     if (!isSelected) return "hidden";
-    return status === "electromagneticvalve_status" ||
+    return status === "solenoidfault_status" ||
       status === "errorconnection_status"
       ? "ring-red-500"
       : "ring-[#D9D9D9]";
