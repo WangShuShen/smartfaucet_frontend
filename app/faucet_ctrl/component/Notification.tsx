@@ -1,12 +1,15 @@
 "use client";
-import React , { useState }from "react";
+import React, { useState } from "react";
 
 interface NotificationProps {
   message: string;
   onClose: () => void;
 }
 
-export const Notification: React.FC<NotificationProps> = ({ message, onClose }) => {
+export const Notification: React.FC<NotificationProps> = ({
+  message,
+  onClose,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-sm w-full flex justify-center items-center flex-col">
@@ -22,7 +25,7 @@ export const Notification: React.FC<NotificationProps> = ({ message, onClose }) 
       >
         確認
         {isHovered && (
-          <div className="absolute left-0 right-0 bottom-0 h-1 bg-black" ></div>
+          <div className="absolute left-0 right-0 bottom-0 h-0 bg-black"></div>
         )}
       </button>
     </div>
