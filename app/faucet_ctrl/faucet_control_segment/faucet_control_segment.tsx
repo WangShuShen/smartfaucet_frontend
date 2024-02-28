@@ -141,12 +141,12 @@ export default function Faucet_Control_Segment() {
   );
   const disabledStyle = {
     opacity:
-      faucet_status === "electromagneticvalve_status" ||
+      faucet_status === "solenoidfault_status" ||
       faucet_status === "errorconnection_status"
         ? 0.5
         : 1,
     pointerEvents:
-      faucet_status === "electromagneticvalve_status" ||
+      faucet_status === "solenoidfault_status" ||
       faucet_status === "errorconnection_status"
         ? "none"
         : "auto",
