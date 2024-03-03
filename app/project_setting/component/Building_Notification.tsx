@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setBuilding} from "@/app/redux/project_setting/project_CRUD";
+import { setBuilding } from "@/app/redux/project_setting/current_project_select";
 interface NotificationProps {
   message: string;
   onClose: () => void;

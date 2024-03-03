@@ -21,11 +21,11 @@ export const Notification: React.FC<NotificationProps> = ({
         onClick={onClose}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="text-[#118BBB] font-bold py-2 px-4 hover:text-black hover:underline"
+        className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
       >
         確認
         {isHovered && (
-          <div className="absolute left-0 right-0 bottom-0 h-0 bg-black"></div>
+          <div className="h-0.5 bg-black" ></div>
         )}
       </button>
     </div>

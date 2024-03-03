@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setFloor } from "@/app/redux/project_setting/project_CRUD";
+import { setFloor } from "@/app/redux/project_setting/current_project_select";
 
 interface NotificationProps {
   message: string;

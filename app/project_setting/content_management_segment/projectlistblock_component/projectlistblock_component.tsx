@@ -3,18 +3,52 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { setNotification } from "@/app/redux/app/app";
+import { fetchProject } from "@/app/redux/project_setting/project_CRUD";
 
 export default function ProjectListBlockComponent() {
   const dispatch = useDispatch();
+  const reduxProjects = useSelector(
+    (state: RootState) => state.project.projects
+  );
+  const currentProject = useSelector(
+    (state: RootState) => state.currentproject
+  );
   const [projects, setProjects] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [hasUpdated, setHasUpdated] = useState({
     company: false,
     building: false,
     floor: false,
+    hub: false,
+    location: false,
   });
   const emptyRows = Math.max(5 - projects.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
+
+  useEffect(() => {
+    dispatch(fetchProject());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const projectsWithId = reduxProjects.map((project, index) => ({
+      ...project,
+      id: `${project.project_company_uid}-${index}`,
+    }));
+    setProjects(projectsWithId);
+  }, [reduxProjects]);
+
+  useEffect(() => {
+    // 假設currentProject包含了相應的更新標記，比如companyUpdated, buildingUpdated等
+    if (currentProject) {
+      setHasUpdated({
+        company: currentProject.companyValue || false,
+        building: currentProject.buildingValue || false,
+        floor: currentProject.floorValue || false,
+        hub: currentProject.hubValue || false,
+        location: currentProject.locationValue || false,
+      });
+    }
+  }, [currentProject]);
 
   const handleSelectChange = (id) => {
     setSelectedId(id);
@@ -30,97 +64,6 @@ export default function ProjectListBlockComponent() {
     setSelectedId(id);
     dispatch(setNotification("新增Floor Management"));
   };
-  const companyValue = useSelector(
-    (state: RootState) => state.project.companyValue
-  );
-  const buildingValue = useSelector(
-    (state: RootState) => state.project.buildingValue
-  );
-  const FloorValue = useSelector(
-    (state: RootState) => state.project.floorValue
-  );
-  useEffect(() => {
-    if (companyValue) {
-      const newId = projects.length + 1;
-
-      setProjects((prevProjects) => [
-        ...prevProjects,
-        {
-          id: newId,
-          company: companyValue,
-          building: "",
-          floor: "",
-          hub: "",
-          location: "",
-        },
-      ]);
-      setHasUpdated((prev) => ({
-        ...prev,
-        company: true,
-        building: false,
-        floor: false,
-      }));
-      setSelectedId(newId);
-    }
-  }, [companyValue]);
-
-  useEffect(() => {
-    if (selectedId && buildingValue) {
-      const selectedProjectIndex = projects.findIndex(
-        (project) => project.id === selectedId
-      );
-      const selectedProject = projects[selectedProjectIndex];
-
-      // 檢查是否已有建築物值
-      if (selectedProject && selectedProject.building) {
-        // 如果已有初始值，創建新的 row
-        const newProject = {
-          id: projects.length + 1,
-          company: selectedProject.company, // 從上一個 row 複製 companyValue
-          building: buildingValue, // 設置新的 buildingValue
-          floor: "",
-          hub: "",
-          location: "",
-        };
-
-        // 添加新的 row 到列表
-        setProjects((prevProjects) => [...prevProjects, newProject]);
-        setSelectedId(newProject.id); // 選中新添加的 row
-      } else {
-        // 如果沒有初始值，更新當前選中的 row
-        const updatedProjects = projects.map((project) =>
-          project.id === selectedId
-            ? { ...project, building: buildingValue }
-            : project
-        );
-
-        setProjects(updatedProjects);
-        setHasUpdated((prev) => ({
-          ...prev,
-          company: false,
-          building: true,
-          floor: false,
-        }));
-      }
-    }
-  }, [buildingValue]);
-  useEffect(() => {
-    if (selectedId && FloorValue) {
-      setProjects((prevProjects) =>
-        prevProjects.map((project) =>
-          project.id === selectedId
-            ? { ...project, floor: FloorValue }
-            : project
-        )
-      );
-      setHasUpdated((prev) => ({
-        ...prev,
-        company: false,
-        building: false,
-        floor: true,
-      }));
-    }
-  }, [FloorValue]);
   return (
     <div className="overflow-x-auto">
       <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
@@ -167,7 +110,7 @@ export default function ProjectListBlockComponent() {
               </tr>
             </thead>
             <tbody className="bg-[#EFEFEF]">
-              {projects.map((project) => (
+              {projects.map((project, index) => (
                 <tr key={project.id}>
                   <td className="px-5 py-3 border-gray-200 text-sm">
                     <label className="flex items-center cursor-pointer">
@@ -179,7 +122,7 @@ export default function ProjectListBlockComponent() {
                         className="sr-only"
                       />
                       <span className="block w-4 h-4 rounded bg-[#D9D9D9] mr-2 relative">
-                        {selectedId === project.id && (
+                        {selectedId === project?.id && (
                           <svg
                             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3"
                             viewBox="0 0 24 24"
@@ -195,29 +138,25 @@ export default function ProjectListBlockComponent() {
                   </td>
                   <td
                     className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
-                    title={project.company}
+                    title={project.project_company_name}
                   >
-                    {project.company}
+                    {project.project_company_name}
                   </td>
                   <td
                     className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
-                    title={project.building}
+                    title={project.building_name}
                   >
-                    {project.building}
+                    {project.building_name}
                   </td>
                   <td className="px-5 py-3 border-gray-200 text-sm text-center relative">
-                    {project.floor}
-                    {project.building && !project.floor && (
+                    {project.floor_name}
+                    {project.building_uid && !project.floor_uid && (
                       <button
                         onClick={() => handleAddFloor(project.id)}
                         className="absolute left-6 top-1/2 transform -translate-y-1/2"
                         style={{ outline: "none" }}
                       >
-                        <img
-                          src="add_icon.svg"
-                          alt="Add"
-                          className="w-4 h-4" // 調整圖標大小
-                        />
+                        <img src="add_icon.svg" alt="Add" className="w-4 h-4" />
                       </button>
                     )}
                   </td>

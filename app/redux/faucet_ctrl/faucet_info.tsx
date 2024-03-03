@@ -27,7 +27,6 @@ const initialState: Faucet_Info_State = {
   error_info: null,
 };
 
-// 非同步 thunk 動作，用於獲取蓮蓬頭資料
 export const fetchFaucetInfo = createAsyncThunk<
   Faucet_Info,
   string,
@@ -58,12 +57,11 @@ export const fetchFaucetInfo = createAsyncThunk<
   }
 });
 
-// 建立 slice
 const faucetsInfoSlice = createSlice({
   name: "faucetinfo",
   initialState,
   reducers: {
-    // 這裡可以加入您自定義的 reducers
+
   },
   extraReducers: (builder) => {
     builder
