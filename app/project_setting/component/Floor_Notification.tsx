@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setFloor } from "@/app/redux/project_setting/current_project_select";
+// import { setFloor } from "@/app/redux/project_setting/current_project_select";
 
 interface NotificationProps {
   message: string;
@@ -17,7 +17,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const handleSave = () => {
     if (selectedValue) {
       const floorWithLabel = `${selectedValue}樓`;
-      dispatch(setFloor(floorWithLabel));
+      // dispatch(setFloor(floorWithLabel));
       onClose();
     } else {
     }

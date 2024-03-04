@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { setNotification } from "@/app/redux/app/app";
-import { fetchProject } from "@/app/redux/project_setting/project_CRUD";
+import { fetchProject } from "@/app/redux/project_setting/project_list";
 
 export default function ProjectListBlockComponent() {
   const dispatch = useDispatch();

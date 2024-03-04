@@ -5,8 +5,8 @@ import faucetUsageReducer from "./faucet_usage/usage";
 import figureFaucetUsageReducer from "./faucet_usage/figure";
 import faucetInfoReducer from "./faucet_ctrl/faucet_info";
 import appReducer from "./app/app";
-import projectReducer from "./project_setting/project_CRUD";
-import currentprojectReducer from "./project_setting/current_project_select";
+import projectReducer from "./project_setting/project_list";
+import currentprojectReducer from "./project_setting/project_CRUD";
 export const makeStore = () => {
   return configureStore({
     reducer: {
