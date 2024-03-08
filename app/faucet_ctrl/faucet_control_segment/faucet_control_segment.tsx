@@ -121,7 +121,6 @@ function createDropdownOptions(
   const controlDetails = details.faucet_ctrl;
 
   Object.keys(optionsMap).forEach((key) => {
-    // 確保每個鍵都有一個有效的值
     const controlValue = controlDetails[key] ?? "";
     updatedOptions[key] = optionsMap[key].map((option) => ({
       ...option,

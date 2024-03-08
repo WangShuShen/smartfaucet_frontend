@@ -49,7 +49,6 @@ export const fetchProject = createAsyncThunk<
         location_name: item.location_name ?? "",
       }));
     } else {
-      // 如果 response.data 是空的，返回一個空數組
       return [];
     }
   } catch (error) {

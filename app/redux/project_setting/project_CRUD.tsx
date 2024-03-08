@@ -16,24 +16,31 @@ type Project = {
   }>;
 };
 type ProjectState = {
-  projects: Project[];
-  projects_loading: boolean;
-  projects_error: string | null;
+  set_projects: Project[];
+  set_projects_loading: boolean;
+  set_projects_error: string | null;
 };
 const initialState: ProjectState = {
-  projects: [],
-  projects_loading: false,
-  projects_error: null,
+  set_projects: [],
+  set_projects_loading: false,
+  set_projects_error: null,
 };
 
-export const setCompanyapi = createAsyncThunk<void, { state: RootState }>(
+export const setCompanyapi = createAsyncThunk(
   "project/setCompany",
   async (companyname: string, thunkAPI) => {
+    // 確保 companyname 不是空值
+    if (!companyname.trim()) {
+      // 使用 rejectWithValue 來返回一個錯誤
+      return thunkAPI.rejectWithValue("Company name is required");
+    }
+
     try {
       const apiUrl = process.env.NEXT_PUBLIC_COMPANYCREATE_API as string;
       const response = await axios.post(apiUrl, {
         project_company_name: companyname,
       });
+
       if (
         response.data &&
         Array.isArray(response.data) &&
@@ -68,58 +75,22 @@ const Project_CRUD_Slice = createSlice({
   name: "project_CRUD",
   initialState,
   reducers: {
-    // setCompany: (state, action: PayloadAction<string>) => {
-    //   state.companyValue = action.payload;
-    //   state.buildingValue = "";
-    //   state.floorValue = "";
-    //   state.hubValue = "";
-    //   state.locationValue = "";
-    // },
-    // setBuilding: (state, action: PayloadAction<string>) => {
-    //   state.companyValue = "";
-    //   state.buildingValue = action.payload;
-    //   state.floorValue = "";
-    //   state.hubValue = "";
-    //   state.locationValue = "";
-    // },
-    // setFloor: (state, action: PayloadAction<string>) => {
-    //   state.companyValue = "";
-    //   state.buildingValue = "";
-    //   state.floorValue = action.payload;
-    //   state.hubValue = "";
-    //   state.locationValue = "";
-    // },
-    // setHub: (state, action: PayloadAction<string>) => {
-    //   state.companyValue = "";
-    //   state.buildingValue = "";
-    //   state.floorValue = "";
-    //   state.hubValue = action.payload;
-    //   state.locationValue = "";
-    // },
-    // setLocation: (state, action: PayloadAction<string>) => {
-    //   state.companyValue = "";
-    //   state.buildingValue = "";
-    //   state.floorValue = "";
-    //   state.hubValue = "";
-    //   state.locationValue = action.payload;
-    // },
     extraReducers: (builder) => {
       builder
-        .addCase(setCompanyapi.pending, (state) => {
-          state.status = "loading";
-        })
         .addCase(setCompanyapi.fulfilled, (state, action) => {
-          state.status = "idle";
-          console.log("API response:", action.payload);
-          state.companyValue = action.payload.companyValue;
-          // 根據需要更新其他狀態
+          state.set_projects = action.payload;
+          state.set_projects_loading = false;
         })
-        .addCase(setCompanyapi.rejected, (state) => {
-          state.status = "failed";
+        .addCase(setCompanyapi.pending, (state, action) => {
+          state.set_projects_loading = true;
+        })
+        .addCase(setCompanyapi.rejected, (state, action) => {
+          state.set_projects_error =
+            action.error.message || "Error fetching projects";
+          state.set_projects_loading = false;
         });
     },
   },
 });
-// export const { setCompany, setBuilding, setFloor, setHub, setLocation } =
-//   Current_ProjectSlice.actions;
+
 export default Project_CRUD_Slice.reducer;

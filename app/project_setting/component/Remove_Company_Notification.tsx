@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setCompanyapi } from "@/app/redux/project_setting/current_project_select";
+import { setCompanyapi } from "@/app/redux/project_setting/project_CRUD";
 interface NotificationProps {
   message: string;
   onClose: () => void;
@@ -14,12 +14,17 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const dispatch = useDispatch();
   const handleSave = () => {
     dispatch(setCompanyapi(inputValue));
-    // dispatch(setCompany(inputValue));
     onClose();
   };
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-md w-full">
+        {/* 警告訊息 */}
+        <div className="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
+          <p>
+            注意：刪除專案/公司名稱將會連帶移除所有階層式設置。您將需要重新進行設置。
+          </p>
+        </div>
         <div className="flex items-center">
           <label className="text-[#0C659E] mr-3 font-medium">專案/公司：</label>
           <input

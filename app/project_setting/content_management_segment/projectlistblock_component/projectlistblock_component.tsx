@@ -27,7 +27,7 @@ export default function ProjectListBlockComponent() {
 
   useEffect(() => {
     dispatch(fetchProject());
-  }, [dispatch]);
+  }, [dispatch, currentProject]);
 
   useEffect(() => {
     const projectsWithId = reduxProjects.map((project, index) => ({
@@ -38,7 +38,6 @@ export default function ProjectListBlockComponent() {
   }, [reduxProjects]);
 
   useEffect(() => {
-    // 假設currentProject包含了相應的更新標記，比如companyUpdated, buildingUpdated等
     if (currentProject) {
       setHasUpdated({
         company: currentProject.companyValue || false,

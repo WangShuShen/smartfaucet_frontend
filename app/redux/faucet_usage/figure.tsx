@@ -32,10 +32,8 @@ export const fetchFigureWeeklyUsage = createAsyncThunk(
     const apiUrl = process.env
       .NEXT_PUBLIC_FETCH_FIGURE_WEEKLY_USAGE_API as string;
     const response = await axios.post(apiUrl, {
-      // faucet_uid: faucetUid
       faucet_uid: faucetUid,
     });
-    console.log(response);
     return response.data as FigureFaucetUsageData[];
   }
 );
@@ -48,7 +46,6 @@ export const fetchFigureMonthlyUsage = createAsyncThunk(
     const response = await axios.post(apiUrl, {
       faucet_uid: faucetUid,
     });
-    console.log(response);
     return response.data as FigureFaucetUsageData[];
   }
 );
@@ -59,10 +56,8 @@ export const fetchFigureYearlyUsage = createAsyncThunk(
     const apiUrl = process.env
       .NEXT_PUBLIC_FETCH_FIGURE_YEARLY_USAGE_API as string;
     const response = await axios.post(apiUrl, {
-      // faucet_uid: faucetUid
       faucet_uid: faucetUid,
     });
-    console.log(response);
     return response.data as FigureFaucetUsageData[];
   }
 );

@@ -4,9 +4,10 @@ import Project_button_Segment from "./project_button_segment/Project_button_segm
 import State_Segment from "./State_segment/State_segment";
 import Content_Management from "./content_management_segment/Content_Management_segment";
 import LoadingScreen from "@/app/component/LoadingScreen";
-import Company_Notification from "./component/Company_Notification";
-import Building_Notification from "./component/Building_Notification";
-import Floor_Notification from "./component/Floor_Notification";
+import Create_Company_Notification from "./component/Create_Company_Notification";
+import Create_Building_Notification from "./component/Create_Building_Notification";
+import Create_Floor_Notification from "./component/Create_Floor_Notification";
+import Remove_Company_Notification from "./component/Remove_Company_Notification";
 import { hideNotification } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -20,28 +21,38 @@ export default function Project_setting_Page() {
     dispatch(hideNotification());
   };
   const renderNotificationComponent = () => {
-    if (notificationMessage === "新增Building Management") {
-      return (
-        <Building_Notification
-          message={notificationMessage}
-          onClose={handleCloseNotification}
-        />
-      );
+    switch (notificationMessage) {
+      case "新增Company Management":
+        return (
+          <Create_Company_Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      case "新增Building Management":
+        return (
+          <Create_Building_Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      case "新增Floor Management":
+        return (
+          <Create_Floor_Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      case "刪除Company Management":
+        return (
+          <Remove_Company_Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      default:
+        return <></>;
     }
-    if (notificationMessage === "新增Floor Management") {
-      return (
-        <Floor_Notification
-          message={notificationMessage}
-          onClose={handleCloseNotification}
-        />
-      );
-    }
-    return (
-      <Company_Notification
-        message={notificationMessage}
-        onClose={handleCloseNotification}
-      />
-    );
   };
   // if (loading_state) return <LoadingScreen></LoadingScreen>;
   return (
