@@ -27,11 +27,9 @@ const initialState: ProjectState = {
 };
 
 export const setCompanyapi = createAsyncThunk(
-  "project/setCompany",
+  "project_CRUD/setCompany",
   async (companyname: string, thunkAPI) => {
-    // 確保 companyname 不是空值
     if (!companyname.trim()) {
-      // 使用 rejectWithValue 來返回一個錯誤
       return thunkAPI.rejectWithValue("Company name is required");
     }
 
@@ -40,7 +38,6 @@ export const setCompanyapi = createAsyncThunk(
       const response = await axios.post(apiUrl, {
         project_company_name: companyname,
       });
-
       if (
         response.data &&
         Array.isArray(response.data) &&
@@ -71,26 +68,25 @@ export const setCompanyapi = createAsyncThunk(
   }
 );
 
-const Project_CRUD_Slice = createSlice({
+const project_CRUD_Slice = createSlice({
   name: "project_CRUD",
   initialState,
-  reducers: {
-    extraReducers: (builder) => {
-      builder
-        .addCase(setCompanyapi.fulfilled, (state, action) => {
-          state.set_projects = action.payload;
-          state.set_projects_loading = false;
-        })
-        .addCase(setCompanyapi.pending, (state, action) => {
-          state.set_projects_loading = true;
-        })
-        .addCase(setCompanyapi.rejected, (state, action) => {
-          state.set_projects_error =
-            action.error.message || "Error fetching projects";
-          state.set_projects_loading = false;
-        });
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(setCompanyapi.fulfilled, (state, action) => {
+        state.set_projects = action.payload;
+        state.set_projects_loading = false;
+      })
+      .addCase(setCompanyapi.pending, (state) => {
+        state.set_projects_loading = true;
+      })
+      .addCase(setCompanyapi.rejected, (state, action) => {
+        state.set_projects_error =
+          action.error.message || "Error fetching projects";
+        state.set_projects_loading = false;
+      });
   },
 });
 
-export default Project_CRUD_Slice.reducer;
+export default project_CRUD_Slice.reducer;

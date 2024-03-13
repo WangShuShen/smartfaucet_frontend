@@ -54,7 +54,7 @@ export default function Project_setting_Page() {
         return <></>;
     }
   };
-  // if (loading_state) return <LoadingScreen></LoadingScreen>;
+
   return (
     <div className="flex justify-center	">
       {isNotification && (

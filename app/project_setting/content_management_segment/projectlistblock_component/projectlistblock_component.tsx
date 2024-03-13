@@ -10,9 +10,7 @@ export default function ProjectListBlockComponent() {
   const reduxProjects = useSelector(
     (state: RootState) => state.project.projects
   );
-  const currentProject = useSelector(
-    (state: RootState) => state.currentproject
-  );
+  const project_CRUD = useSelector((state: RootState) => state.project_CRUD);
   const [projects, setProjects] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [hasUpdated, setHasUpdated] = useState({
@@ -27,7 +25,7 @@ export default function ProjectListBlockComponent() {
 
   useEffect(() => {
     dispatch(fetchProject());
-  }, [dispatch, currentProject]);
+  }, [dispatch, project_CRUD]);
 
   useEffect(() => {
     const projectsWithId = reduxProjects.map((project, index) => ({
@@ -38,16 +36,16 @@ export default function ProjectListBlockComponent() {
   }, [reduxProjects]);
 
   useEffect(() => {
-    if (currentProject) {
+    if (project_CRUD) {
       setHasUpdated({
-        company: currentProject.companyValue || false,
-        building: currentProject.buildingValue || false,
-        floor: currentProject.floorValue || false,
-        hub: currentProject.hubValue || false,
-        location: currentProject.locationValue || false,
+        company: project_CRUD.companyValue || false,
+        building: project_CRUD.buildingValue || false,
+        floor: project_CRUD.floorValue || false,
+        hub: project_CRUD.hubValue || false,
+        location: project_CRUD.locationValue || false,
       });
     }
-  }, [currentProject]);
+  }, [project_CRUD]);
 
   const handleSelectChange = (id) => {
     setSelectedId(id);

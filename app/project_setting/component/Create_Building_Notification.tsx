@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { setBuilding } from "@/app/redux/project_setting/current_project_select";
+
 interface NotificationProps {
   message: string;
   onClose: () => void;
@@ -13,7 +13,6 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
   const handleSave = () => {
-    // dispatch(setBuilding(inputValue));
     onClose();
   };
   return (
