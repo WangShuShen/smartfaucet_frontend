@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { setNotification } from "@/app/redux/app/app";
 import { fetchProject } from "@/app/redux/project_setting/project_list";
-
+import { selectprojectReducer } from "@/app/redux/project_setting/project_CRUD";
 export default function ProjectListBlockComponent() {
   const dispatch = useDispatch();
   const reduxProjects = useSelector(
@@ -35,22 +35,11 @@ export default function ProjectListBlockComponent() {
     setProjects(projectsWithId);
   }, [reduxProjects]);
 
-  useEffect(() => {
-    if (project_CRUD) {
-      setHasUpdated({
-        company: project_CRUD.companyValue || false,
-        building: project_CRUD.buildingValue || false,
-        floor: project_CRUD.floorValue || false,
-        hub: project_CRUD.hubValue || false,
-        location: project_CRUD.locationValue || false,
-      });
-    }
-  }, [project_CRUD]);
-
   const handleSelectChange = (id) => {
     setSelectedId(id);
 
     const selectedProject = projects.find((project) => project.id === id);
+    dispatch(selectprojectReducer(selectedProject));
     if (selectedProject) {
       console.log("選中的項目資料：", selectedProject);
     } else {

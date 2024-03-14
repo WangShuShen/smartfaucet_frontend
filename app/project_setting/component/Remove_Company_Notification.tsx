@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "@/app/redux/store";
 import { setCompanyapi } from "@/app/redux/project_setting/project_CRUD";
+import { removeCompanyapi } from "@/app/redux/project_setting/project_CRUD";
 interface NotificationProps {
   message: string;
   onClose: () => void;
@@ -11,9 +13,13 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const dispatch = useDispatch();
-  const handleSave = () => {
 
+  const dispatch = useDispatch();
+  const selected_project = useSelector(
+    (state: RootState) => state.project_CRUD.selected_project
+  );
+  const handleSave = () => {
+    dispatch(removeCompanyapi(selected_project.project_company_uid));
     onClose();
   };
   return (
@@ -22,10 +28,11 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
         {/* 警告訊息 */}
         <div className="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
           <p>
-            注意：刪除專案/公司將會連帶移除所有階層式設置。您將需要重新進行設置。
+            注意：刪除專案/公司{selected_project.project_company_name}
+            將會連帶移除所有階層式設置。您將需要重新進行設置。
           </p>
         </div>
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <label className="text-[#0C659E] mr-3 font-medium">專案/公司：</label>
           <input
             type="text"
@@ -33,7 +40,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
             onChange={(e) => setInputValue(e.target.value)}
             className="bg-white flex-1 p-2 rounded text-gray-800 shadow-md"
           />
-        </div>
+        </div> */}
 
         <div className="flex justify-end mt-4">
           <button
