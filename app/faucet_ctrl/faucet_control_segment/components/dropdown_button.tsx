@@ -27,7 +27,7 @@ export default function DropdownButton({
     options.find((option) => option.value === currentSetting) || options[0];
   const currentSetting = useSelector(
     (state: RootState) =>
-      state.faucetSetting.faucetDetail?.faucet_ctrl[settingKey]
+      state.faucetSetting.faucetDetail?.faucet_ctrl.energySavingValue
   );
   const handleSelectionChange = (option: DropdownOption) => {
     setSelectedOption(option);
