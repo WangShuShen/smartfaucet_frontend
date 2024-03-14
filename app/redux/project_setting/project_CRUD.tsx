@@ -81,6 +81,55 @@ export const setCompanyapi = createAsyncThunk(
   }
 );
 
+export const setBuildingapi = createAsyncThunk(
+  "project_CRUD/setBuilding",
+  async (
+    {
+      building_name,
+      project_company_uid,
+    }: { building_name: string; project_company_uid: string },
+    thunkAPI
+  ) => {
+    if (!building_name.trim()) {
+      return thunkAPI.rejectWithValue("Building name is required");
+    }
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_COMPANYCREATE_API as string;
+      const response = await axios.post(apiUrl, {
+        building_name: building_name,
+        f_project_company_uid: project_company_uid,
+      });
+      if (
+        response.data &&
+        Array.isArray(response.data) &&
+        response.data.length > 0
+      ) {
+        return response.data.map((item: any) => ({
+          project_company_uid: item.project_company_uid ?? "",
+          project_company_name: item.project_company_name ?? "",
+          building_uid: item.building_uid ?? "",
+          building_name: item.building_name ?? "",
+          floor_uid: item.floor_uid ?? "",
+          floor_name: item.floor_name ?? "",
+          location_uid: item.location_uid ?? "",
+          location_name: item.location_name ?? "",
+        }));
+      } else {
+        return [];
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error:", error.response || error.message);
+        return thunkAPI.rejectWithValue(error.message);
+      } else {
+        console.error("Unexpected error:", error);
+        return thunkAPI.rejectWithValue("An unknown error occurred");
+      }
+    }
+  }
+);
+
 export const removeCompanyapi = createAsyncThunk(
   "project_CRUD/removeCompany",
   async (project_company_Uid: string, thunkAPI) => {
@@ -92,6 +141,48 @@ export const removeCompanyapi = createAsyncThunk(
       const apiUrl = process.env.NEXT_PUBLIC_COMPANYREMOVE_API as string;
       const response = await axios.post(apiUrl, {
         project_company_uid: project_company_Uid,
+      });
+      if (
+        response.data &&
+        Array.isArray(response.data) &&
+        response.data.length > 0
+      ) {
+        return response.data.map((item: any) => ({
+          project_company_uid: item.project_company_uid ?? "",
+          project_company_name: item.project_company_name ?? "",
+          building_uid: item.building_uid ?? "",
+          building_name: item.building_name ?? "",
+          floor_uid: item.floor_uid ?? "",
+          floor_name: item.floor_name ?? "",
+          location_uid: item.location_uid ?? "",
+          location_name: item.location_name ?? "",
+        }));
+      } else {
+        return [];
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error:", error.response || error.message);
+        return thunkAPI.rejectWithValue(error.message);
+      } else {
+        console.error("Unexpected error:", error);
+        return thunkAPI.rejectWithValue("An unknown error occurred");
+      }
+    }
+  }
+);
+
+export const removeBuildingapi = createAsyncThunk(
+  "project_CRUD/removeBuilding",
+  async (building_Uid: string, thunkAPI) => {
+    if (!building_Uid.trim()) {
+      return thunkAPI.rejectWithValue("Building uid is required");
+    }
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_COMPANYREMOVE_API as string;
+      const response = await axios.post(apiUrl, {
+        project_company_uid: building_Uid,
       });
       if (
         response.data &&
