@@ -13,7 +13,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
   const handleSave = () => {
-    dispatch(setCompanyapi(inputValue));
+
     onClose();
   };
   return (
@@ -22,7 +22,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
         {/* 警告訊息 */}
         <div className="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
           <p>
-            注意：刪除專案/公司{}將會連帶移除所有階層式設置。您將需要重新進行設置。
+            注意：刪除專案/公司將會連帶移除所有階層式設置。您將需要重新進行設置。
           </p>
         </div>
         <div className="flex items-center">

@@ -9,6 +9,5 @@ export default function Loading() {
         transition={{ duration: 1, repeat: Infinity }}
       />
     </div>
-    // <LoadingSkeleton />
   );
 }

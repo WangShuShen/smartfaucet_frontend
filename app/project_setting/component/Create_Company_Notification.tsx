@@ -14,7 +14,6 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const dispatch = useDispatch();
   const handleSave = () => {
     dispatch(setCompanyapi(inputValue));
-    // dispatch(setCompany(inputValue));
     onClose();
   };
   return (

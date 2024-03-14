@@ -1,4 +1,3 @@
-// useFaucetUsageData.js
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchLatestUsage } from "@/app/redux/faucet_usage/usage";

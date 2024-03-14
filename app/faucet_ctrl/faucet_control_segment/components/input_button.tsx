@@ -1,4 +1,3 @@
-// components/input_button.tsx
 import React, { useState, ChangeEvent } from 'react';
 
 interface InputButtonProps {
@@ -15,7 +14,6 @@ const InputButton: React.FC<InputButtonProps> = ({ label, placeholder, buttonTex
   };
 
   const handleSubmit = () => {
-    // 處理提交邏輯
     console.log("Input Value:", inputValue);
   };
 

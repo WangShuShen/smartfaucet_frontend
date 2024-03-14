@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 interface SliderProps {
   min: number;
   max: number;
-  step?: number; // Optional prop to define the step size
+  step?: number; 
   label: string;
   val: number;
   settingKey: string;
@@ -19,10 +19,9 @@ export default function Slider({
   settingKey,
 }: SliderProps) {
   const dispatch = useDispatch();
-  const [value, setValue] = useState(val); // 使用 val 來初始化 value
+  const [value, setValue] = useState(val); 
   const handleSliderChange = (newValue: number) => {
     setValue(newValue);
-    // 更新 Redux 状态
     dispatch(
       updateFaucetSetting({ key: settingKey, value: newValue.toString() })
     );
