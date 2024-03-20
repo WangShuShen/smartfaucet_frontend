@@ -19,8 +19,14 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
     (state: RootState) => state.project_CRUD.selected_project
   );
   const handleSave = () => {
-    dispatch(removeCompanyapi(selected_project.project_company_uid));
-    onClose();
+    // 確保 selected_project.project_company_name 有值
+    if (selected_project) {
+      dispatch(removeCompanyapi(selected_project.project_company_uid));
+      onClose();
+    } else {
+      // 可以在這裡處理錯誤或顯示警告訊息
+      console.error("project_company_name is empty or undefined.");
+    }
   };
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
@@ -28,39 +34,46 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
         {/* 警告訊息 */}
         <div className="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
           <p>
-            注意：刪除專案/公司{selected_project.project_company_name}
-            將會連帶移除所有階層式設置。您將需要重新進行設置。
+            注意：
+            {selected_project
+              ? `刪除專案/公司 ${selected_project.project_company_name} 將會連帶移除所有階層式設置。您將需要重新進行設置。`
+              : "請勾選下方的欄位資料。"}
           </p>
         </div>
-        {/* <div className="flex items-center">
-          <label className="text-[#0C659E] mr-3 font-medium">專案/公司：</label>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="bg-white flex-1 p-2 rounded text-gray-800 shadow-md"
-          />
-        </div> */}
-
+        {/* 操作按鈕 */}
         <div className="flex justify-end mt-4">
-          <button
-            onClick={handleSave}
-            onMouseEnter={() => setIsSaveHovered(true)}
-            onMouseLeave={() => setIsSaveHovered(false)}
-            className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
-          >
-            Save
-            {isSaveHovered && <div className="h-0.5 bg-black"></div>}
-          </button>
-          <button
-            onClick={onClose}
-            onMouseEnter={() => setIsCancelHovered(true)}
-            onMouseLeave={() => setIsCancelHovered(false)}
-            className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
-          >
-            Cancel
-            {isCancelHovered && <div className="h-0.5 bg-black"></div>}
-          </button>
+          {selected_project ? (
+            <>
+              <button
+                onClick={handleSave}
+                onMouseEnter={() => setIsSaveHovered(true)}
+                onMouseLeave={() => setIsSaveHovered(false)}
+                className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
+              >
+                Save
+                {isSaveHovered && <div className="h-0.5 bg-black"></div>}
+              </button>
+              <button
+                onClick={onClose}
+                onMouseEnter={() => setIsCancelHovered(true)}
+                onMouseLeave={() => setIsCancelHovered(false)}
+                className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black ml-2"
+              >
+                Cancel
+                {isCancelHovered && <div className="h-0.5 bg-black"></div>}
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={onClose}
+              onMouseEnter={() => setIsCancelHovered(true)}
+              onMouseLeave={() => setIsCancelHovered(false)}
+              className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
+            >
+              確認
+              {isCancelHovered && <div className="h-0.5 bg-black"></div>}
+            </button>
+          )}
         </div>
       </div>
     </div>

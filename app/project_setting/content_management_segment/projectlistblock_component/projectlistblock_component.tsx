@@ -57,11 +57,11 @@ export default function ProjectListBlockComponent() {
           <table className="min-w-full leading-normal">
             <thead>
               <tr>
-                <th className="sticky top-0 z-10 px-5 py-3 bg-[#EFEFEF] text-left text-xs text-[#5F6162] uppercase tracking-wider ${hasUpdated.company ? 'bg-[#007BFF]' : 'bg-[#EFEFEF]'} text-[#5F6162]`}">
+                <th className="sticky top-0 z-10 px-5 py-3 bg-[#EFEFEF] text-center text-xs text-[#5F6162] uppercase tracking-wider ${hasUpdated.company ? 'bg-[#007BFF]' : 'bg-[#EFEFEF]'} text-[#5F6162]`}">
                   選取
                 </th>
                 <th
-                  className={`sticky top-0 z-10 px-5 py-3 text-left text-xs uppercase tracking-wider ${
+                  className={`sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider ${
                     hasUpdated.company
                       ? "bg-[#1498b5] text-[#FFFFFF]"
                       : "bg-[#A9CFD9] text-[#5F6162]"
@@ -70,7 +70,7 @@ export default function ProjectListBlockComponent() {
                   專案/公司
                 </th>
                 <th
-                  className={`sticky top-0 z-10 px-5 py-3 text-left text-xs uppercase tracking-wider ${
+                  className={`sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider ${
                     hasUpdated.building
                       ? "bg-[#1498b5] text-[#FFFFFF]"
                       : "bg-[#A9CFD9] text-[#5F6162]"
@@ -79,7 +79,7 @@ export default function ProjectListBlockComponent() {
                   任務/建築物
                 </th>
                 <th
-                  className={`sticky top-0 z-10 px-5 py-3 text-left text-xs uppercase tracking-wider ${
+                  className={`sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider ${
                     hasUpdated.floor
                       ? "bg-[#1498b5] text-[#FFFFFF]"
                       : "bg-[#A9CFD9] text-[#5F6162]"
@@ -87,10 +87,10 @@ export default function ProjectListBlockComponent() {
                 >
                   樓層
                 </th>
-                <th className="sticky top-0 z-10 px-5 py-3 bg-[#A9CFD9] text-left text-xs text-[#5F6162] uppercase tracking-wider">
+                <th className="sticky top-0 z-10 px-5 py-3 bg-[#A9CFD9] text-center text-xs text-[#5F6162] uppercase tracking-wider">
                   Hub
                 </th>
-                <th className="sticky top-0 z-10 px-5 py-3 bg-[#A9CFD9] text-left text-xs text-[#5F6162] uppercase tracking-wider">
+                <th className="sticky top-0 z-10 px-5 py-3 bg-[#A9CFD9] text-center text-xs text-[#5F6162] uppercase tracking-wider">
                   位置
                 </th>
               </tr>
@@ -134,7 +134,7 @@ export default function ProjectListBlockComponent() {
                   >
                     {project.building_name}
                   </td>
-                  <td className="px-5 py-3 border-gray-200 text-sm text-center relative">
+                  <td className="px-5 py-3 border-gray-200 text-sm text-center relative truncate max-w-[30px]">
                     {project.floor_name}
                     {project.building_uid && !project.floor_uid && (
                       <button

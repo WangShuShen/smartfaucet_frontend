@@ -10,6 +10,8 @@ type ProjectItem = {
   building_name?: string;
   floor_uid?: string;
   floor_name?: string;
+  hub_uid?: string;
+  hub_name?: string;
   location_uid?: string;
   location_name?: string;
 };

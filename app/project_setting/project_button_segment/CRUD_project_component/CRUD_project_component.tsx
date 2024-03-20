@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setNotification } from "@/app/redux/app/app";
-export default function CRUD_Project_Button({ imgSrc, text }) {
+export default function CRUD_Project_Button({ imgSrc, text, isDisabled }) {
   const dispatch = useDispatch();
   const handleCRUDbutton = () => {
     let notificationMessage = "";
@@ -28,8 +28,11 @@ export default function CRUD_Project_Button({ imgSrc, text }) {
   return (
     <button
       onClick={handleCRUDbutton}
-      className="bg-white text-black font-bold text-xs justify-center rounded-lg items-center mx-2"
+      className={`bg-white text-black font-bold text-xs justify-center rounded-lg items-center mx-1 ${
+        isDisabled ? "opacity-50 cursor-not-allowed" : ""
+      }`}
       style={{ width: "95px", height: "95px" }}
+      disabled={isDisabled}
     >
       <img src={imgSrc} alt={text} className="w-16 h-16 ml-5 mb-1" />
       <span className="text-[#727171]">{text}</span>
