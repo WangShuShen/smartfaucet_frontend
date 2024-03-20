@@ -4,7 +4,7 @@ import Projectlistblock_Component from "./projectlistblock_component/projectlist
 export default function Content_management_Segment() {
   return (
     <div className="flex justify-between">
-      <div className="mt-4">
+      <div className="mt-4 w-[46%]">
         <Projectlistblock_Component></Projectlistblock_Component>
       </div>
     </div>

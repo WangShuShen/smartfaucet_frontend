@@ -8,10 +8,16 @@ export default function Project_button_Segment() {
   const Create_Project_Data = [
     { imgSrc: "/project_setting_create_company.svg", text: "新增專案/公司" },
     { imgSrc: "/project_setting_create_building.svg", text: "新增任務/建築物" },
+    { imgSrc: "/projectsetting_create_floor.svg", text: "新增樓層" },
+    { imgSrc: "/projectsetting_create_hub.svg", text: "新增HUB" },
+    { imgSrc: "/projectsetting_create_location.svg", text: "新增位置" },
   ];
   const Delete_Project_Data = [
     { imgSrc: "/project_setting_delete_company.svg", text: "刪除專案/公司" },
     { imgSrc: "/project_setting_delete_building.svg", text: "刪除任務/建築物" },
+    { imgSrc: "/projectsetting_delete_floor.svg", text: "刪除樓層" },
+    { imgSrc: "/projectsetting_delete_hub.svg", text: "刪除HUB" },
+    { imgSrc: "/projectsetting_delete_location.svg", text: "刪除位置" },
   ];
 
   const Project_Managerment_Data = [
@@ -23,7 +29,7 @@ export default function Project_button_Segment() {
   return (
     <div className="flex justify-between">
       <Search_engine_Component />
-      <div className="w-64 h-40 bg-gradient-to-b from-custom-from to-custom-to rounded-xl flex flex-col mx-6">
+      <div className="w-1/2 h-40 bg-gradient-to-b from-custom-from to-custom-to rounded-xl flex flex-col mx-6">
         <div className="basis-1/4 flex items-center justify-center">
           <p className="text-white font-bold">新增 +</p>
         </div>
@@ -40,7 +46,7 @@ export default function Project_button_Segment() {
         </div>
       </div>
 
-      <div className="w-64 h-40 bg-gradient-to-b from-[#727272] to-[#959595] rounded-xl flex flex-col mx-6">
+      <div className="w-1/2 h-40 bg-gradient-to-b from-[#727272] to-[#959595] rounded-xl flex flex-col mx-6">
         <div className="basis-1/4 flex items-center justify-center">
           <p className="text-white font-bold">刪除 X</p>
         </div>
