@@ -7,6 +7,8 @@ import LoadingScreen from "@/app/component/LoadingScreen";
 import Create_Company_Notification from "./component/Create_Company_Notification";
 import Create_Building_Notification from "./component/Create_Building_Notification";
 import Create_Floor_Notification from "./component/Create_Floor_Notification";
+import Create_Hub_Notification from "./component/Create_Hub_Notification";
+import Create_Location_Notification from "./component/Create_Location_Notification";
 import Remove_Company_Notification from "./component/Remove_Company_Notification";
 import { hideNotification } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
@@ -39,6 +41,20 @@ export default function Project_setting_Page() {
       case "新增Floor Management":
         return (
           <Create_Floor_Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      case "新增HUB Management":
+        return (
+          <Create_Hub_Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      case "新增Location Management":
+        return (
+          <Create_Location_Notification
             message={notificationMessage}
             onClose={handleCloseNotification}
           />

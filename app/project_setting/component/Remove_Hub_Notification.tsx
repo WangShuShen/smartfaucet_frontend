@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/app/redux/store";
-
 import { removeCompanyapi } from "@/app/redux/project_setting/project_CRUD";
 interface NotificationProps {
   message: string;
@@ -32,7 +31,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
           <p>
             注意：
             {selected_project
-              ? `刪除專案/公司 ${selected_project.project_company_name} 將會連帶移除該公司的所有階層式設置。您將需要重新進行設置。`
+              ? `刪除HUB ${selected_project.project_company_name} 將會連帶移除以下的階層式設置。您將需要重新進行設置。`
               : "請勾選下方的欄位資料。"}
           </p>
         </div>

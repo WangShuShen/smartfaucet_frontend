@@ -32,7 +32,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
           <p>
             注意：
             {selected_project
-              ? `刪除專案/公司 ${selected_project.project_company_name} 將會連帶移除該公司的所有階層式設置。您將需要重新進行設置。`
+              ? `刪除樓層 ${selected_project.project_company_name} 將會連帶移除底下的階層式設置。您將需要重新進行設置。`
               : "請勾選下方的欄位資料。"}
           </p>
         </div>
