@@ -12,7 +12,6 @@ interface NotificationProps {
 export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
-  const [inputValue, setInputValue] = useState("");
 
   const dispatch = useDispatch();
   const selected_project = useSelector(

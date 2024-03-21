@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCompanyapi } from "@/app/redux/project_setting/project_CRUD";
+
 interface NotificationProps {
   message: string;
   onClose: () => void;
