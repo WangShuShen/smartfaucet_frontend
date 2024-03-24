@@ -200,7 +200,7 @@ export const removeFloorapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_BUILDINGREMOVE_API as string;
+      const apiUrl = process.env.NEXT_PUBLIC_FLOORREMOVE_API as string;
       const response = await axios.post(apiUrl, {
         floor_uid: floor_Uid,
       });
@@ -286,6 +286,18 @@ const project_CRUD_Slice = createSlice({
         state.set_projects_loading = true;
       })
       .addCase(removeBuildingapi.rejected, (state, action) => {
+        state.set_projects_error =
+          action.error.message || "Error fetching projects";
+        state.set_projects_loading = false;
+      })
+      .addCase(removeFloorapi.fulfilled, (state, action) => {
+        state.set_projects = action.payload;
+        state.set_projects_loading = false;
+      })
+      .addCase(removeFloorapi.pending, (state) => {
+        state.set_projects_loading = true;
+      })
+      .addCase(removeFloorapi.rejected, (state, action) => {
         state.set_projects_error =
           action.error.message || "Error fetching projects";
         state.set_projects_loading = false;
