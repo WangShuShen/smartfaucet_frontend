@@ -40,37 +40,35 @@ const initialState: ProjectState = {
   set_projects_loading: false,
   set_projects_error: null,
 };
-
+const handleApiResponse = (response: any) => {
+  return response.data &&
+    Array.isArray(response.data) &&
+    response.data.length > 0
+    ? response.data.map((item: any) => ({
+        ...item,
+        project_company_uid: item.project_company_uid ?? "",
+        project_company_name: item.project_company_name ?? "",
+        building_uid: item.building_uid ?? "",
+        building_name: item.building_name ?? "",
+        floor_uid: item.floor_uid ?? "",
+        floor_name: item.floor_name ?? "",
+        location_uid: item.location_uid ?? "",
+        location_name: item.location_name ?? "",
+      }))
+    : [];
+};
 export const setCompanyapi = createAsyncThunk(
   "project_CRUD/setCompany",
   async (companyname: string, thunkAPI) => {
     if (!companyname.trim()) {
       return thunkAPI.rejectWithValue("Company name is required");
     }
-
     try {
       const apiUrl = process.env.NEXT_PUBLIC_COMPANYCREATE_API as string;
       const response = await axios.post(apiUrl, {
         project_company_name: companyname,
       });
-      if (
-        response.data &&
-        Array.isArray(response.data) &&
-        response.data.length > 0
-      ) {
-        return response.data.map((item: any) => ({
-          project_company_uid: item.project_company_uid ?? "",
-          project_company_name: item.project_company_name ?? "",
-          building_uid: item.building_uid ?? "",
-          building_name: item.building_name ?? "",
-          floor_uid: item.floor_uid ?? "",
-          floor_name: item.floor_name ?? "",
-          location_uid: item.location_uid ?? "",
-          location_name: item.location_name ?? "",
-        }));
-      } else {
-        return [];
-      }
+      return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response || error.message);
@@ -97,29 +95,41 @@ export const setBuildingapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_COMPANYCREATE_API as string;
+      const apiUrl = process.env.NEXT_PUBLIC_BUILDINGCREATE_API as string;
       const response = await axios.post(apiUrl, {
         building_name: building_name,
         f_project_company_uid: project_company_uid,
       });
-      if (
-        response.data &&
-        Array.isArray(response.data) &&
-        response.data.length > 0
-      ) {
-        return response.data.map((item: any) => ({
-          project_company_uid: item.project_company_uid ?? "",
-          project_company_name: item.project_company_name ?? "",
-          building_uid: item.building_uid ?? "",
-          building_name: item.building_name ?? "",
-          floor_uid: item.floor_uid ?? "",
-          floor_name: item.floor_name ?? "",
-          location_uid: item.location_uid ?? "",
-          location_name: item.location_name ?? "",
-        }));
+      return handleApiResponse(response);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error:", error.response || error.message);
+        return thunkAPI.rejectWithValue(error.message);
       } else {
-        return [];
+        console.error("Unexpected error:", error);
+        return thunkAPI.rejectWithValue("An unknown error occurred");
       }
+    }
+  }
+);
+
+export const setFloorapi = createAsyncThunk(
+  "project_CRUD/setFloor",
+  async (
+    { floor_name, building_uid }: { floor_name: string; building_uid: string },
+    thunkAPI
+  ) => {
+    if (!floor_name.trim()) {
+      return thunkAPI.rejectWithValue("FLoor name is required");
+    }
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_FLOORCREATE_API as string;
+      const response = await axios.post(apiUrl, {
+        floor_name: floor_name,
+        f_building_uid: building_uid,
+      });
+      return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response || error.message);
@@ -144,24 +154,7 @@ export const removeCompanyapi = createAsyncThunk(
       const response = await axios.post(apiUrl, {
         project_company_uid: project_company_Uid,
       });
-      if (
-        response.data &&
-        Array.isArray(response.data) &&
-        response.data.length > 0
-      ) {
-        return response.data.map((item: any) => ({
-          project_company_uid: item.project_company_uid ?? "",
-          project_company_name: item.project_company_name ?? "",
-          building_uid: item.building_uid ?? "",
-          building_name: item.building_name ?? "",
-          floor_uid: item.floor_uid ?? "",
-          floor_name: item.floor_name ?? "",
-          location_uid: item.location_uid ?? "",
-          location_name: item.location_name ?? "",
-        }));
-      } else {
-        return [];
-      }
+      return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response || error.message);
@@ -182,28 +175,36 @@ export const removeBuildingapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_COMPANYREMOVE_API as string;
+      const apiUrl = process.env.NEXT_PUBLIC_BUILDINGREMOVE_API as string;
       const response = await axios.post(apiUrl, {
-        project_company_uid: building_Uid,
+        building_uid: building_Uid,
       });
-      if (
-        response.data &&
-        Array.isArray(response.data) &&
-        response.data.length > 0
-      ) {
-        return response.data.map((item: any) => ({
-          project_company_uid: item.project_company_uid ?? "",
-          project_company_name: item.project_company_name ?? "",
-          building_uid: item.building_uid ?? "",
-          building_name: item.building_name ?? "",
-          floor_uid: item.floor_uid ?? "",
-          floor_name: item.floor_name ?? "",
-          location_uid: item.location_uid ?? "",
-          location_name: item.location_name ?? "",
-        }));
+      return handleApiResponse(response);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error:", error.response || error.message);
+        return thunkAPI.rejectWithValue(error.message);
       } else {
-        return [];
+        console.error("Unexpected error:", error);
+        return thunkAPI.rejectWithValue("An unknown error occurred");
       }
+    }
+  }
+);
+
+export const removeFloorapi = createAsyncThunk(
+  "project_CRUD/removeFloor",
+  async (floor_Uid: string, thunkAPI) => {
+    if (!floor_Uid.trim()) {
+      return thunkAPI.rejectWithValue("Floor uid is required");
+    }
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_BUILDINGREMOVE_API as string;
+      const response = await axios.post(apiUrl, {
+        floor_uid: floor_Uid,
+      });
+      return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response || error.message);
@@ -241,6 +242,30 @@ const project_CRUD_Slice = createSlice({
           action.error.message || "Error fetching projects";
         state.set_projects_loading = false;
       })
+      .addCase(setBuildingapi.fulfilled, (state, action) => {
+        state.set_projects = action.payload;
+        state.set_projects_loading = false;
+      })
+      .addCase(setBuildingapi.pending, (state) => {
+        state.set_projects_loading = true;
+      })
+      .addCase(setBuildingapi.rejected, (state, action) => {
+        state.set_projects_error =
+          action.error.message || "Error fetching projects";
+        state.set_projects_loading = false;
+      })
+      .addCase(setFloorapi.fulfilled, (state, action) => {
+        state.set_projects = action.payload;
+        state.set_projects_loading = false;
+      })
+      .addCase(setFloorapi.pending, (state) => {
+        state.set_projects_loading = true;
+      })
+      .addCase(setFloorapi.rejected, (state, action) => {
+        state.set_projects_error =
+          action.error.message || "Error fetching projects";
+        state.set_projects_loading = false;
+      })
       .addCase(removeCompanyapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
@@ -249,6 +274,18 @@ const project_CRUD_Slice = createSlice({
         state.set_projects_loading = true;
       })
       .addCase(removeCompanyapi.rejected, (state, action) => {
+        state.set_projects_error =
+          action.error.message || "Error fetching projects";
+        state.set_projects_loading = false;
+      })
+      .addCase(removeBuildingapi.fulfilled, (state, action) => {
+        state.set_projects = action.payload;
+        state.set_projects_loading = false;
+      })
+      .addCase(removeBuildingapi.pending, (state) => {
+        state.set_projects_loading = true;
+      })
+      .addCase(removeBuildingapi.rejected, (state, action) => {
         state.set_projects_error =
           action.error.message || "Error fetching projects";
         state.set_projects_loading = false;

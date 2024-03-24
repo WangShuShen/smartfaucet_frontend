@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/app/redux/store";
-import { removeCompanyapi } from "@/app/redux/project_setting/project_CRUD";
+import { removeBuildingapi } from "@/app/redux/project_setting/project_CRUD";
 interface NotificationProps {
   message: string;
   onClose: () => void;
@@ -18,7 +18,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   );
   const handleSave = () => {
     if (selected_project) {
-      dispatch(removeCompanyapi(selected_project.project_company_uid));
+      dispatch(removeBuildingapi(selected_project.building_uid));
       onClose();
     } else {
       console.error("project_company_name is empty or undefined.");
@@ -31,7 +31,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
           <p>
             注意：
             {selected_project
-              ? `刪除任務/建築物 ${selected_project.project_company_name} 將會連帶移除以下的階層式設置。您將需要重新進行設置。`
+              ? `刪除任務/建築物 ${selected_project.building_name} 將會連帶移除以下的階層式設置。您將需要重新進行設置。`
               : "請勾選下方的欄位資料。"}
           </p>
         </div>

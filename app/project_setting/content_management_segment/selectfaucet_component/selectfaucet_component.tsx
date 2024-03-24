@@ -5,7 +5,7 @@ import { RootState } from "@/app/redux/store";
 import { setNotification } from "@/app/redux/app/app";
 import { fetchProject } from "@/app/redux/project_setting/project_list";
 import { selectprojectReducer } from "@/app/redux/project_setting/project_CRUD";
-export default function ProjectListBlockComponent() {
+export default function SelectFaucet_Component() {
   const dispatch = useDispatch();
   const reduxProjects = useSelector(
     (state: RootState) => state.project.projects
@@ -136,6 +136,15 @@ export default function ProjectListBlockComponent() {
                   </td>
                   <td className="px-5 py-3 border-gray-200 text-sm text-center relative truncate max-w-[30px]">
                     {project.floor_name}
+                    {project.building_uid && !project.floor_uid && (
+                      <button
+                        onClick={() => handleAddFloor(project.id)}
+                        className="absolute left-6 top-1/2 transform -translate-y-1/2"
+                        style={{ outline: "none" }}
+                      >
+                        <img src="add_icon.svg" alt="Add" className="w-4 h-4" />
+                      </button>
+                    )}
                   </td>
                   <td
                     className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
