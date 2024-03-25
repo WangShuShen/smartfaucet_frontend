@@ -46,10 +46,6 @@ export default function ProjectListBlockComponent() {
       console.log("未找到選中的項目");
     }
   };
-  const handleAddFloor = (id) => {
-    setSelectedId(id);
-    dispatch(setNotification("新增Floor Management"));
-  };
   return (
     <div className="overflow-x-auto">
       <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
@@ -139,9 +135,9 @@ export default function ProjectListBlockComponent() {
                   </td>
                   <td
                     className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
-                    title={project.hub}
+                    title={project.hub_uid}
                   >
-                    {project.hub}
+                    {project.hub_uid}
                   </td>
                   <td
                     className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"

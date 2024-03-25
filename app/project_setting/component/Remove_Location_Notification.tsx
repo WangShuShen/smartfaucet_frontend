@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/app/redux/store";
 
-import { removeCompanyapi } from "@/app/redux/project_setting/project_CRUD";
+import { removeLocationapi } from "@/app/redux/project_setting/project_CRUD";
 interface NotificationProps {
   message: string;
   onClose: () => void;
@@ -19,7 +19,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   );
   const handleSave = () => {
     if (selected_project) {
-      dispatch(removeCompanyapi(selected_project.project_company_uid));
+      dispatch(removeLocationapi(selected_project.location_uid));
       onClose();
     } else {
       console.error("project_company_name is empty or undefined.");

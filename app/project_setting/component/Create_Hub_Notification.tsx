@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setCompanyapi } from "@/app/redux/project_setting/project_CRUD";
+import { useDispatch, useSelector } from "react-redux";
+import { setHubapi } from "@/app/redux/project_setting/project_CRUD";
 
 interface NotificationProps {
   message: string;
@@ -12,9 +12,18 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const selected_project = useSelector(
+    (state: RootState) => state.project_CRUD.selected_project
+  );
   const dispatch = useDispatch();
+
   const handleSave = () => {
-    dispatch(setCompanyapi(inputValue));
+    dispatch(
+      setHubapi({
+        hub_uid: inputValue,
+        f_floor_uid: selected_project.floor_uid,
+      })
+    );
     onClose();
   };
   return (
