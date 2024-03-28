@@ -137,7 +137,7 @@ export default function ProjectListBlockComponent() {
                     className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
                     title={project.hub_uid}
                   >
-                    {project.hub_uid}
+                    {project.hub_uid[0]}
                   </td>
                   <td
                     className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"

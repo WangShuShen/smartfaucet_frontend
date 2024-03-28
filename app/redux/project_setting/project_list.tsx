@@ -10,6 +10,7 @@ type Project = {
     building_name?: string;
     floor_uid?: string;
     floor_name?: string;
+    hub_uid?: string;
     location_uid?: string;
     location_name?: string;
   }>;
@@ -45,6 +46,7 @@ export const fetchProject = createAsyncThunk<
         building_name: item.building_name ?? "",
         floor_uid: item.floor_uid ?? "",
         floor_name: item.floor_name ?? "",
+        hub_uid: item.hub_uid ?? "",
         location_uid: item.location_uid ?? "",
         location_name: item.location_name ?? "",
       }));
