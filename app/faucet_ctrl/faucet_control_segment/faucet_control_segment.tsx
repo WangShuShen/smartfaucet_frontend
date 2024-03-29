@@ -247,7 +247,7 @@ export default function Faucet_Control_Segment() {
           <div className="flex-1  p-4">
             <ControlButton
               options={updatedOptionsMap.maxIRWaterCheckDuration}
-              segmentTitle="最常感應水確認時間"
+              segmentTitle="最長感應水確認時間"
               settingKey="maxIRWaterCheckDuration"
             />
           </div>

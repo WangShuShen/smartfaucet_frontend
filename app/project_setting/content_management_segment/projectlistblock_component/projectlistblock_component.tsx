@@ -25,7 +25,7 @@ export default function ProjectListBlockComponent() {
 
   useEffect(() => {
     dispatch(fetchProject());
-  }, [dispatch, project_CRUD]);
+  }, [project_CRUD]);
 
   useEffect(() => {
     const projectsWithId = reduxProjects.map((project, index) => ({
@@ -37,14 +37,8 @@ export default function ProjectListBlockComponent() {
 
   const handleSelectChange = (id) => {
     setSelectedId(id);
-
     const selectedProject = projects.find((project) => project.id === id);
     dispatch(selectprojectReducer(selectedProject));
-    if (selectedProject) {
-      console.log("選中的項目資料：", selectedProject);
-    } else {
-      console.log("未找到選中的項目");
-    }
   };
   return (
     <div className="overflow-x-auto">

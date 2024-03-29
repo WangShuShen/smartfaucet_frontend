@@ -51,9 +51,9 @@ export const fetchFaucetSetting = createAsyncThunk<
     if (response.data.energy_saving_mode) {
       const modeValue = response.data.energy_saving_mode.split(" ");
       if (modeValue.length > 0) {
-        energySavingMode = modeValue[0]; 
+        energySavingMode = modeValue[0];
         if (modeValue.length > 1) {
-          energySavingValue = modeValue[1]; 
+          energySavingValue = modeValue[1];
         }
       }
     }
@@ -68,7 +68,7 @@ export const fetchFaucetSetting = createAsyncThunk<
       irSensingTest: response.data.infrared_test,
       firmwareUpdate: response.data.firmware_update,
       infraredDistance: response.data.infrared_distance,
-      energySavingMode, 
+      energySavingMode,
       energySavingValue,
     };
     return { faucet_ctrl: faucetControlData };

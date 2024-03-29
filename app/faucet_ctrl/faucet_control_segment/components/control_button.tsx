@@ -68,7 +68,7 @@ export default function ControlButton({
               margin: "0 2px",
               backgroundColor:
                 selected === option.value ? "#81c0c0" : "#d0d0d0",
-            }} 
+            }}
           >
             {option.label}
           </button>
