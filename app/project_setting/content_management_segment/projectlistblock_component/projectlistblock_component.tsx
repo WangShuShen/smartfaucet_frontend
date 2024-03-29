@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "@/app/redux/store";
-import { setNotification } from "@/app/redux/app/app";
 import { fetchProject } from "@/app/redux/project_setting/project_list";
 import { selectprojectReducer } from "@/app/redux/project_setting/project_CRUD";
 export default function ProjectListBlockComponent() {
@@ -13,13 +12,6 @@ export default function ProjectListBlockComponent() {
   const project_CRUD = useSelector((state: RootState) => state.project_CRUD);
   const [projects, setProjects] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
-  const [hasUpdated, setHasUpdated] = useState({
-    company: false,
-    building: false,
-    floor: false,
-    hub: false,
-    location: false,
-  });
   const emptyRows = Math.max(5 - projects.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
 
@@ -50,31 +42,13 @@ export default function ProjectListBlockComponent() {
                 <th className="sticky top-0 z-10 px-5 py-3 bg-[#EFEFEF] text-center text-xs text-[#5F6162] uppercase tracking-wider ${hasUpdated.company ? 'bg-[#007BFF]' : 'bg-[#EFEFEF]'} text-[#5F6162]`}">
                   選取
                 </th>
-                <th
-                  className={`sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider ${
-                    hasUpdated.company
-                      ? "bg-[#1498b5] text-[#FFFFFF]"
-                      : "bg-[#A9CFD9] text-[#5F6162]"
-                  } `}
-                >
+                <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
                   專案/公司
                 </th>
-                <th
-                  className={`sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider ${
-                    hasUpdated.building
-                      ? "bg-[#1498b5] text-[#FFFFFF]"
-                      : "bg-[#A9CFD9] text-[#5F6162]"
-                  } `}
-                >
+                <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
                   任務/建築物
                 </th>
-                <th
-                  className={`sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider ${
-                    hasUpdated.floor
-                      ? "bg-[#1498b5] text-[#FFFFFF]"
-                      : "bg-[#A9CFD9] text-[#5F6162]"
-                  }`}
-                >
+                <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
                   樓層
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 bg-[#A9CFD9] text-center text-xs text-[#5F6162] uppercase tracking-wider">
@@ -88,8 +62,8 @@ export default function ProjectListBlockComponent() {
             <tbody className="bg-[#EFEFEF]">
               {projects.map((project, index) => (
                 <tr key={project.id}>
-                  <td className="px-5 py-3 border-gray-200 text-sm">
-                    <label className="flex items-center cursor-pointer">
+                  <td className="px-5 py-3 border-gray-200 text-sm ">
+                    <label className="flex cursor-pointer">
                       <input
                         type="radio"
                         name="projectSelection"
@@ -97,7 +71,7 @@ export default function ProjectListBlockComponent() {
                         onChange={() => handleSelectChange(project.id)}
                         className="sr-only"
                       />
-                      <span className="block w-4 h-4 rounded bg-[#D9D9D9] mr-2 relative">
+                      <span className="block w-4 h-4 rounded bg-[#D9D9D9] ml-14 relatives">
                         {selectedId === project?.id && (
                           <svg
                             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3"
