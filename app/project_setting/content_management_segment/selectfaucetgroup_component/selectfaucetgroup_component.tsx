@@ -4,12 +4,21 @@ import { RootState } from "@/app/redux/store";
 import { fetchProject } from "@/app/redux/project_setting/project_list";
 import { selectprojectReducer } from "@/app/redux/project_setting/project_CRUD";
 
-export default function ProjectListBlockComponent() {
+export default function SelectFaucetGroupComponent() {
   const dispatch = useDispatch();
 
   const [projects, setProjects] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
-
+  const reduxProjects = useSelector(
+    (state: RootState) => state.project.projects
+  );
+  const emptyRows = Math.max(5 - projects.length, 0);
+  const emptyRowsArray = Array(emptyRows).fill(null);
+  useEffect(() => {
+    if (reduxProjects && reduxProjects.length > 0) {
+      setProjects(reduxProjects);
+    }
+  }, [reduxProjects]);
   return (
     <div className="overflow-x-auto">
       <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
@@ -50,6 +59,16 @@ export default function ProjectListBlockComponent() {
                       />
                     </label>
                   </td>
+                </tr>
+              ))}
+              {emptyRowsArray.map((_, index) => (
+                <tr key={`empty-${index}`}>
+                  <td className="px-5 py-3 border-gray-200 text-sm">
+                    <input type="radio" disabled className="hidden" />
+                  </td>
+                  <td className="px-5 py-3 border-gray-200 text-sm">&nbsp;</td>
+                  <td className="px-5 py-3 border-gray-200 text-sm">&nbsp;</td>
+                  <td className="px-5 py-3 border-gray-200 text-sm">&nbsp;</td>
                 </tr>
               ))}
             </tbody>
