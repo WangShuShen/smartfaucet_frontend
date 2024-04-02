@@ -77,7 +77,7 @@ export default function ProjectListBlockComponent() {
                       />
                       <span className="block w-4 h-4 rounded bg-[#D9D9D9] ml-14 relatives">
                         {selectedId === project?.id && (
-                          <svg className="w-3 h-3" viewBox="0 0 24 24">
+                          <svg className="w-3 h-3" viewBox="0 0 18 24">
                             <path
                               fill="#0C659E"
                               d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"

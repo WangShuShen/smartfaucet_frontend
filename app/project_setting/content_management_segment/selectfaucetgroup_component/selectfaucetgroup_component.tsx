@@ -10,11 +10,10 @@ async function fetchlistfaucet(hubUid) {
     const response = await axios.post(apiUrl, {
       hub_uid: hubUid,
     });
-    console.log(response);
-    return response.data; 
+    return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
-    return null; 
+    return null;
   }
 }
 
@@ -22,7 +21,7 @@ export default function SelectFaucetGroupComponent() {
   const dispatch = useDispatch();
 
   const [unbindfaucets, setUnbindfaucets] = useState([]);
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedIds, setSelectedIds] = useState([]);
   const project_CRUD = useSelector((state: RootState) => state.project_CRUD);
   const emptyRows = Math.max(5 - unbindfaucets.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
@@ -30,9 +29,19 @@ export default function SelectFaucetGroupComponent() {
     project_CRUD.selected_project && project_CRUD.selected_project.location_uid;
   const handleListFaucetClick = async () => {
     const data = await fetchlistfaucet(project_CRUD.selected_project.hub_uid);
-    // if (data) {
-    //   setUnbindfaucets(data);
-    // }
+    if (data) {
+      setUnbindfaucets(data);
+    }
+  };
+
+  const handleSelectChange = (selectedFaucetUid) => {
+    setSelectedIds((prevSelectedIds) => {
+      if (prevSelectedIds.includes(selectedFaucetUid)) {
+        return prevSelectedIds.filter((id) => id !== selectedFaucetUid);
+      } else {
+        return [...prevSelectedIds, selectedFaucetUid];
+      }
+    });
   };
   return (
     <div className="overflow-x-auto relative min-h-[300px]">
@@ -62,20 +71,22 @@ export default function SelectFaucetGroupComponent() {
                   <td className="px-5 py-3 text-sm text-center">
                     {unbindfaucet.faucet_uid}
                   </td>
-                  <td className="px-5 py-3 text-sm text-center"></td>
+                  <td className="px-5 py-3 text-sm text-center">
+                    {unbindfaucet.faucet_status}
+                  </td>
                   <td className="px-5 py-3 border-gray-200 text-sm flex items-center justify-center">
                     <label className="flex cursor-pointer items-center justify-center">
                       <input
-                        type="radio"
+                        type="checkbox"
                         name="projectSelection"
-                        checked={selectedId === unbindfaucet.faucet_uid}
+                        checked={selectedIds.includes(unbindfaucet.faucet_uid)}
                         onChange={() =>
                           handleSelectChange(unbindfaucet.faucet_uid)
                         }
                         className="sr-only"
                       />
                       <span className="block w-4 h-4 rounded bg-[#D9D9D9] flex items-center justify-center">
-                        {selectedId === unbindfaucet?.faucet_uid && (
+                        {selectedIds.includes(unbindfaucet?.faucet_uid) && (
                           <svg className="w-3 h-3" viewBox="0 0 24 24">
                             <path
                               fill="#0C659E"
