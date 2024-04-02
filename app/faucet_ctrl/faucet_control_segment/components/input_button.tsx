@@ -14,7 +14,6 @@ const InputButton: React.FC<InputButtonProps> = ({ label, placeholder, buttonTex
   };
 
   const handleSubmit = () => {
-    console.log("Input Value:", inputValue);
   };
 
   return (

@@ -3,24 +3,39 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { fetchProject } from "@/app/redux/project_setting/project_list";
 import { selectprojectReducer } from "@/app/redux/project_setting/project_CRUD";
+import axios from "axios";
+async function fetchlistfaucet(hubUid) {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API as string;
+    const response = await axios.post(apiUrl, {
+      hub_uid: hubUid,
+    });
+    console.log(response);
+    return response.data; 
+  } catch (error) {
+    console.error("Axios error:", error.response || error.message);
+    return null; 
+  }
+}
 
 export default function SelectFaucetGroupComponent() {
   const dispatch = useDispatch();
 
-  const [projects, setProjects] = useState([]);
+  const [unbindfaucets, setUnbindfaucets] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
-  const reduxProjects = useSelector(
-    (state: RootState) => state.project.projects
-  );
-  const emptyRows = Math.max(5 - projects.length, 0);
+  const project_CRUD = useSelector((state: RootState) => state.project_CRUD);
+  const emptyRows = Math.max(5 - unbindfaucets.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
-  useEffect(() => {
-    if (reduxProjects && reduxProjects.length > 0) {
-      setProjects([]);
-    }
-  }, [reduxProjects]);
+  const shouldShowListFaucetButton =
+    project_CRUD.selected_project && project_CRUD.selected_project.location_uid;
+  const handleListFaucetClick = async () => {
+    const data = await fetchlistfaucet(project_CRUD.selected_project.hub_uid);
+    // if (data) {
+    //   setUnbindfaucets(data);
+    // }
+  };
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto relative min-h-[300px]">
       <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
         <div className="overflow-y-auto max-h-[260px]">
           <table className="min-w-full leading-normal">
@@ -41,11 +56,11 @@ export default function SelectFaucetGroupComponent() {
               </tr>
             </thead>
             <tbody className="bg-[#EFEFEF]">
-              {projects.map((project, index) => (
-                <tr key={project.id}>
+              {unbindfaucets.map((unbindfaucet, index) => (
+                <tr key={unbindfaucet.faucet_uid}>
                   <td className="px-5 py-3 text-sm"></td>
                   <td className="px-5 py-3 text-sm text-center">
-                    {project.id}
+                    {unbindfaucet.faucet_uid}
                   </td>
                   <td className="px-5 py-3 text-sm text-center"></td>
                   <td className="px-5 py-3 border-gray-200 text-sm flex items-center justify-center">
@@ -53,12 +68,14 @@ export default function SelectFaucetGroupComponent() {
                       <input
                         type="radio"
                         name="projectSelection"
-                        checked={selectedId === project.id}
-                        onChange={() => handleSelectChange(project.id)}
+                        checked={selectedId === unbindfaucet.faucet_uid}
+                        onChange={() =>
+                          handleSelectChange(unbindfaucet.faucet_uid)
+                        }
                         className="sr-only"
                       />
                       <span className="block w-4 h-4 rounded bg-[#D9D9D9] flex items-center justify-center">
-                        {selectedId === project?.id && (
+                        {selectedId === unbindfaucet?.faucet_uid && (
                           <svg className="w-3 h-3" viewBox="0 0 24 24">
                             <path
                               fill="#0C659E"
@@ -83,6 +100,17 @@ export default function SelectFaucetGroupComponent() {
               ))}
             </tbody>
           </table>
+          {shouldShowListFaucetButton && (
+            <div className="absolute bottom-0 right-0 mb-10 mr-2">
+              <button
+                type="button"
+                className="text-[#118BBB] font-medium rounded-lg text-sm px-5 py-2.5"
+                onClick={handleListFaucetClick}
+              >
+                List Faucet
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

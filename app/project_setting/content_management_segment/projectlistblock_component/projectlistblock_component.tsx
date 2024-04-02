@@ -34,7 +34,6 @@ export default function ProjectListBlockComponent() {
   const handleSelectChange = (id) => {
     setSelectedId(id);
     const selectedProject = projects.find((project) => project.id === id);
-    console.log(selectedProject);
     dispatch(selectprojectReducer(selectedProject));
   };
   return (

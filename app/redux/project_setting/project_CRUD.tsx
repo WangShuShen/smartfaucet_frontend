@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import type { RootState } from "../store";
-import { json } from "stream/consumers";
+
 
 type ProjectItem = {
   project_company_uid?: string;

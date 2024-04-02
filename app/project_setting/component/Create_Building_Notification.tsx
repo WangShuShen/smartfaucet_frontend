@@ -16,7 +16,6 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   );
   const dispatch = useDispatch();
   const handleSave = () => {
-    console.log(selected_project.project_company_uid);
     dispatch(
       setBuildingapi({
         building_name: inputValue,

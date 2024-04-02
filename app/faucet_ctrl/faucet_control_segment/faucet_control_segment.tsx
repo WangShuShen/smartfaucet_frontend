@@ -153,7 +153,7 @@ export default function Faucet_Control_Segment() {
 
   const [savebuttonisOpen, setsavebuttonIsOpen] = useState(false);
   const handleClick = () => {
-    console.log("OnClick!");
+
   };
   const handleSaveClick = () => {
     const faucetSettings = faucetDetail?.faucet_ctrl;
