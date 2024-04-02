@@ -85,7 +85,7 @@ export default function Project_setting_Page() {
             onClose={handleCloseNotification}
           />
         );
-      case "刪除Hub Management":
+      case "刪除HUB Management":
         return (
           <Remove_Hub_Notification
             message={notificationMessage}

@@ -32,7 +32,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
           <p>
             注意：
             {selected_project
-              ? `刪除位置 ${selected_project.project_company_name}。`
+              ? `刪除位置 ${selected_project.location_name}。`
               : "請勾選下方的欄位資料。"}
           </p>
         </div>

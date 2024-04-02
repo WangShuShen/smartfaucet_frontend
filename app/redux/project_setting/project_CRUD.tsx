@@ -175,10 +175,7 @@ export const setHubapi = createAsyncThunk(
 export const setLocationapi = createAsyncThunk(
   "project_CRUD/setLocation",
   async (
-    {
-      location_name,
-      f_floor_uid,
-    }: { location_name: string; f_floor_uid: string },
+    { location_name, f_hub_uid }: { location_name: string; f_hub_uid: string },
     thunkAPI
   ) => {
     if (!location_name.trim()) {
@@ -189,7 +186,7 @@ export const setLocationapi = createAsyncThunk(
       const apiUrl = process.env.NEXT_PUBLIC_LOCATIONCREATE_API as string;
       const response = await axios.post(apiUrl, {
         location_name: location_name,
-        f_floor_uid: f_floor_uid,
+        f_hub_uid: f_hub_uid,
       });
       return handleApiResponse(response);
     } catch (error) {
@@ -345,6 +342,7 @@ const project_CRUD_Slice = createSlice({
       .addCase(setCompanyapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
+        state.selected_project = null;
       })
       .addCase(setCompanyapi.pending, (state) => {
         state.set_projects_loading = true;
@@ -357,6 +355,7 @@ const project_CRUD_Slice = createSlice({
       .addCase(setBuildingapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
+         state.selected_project = null;
       })
       .addCase(setBuildingapi.pending, (state) => {
         state.set_projects_loading = true;
@@ -369,6 +368,7 @@ const project_CRUD_Slice = createSlice({
       .addCase(setFloorapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
+         state.selected_project = null;
       })
       .addCase(setFloorapi.pending, (state) => {
         state.set_projects_loading = true;
@@ -381,6 +381,7 @@ const project_CRUD_Slice = createSlice({
       .addCase(setHubapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
+         state.selected_project = null;
       })
       .addCase(setHubapi.pending, (state) => {
         state.set_projects_loading = true;
@@ -393,6 +394,7 @@ const project_CRUD_Slice = createSlice({
       .addCase(setLocationapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
+         state.selected_project = null;
       })
       .addCase(setLocationapi.pending, (state) => {
         state.set_projects_loading = true;
@@ -405,6 +407,7 @@ const project_CRUD_Slice = createSlice({
       .addCase(removeCompanyapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
+         state.selected_project = null;
       })
       .addCase(removeCompanyapi.pending, (state) => {
         state.set_projects_loading = true;
@@ -417,6 +420,7 @@ const project_CRUD_Slice = createSlice({
       .addCase(removeBuildingapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
+         state.selected_project = null;
       })
       .addCase(removeBuildingapi.pending, (state) => {
         state.set_projects_loading = true;
@@ -429,6 +433,7 @@ const project_CRUD_Slice = createSlice({
       .addCase(removeFloorapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
+         state.selected_project = null;
       })
       .addCase(removeFloorapi.pending, (state) => {
         state.set_projects_loading = true;
@@ -441,6 +446,7 @@ const project_CRUD_Slice = createSlice({
       .addCase(removeHubapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
+         state.selected_project = null;
       })
       .addCase(removeHubapi.pending, (state) => {
         state.set_projects_loading = true;
@@ -453,6 +459,7 @@ const project_CRUD_Slice = createSlice({
       .addCase(removeLocationapi.fulfilled, (state, action) => {
         state.set_projects = action.payload;
         state.set_projects_loading = false;
+         state.selected_project = null;
       })
       .addCase(removeLocationapi.pending, (state) => {
         state.set_projects_loading = true;

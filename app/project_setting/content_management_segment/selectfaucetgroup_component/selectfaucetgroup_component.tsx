@@ -16,7 +16,7 @@ export default function SelectFaucetGroupComponent() {
   const emptyRowsArray = Array(emptyRows).fill(null);
   useEffect(() => {
     if (reduxProjects && reduxProjects.length > 0) {
-      setProjects(reduxProjects);
+      setProjects([]);
     }
   }, [reduxProjects]);
   return (
@@ -30,10 +30,10 @@ export default function SelectFaucetGroupComponent() {
                   FAUCET
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                  FAUCET
+                  ID
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                  ID
+                  STATE
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
                   SELECT FAUCET
@@ -44,19 +44,29 @@ export default function SelectFaucetGroupComponent() {
               {projects.map((project, index) => (
                 <tr key={project.id}>
                   <td className="px-5 py-3 text-sm"></td>
-                  <td className="px-5 py-3 text-sm text-center"></td>
                   <td className="px-5 py-3 text-sm text-center">
                     {project.id}
                   </td>
-                  <td className="px-5 py-3 text-sm text-center">
-                    <label className="flex items-center cursor-pointer">
+                  <td className="px-5 py-3 text-sm text-center"></td>
+                  <td className="px-5 py-3 border-gray-200 text-sm flex items-center justify-center">
+                    <label className="flex cursor-pointer items-center justify-center">
                       <input
-                        type="checkbox"
+                        type="radio"
                         name="projectSelection"
                         checked={selectedId === project.id}
                         onChange={() => handleSelectChange(project.id)}
-                        className="form-checkbox"
+                        className="sr-only"
                       />
+                      <span className="block w-4 h-4 rounded bg-[#D9D9D9] flex items-center justify-center">
+                        {selectedId === project?.id && (
+                          <svg className="w-3 h-3" viewBox="0 0 24 24">
+                            <path
+                              fill="#0C659E"
+                              d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                            />
+                          </svg>
+                        )}
+                      </span>
                     </label>
                   </td>
                 </tr>

@@ -26,11 +26,15 @@ export default function ProjectListBlockComponent() {
       id: `${project.project_company_uid}-${index}`,
     }));
     setProjects(projectsWithId);
+    if (project_CRUD.selected_project === null && projects.length > 0) {
+      setSelectedId(null);
+    }
   }, [reduxProjects]);
 
   const handleSelectChange = (id) => {
     setSelectedId(id);
     const selectedProject = projects.find((project) => project.id === id);
+    console.log(selectedProject);
     dispatch(selectprojectReducer(selectedProject));
   };
   return (
@@ -74,10 +78,7 @@ export default function ProjectListBlockComponent() {
                       />
                       <span className="block w-4 h-4 rounded bg-[#D9D9D9] ml-14 relatives">
                         {selectedId === project?.id && (
-                          <svg
-                            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3"
-                            viewBox="0 0 24 24"
-                          >
+                          <svg className="w-3 h-3" viewBox="0 0 24 24">
                             <path
                               fill="#0C659E"
                               d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
@@ -110,9 +111,9 @@ export default function ProjectListBlockComponent() {
                   </td>
                   <td
                     className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
-                    title={project.location}
+                    title={project.location_name}
                   >
-                    {project.location}
+                    {project.location_name}
                   </td>
                 </tr>
               ))}

@@ -20,7 +20,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
     dispatch(
       setLocationapi({
         location_name: inputValue,
-        f_floor_uid: selected_project.floor_uid,
+        f_hub_uid: selected_project.hub_uid,
       })
     );
     onClose();

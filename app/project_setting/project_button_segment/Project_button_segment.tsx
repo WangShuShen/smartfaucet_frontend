@@ -132,8 +132,11 @@ export default function Project_button_Segment() {
   ];
 
   return (
-    <div className="flex justify-between">
-      <Search_engine_Component />
+    <div className="lg:flex lg:justify-between md:block md:justify-center">
+      <div className="md:flex lg:flex-col justify-end w-[70%] sm:hidden">
+        <Search_engine_Component />
+      </div>
+
       <div className="w-auto h-40 bg-gradient-to-b from-custom-from to-custom-to rounded-xl flex flex-col mx-6">
         <div className="basis-1/4 flex items-center justify-center">
           <p className="text-white font-bold">新增 +</p>
