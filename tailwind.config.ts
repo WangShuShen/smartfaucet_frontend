@@ -15,6 +15,7 @@ module.exports = {
         "light-white-300": "#F3F3F4",
         "light-white-400": "#E2E5F1",
         "light-white-500": "#E4E4E4",
+        'custom-cyan': '#A9CFD9',
         'custom-from': 'rgba(17, 139, 187, 0.6)',
         'custom-to': 'rgba(12, 101, 158, 0.6)',
         gray: "#4D4A4A",
