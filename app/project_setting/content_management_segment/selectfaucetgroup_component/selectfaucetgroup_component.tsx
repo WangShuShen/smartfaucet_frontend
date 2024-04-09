@@ -16,17 +16,65 @@ async function fetchlistfaucet(hubUid) {
     return null;
   }
 }
-
+async function fetchbindfaucet(location_Uid) {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API as string;
+    const response = await axios.post(apiUrl, {
+      location_uid: location_Uid,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Axios error:", error.response || error.message);
+    return null;
+  }
+}
+async function bindfaucetapi(location_Uid, faucet_uid) {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API as string;
+    const response = await axios.post(apiUrl, {
+      faucet_uid: faucet_uid,
+      f_location_uid: location_Uid,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Axios error:", error.response || error.message);
+    return null;
+  }
+}
 export default function SelectFaucetGroupComponent() {
   const dispatch = useDispatch();
-
+  const selected_project = useSelector(
+    (state: RootState) => state.project_CRUD.selected_project
+  );
   const [unbindfaucets, setUnbindfaucets] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
+  const [lastLocationUid, setLastLocationUid] = useState("");
+  const [bindFaucets, setBindFaucets] = useState([]);
   const project_CRUD = useSelector((state: RootState) => state.project_CRUD);
   const emptyRows = Math.max(5 - unbindfaucets.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
+
   const shouldShowListFaucetButton =
-    project_CRUD.selected_project && project_CRUD.selected_project.location_uid;
+    !bindFaucets.length &&
+    selected_project?.location_uid !== "" &&
+    selected_project &&
+    selected_project &&
+    selectedIds.length === 0;
+
+  useEffect(() => {
+    const fetchFaucets = async () => {
+      if (
+        selected_project?.location_uid &&
+        selected_project?.location_uid !== lastLocationUid
+      ) {
+        const data = await fetchbindfaucet(selected_project?.location_uid);
+        setBindFaucets(data || []);
+        setLastLocationUid(selected_project?.location_uid);
+      }
+    };
+
+    fetchFaucets();
+  }, [selected_project?.location_uid, lastLocationUid]);
   const handleListFaucetClick = async () => {
     const data = await fetchlistfaucet(project_CRUD.selected_project.hub_uid);
     if (data) {
@@ -42,6 +90,14 @@ export default function SelectFaucetGroupComponent() {
         return [...prevSelectedIds, selectedFaucetUid];
       }
     });
+  };
+  const handleAddButtonClick = async () => {
+    const results = await Promise.all(
+      selectedIds.map((faucetUid) =>
+        bindfaucetapi(selected_project.location_uid, faucetUid)
+      )
+    );
+    console.log(results);
   };
   return (
     <div className="overflow-x-auto relative min-h-[300px]">
@@ -111,8 +167,8 @@ export default function SelectFaucetGroupComponent() {
               ))}
             </tbody>
           </table>
-          {shouldShowListFaucetButton && (
-            <div className="absolute bottom-0 right-0 mb-10 mr-2">
+          <div className="absolute bottom-0 right-0 mb-10 mr-2">
+            {shouldShowListFaucetButton ? (
               <button
                 type="button"
                 className="text-[#118BBB] font-medium rounded-lg text-sm px-5 py-2.5"
@@ -120,8 +176,17 @@ export default function SelectFaucetGroupComponent() {
               >
                 List Faucet
               </button>
-            </div>
-          )}
+            ) : (
+              <button
+                type="button"
+                className="text-[#118BBB] font-medium rounded-lg text-sm px-5 py-2.5"
+                onClick={handleAddButtonClick}
+                disabled={selectedIds.length === 0} 
+              >
+                Add
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
