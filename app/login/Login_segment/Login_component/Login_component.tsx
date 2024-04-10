@@ -25,6 +25,7 @@ export default function Login_Component() {
     const handleForgotPasswordClick = () => {
         setCurrentStep('forgotPassword');
         router.push('/login?step=forgotPassword');
+        setShowPassword(false);
     };
 
     const handleForgotPasswordSubmit = (event) => {
@@ -107,13 +108,14 @@ export default function Login_Component() {
                             <img src="/register_pwd.svg" alt="Lock" className="mr-2"/>
                             <div className='flex-1 border-b-2 border-neutral-500 flex items-center justify-between'>
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="輸入密碼"
                                     className="p-2 font-semibold focus:outline-none"
                                 />
-                                <button onClick={handleForgotPasswordClick} className="text-sm text-neutral-500 border-b-2 border-neutral-500">忘記密碼</button>
+                                <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
+                                <button onClick={handleForgotPasswordClick} className="text-sm text-neutral-500 border-b-2 border-neutral-500">忘記密碼</button>                
                             </div>
                         </div>
                         {/* <div className="flex items-center ">
