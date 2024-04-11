@@ -159,7 +159,7 @@ export default function Login_Component() {
                                 className="flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none"
                             />
                         </div>
-                        <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-4">
+                        <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
                             送出
                         </button>
                     </form>
@@ -186,7 +186,7 @@ export default function Login_Component() {
                                     <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                 </div>
                             </div>
-                            <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-4">
+                            <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
                                 下一步
                             </button>
                         </form>
@@ -213,7 +213,7 @@ export default function Login_Component() {
                                         <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                     </div>
                                 </div>
-                                <div className="flex items-center ">
+                                <div className="flex items-center mt-2">
                                     <img src="/register_pwd2.svg" alt="Verification" className="mr-2"/>
                                     <div className='flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
                                         <input
@@ -226,7 +226,7 @@ export default function Login_Component() {
                                         <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                     </div>
                                 </div>
-                                <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-4">
+                                <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
                                     送出
                                 </button>
                             </form>
