@@ -136,7 +136,7 @@ export default function Login_Component() {
                             登入
                         </button>
                         <div className="flex justify-between mt-4">
-                            <a href="#help" className="text-blue-950 text-xl font-bold my-3 mx-auto">註冊帳號</a>
+                            <a href="/register" className="text-blue-950 text-xl font-bold my-3 mx-auto">註冊帳號</a>
                         </div>
                     </form>
                 </div>
@@ -189,7 +189,6 @@ export default function Login_Component() {
                             <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-4">
                                 下一步
                             </button>
-                            {/* 不显示注册账号 */}
                         </form>
                     </div>
                 );
