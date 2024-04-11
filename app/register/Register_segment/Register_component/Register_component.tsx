@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation'; // 确保是正确的导入路径
 
 export default function Register_Component() {
     const defaultAvatar = '/register_user_picture.png'; // 默认头像路径
@@ -7,6 +8,7 @@ export default function Register_Component() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // 新增状态控制密码是否显示
+    const router = useRouter();
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -46,6 +48,7 @@ export default function Register_Component() {
         }
 
         console.log('New password set for username');
+        router.push('/login');
     };
 
     const toggleShowPassword = () => {
@@ -102,7 +105,7 @@ export default function Register_Component() {
                         <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                     </div>
                 </div>
-                <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-16">
+                <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-16" onClick={handleRegisterSubmit}>
                     註冊
                 </button>
             </form>
