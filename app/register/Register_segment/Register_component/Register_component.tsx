@@ -1,10 +1,30 @@
 import React, { useState } from 'react';
 
 export default function Register_Component() {
+    const defaultAvatar = '/register_user_picture.png'; // 默认头像路径
+    const [avatar, setAvatar] = useState(defaultAvatar); // 默认头像
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // 新增状态控制密码是否显示
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setAvatar(e.target.result); // 将头像设置为选中的图片
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // 触发文件输入的点击事件
+    const triggerFileInputClick = () => {
+        document.getElementById('fileInput').click();
+    };
+
+    const avatarClass = avatar === defaultAvatar ? "w-1/4 h-1/4 mx-auto mt-4" : "w-1/4 h-1/4 mx-auto mt-4 rounded-full";
 
     const handleRegisterSubmit = (event) => {
         event.preventDefault();
@@ -40,8 +60,11 @@ export default function Register_Component() {
                     註冊帳號
                 </div>
             </div>
-            <img src="/register_user_picture.png" alt="T.A.P. Logo" className="w-1/4 h-auto mx-auto mt-4" />
-            <div className='text-center text-gray-300 font-bold mt-1'>新增頭像</div>
+            <div className="text-center">
+                <input type="file" id="fileInput" accept="image/*" onChange={handleFileChange} className="hidden" />
+                <img src={avatar} alt="T.A.P. Logo" className={avatarClass} onClick={triggerFileInputClick} />
+                <div className='text-center text-gray-300 font-bold mt-1 cursor-pointer' onClick={triggerFileInputClick}>新增頭像</div>
+            </div>
             <form onSubmit={handleRegisterSubmit} className="flex flex-col ">
                 <div className="flex items-center mt-8" >
                     <img src="/register_user.svg" alt="User" className="mr-2"/>

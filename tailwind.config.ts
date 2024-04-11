@@ -41,6 +41,12 @@ module.exports = {
         xxs: '0.625rem',      
         xxxs: '0.5rem', 
       },
+      width: {
+        'custom-width': '420px', // 自定义的宽度
+      },
+      height: {
+        'custom-height': '600px', // 自定义的高度
+      },
     },
   },
   plugins: [require("daisyui")],
