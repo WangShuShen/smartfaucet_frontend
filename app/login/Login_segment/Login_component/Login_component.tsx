@@ -93,8 +93,8 @@ export default function Login_Component() {
                     <div className="text-blue-950 text-2xl font-semibold my-16">
                         登入以繼續
                     </div>
-                    <form onSubmit={handleLoginSubmit} className="flex flex-col space-y-4">
-                        <div className="flex items-center " >
+                    <form onSubmit={handleLoginSubmit} className="flex flex-col ">
+                        <div className="flex items-center mt-4" >
                             <img src="/register_user.svg" alt="User" className="mr-2"/>
                             <input
                                 type="text"
@@ -104,18 +104,18 @@ export default function Login_Component() {
                                 className="flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none"
                             />
                         </div>
-                        <div className="flex items-center ">
+                        <div className="flex items-center mt-2">
                             <img src="/register_pwd.svg" alt="Lock" className="mr-2"/>
-                            <div className='flex-1 border-b-2 border-neutral-500 flex items-center justify-between'>
+                            <div className='flex-1 border-b-2 border-neutral-500 flex items-center justify-between '>
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="輸入密碼"
-                                    className="p-2 font-semibold focus:outline-none"
+                                    className="p-2 font-semibold focus:outline-none min-w-0"
                                 />
                                 <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
-                                <button onClick={handleForgotPasswordClick} className="text-sm text-neutral-500 border-b-2 border-neutral-500">忘記密碼</button>                
+                                <button onClick={handleForgotPasswordClick} className="whitespace-nowrap text-sm text-neutral-500 border-b-2 border-neutral-500">忘記密碼</button>                
                             </div>
                         </div>
                         {/* <div className="flex items-center ">
@@ -132,7 +132,7 @@ export default function Login_Component() {
                             </div>
                             
                         </div> */}
-                        <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-4">
+                        <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-8">
                             登入
                         </button>
                         <div className="flex justify-between mt-4">
@@ -148,7 +148,7 @@ export default function Login_Component() {
                     <div className="text-blue-950 text-2xl font-extrabold my-16">
                         忘記密碼
                     </div>
-                    <form onSubmit={handleForgotPasswordSubmit} className="flex flex-col space-y-4">
+                    <form onSubmit={handleForgotPasswordSubmit} className="flex flex-col ">
                         <div className="flex items-center ">
                             <img src="/register_forget_pwd_email.svg" alt="Verification" className="mr-2"/>
                             <input
@@ -172,7 +172,7 @@ export default function Login_Component() {
                         <div className="text-blue-950 text-2xl font-extrabold my-16">
                             輸入臨時密碼登入
                         </div>
-                        <form onSubmit={handleVerificationSubmit} className="flex flex-col space-y-4">
+                        <form onSubmit={handleVerificationSubmit} className="flex flex-col ">
                             <div className="flex items-center ">
                                 <img src="/register_captcha.svg" alt="Verification" className="mr-2"/>
                                 <div className='flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
@@ -199,7 +199,7 @@ export default function Login_Component() {
                             <div className="text-blue-950 text-2xl font-extrabold my-16">
                                 重新設定密碼
                             </div>
-                            <form onSubmit={handleNewPasswordSubmit} className="flex flex-col space-y-4">
+                            <form onSubmit={handleNewPasswordSubmit} className="flex flex-col ">
                                 <div className="flex items-center ">
                                     <img src="/register_pwd.svg" alt="Verification" className="mr-2"/>
                                     <div className='flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
