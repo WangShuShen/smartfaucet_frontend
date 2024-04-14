@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import { fetchProject } from "@/app/redux/project_setting/project_list";
-import { selectprojectReducer } from "@/app/redux/project_setting/project_CRUD";
+import {
+  selectprojectReducer,
+  setisbindReducer,
+} from "@/app/redux/project_setting/project_CRUD";
 import axios from "axios";
 async function fetchlistfaucet(hubUid) {
   try {
@@ -46,35 +49,41 @@ export default function SelectFaucetGroupComponent() {
   const selected_project = useSelector(
     (state: RootState) => state.project_CRUD.selected_project
   );
+  const isbindfaucet = useSelector(
+    (state: RootState) => state.project_CRUD.isbindfaucet
+  );
   const [unbindfaucets, setUnbindfaucets] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
-  const [lastLocationUid, setLastLocationUid] = useState("");
   const [bindFaucets, setBindFaucets] = useState([]);
+  const [ShowListFaucetButton, setShowListFaucetButton] = useState(false);
+  const [ShowAddFaucet, setShowAddFaucet] = useState(false);
   const project_CRUD = useSelector((state: RootState) => state.project_CRUD);
   const emptyRows = Math.max(5 - unbindfaucets.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
 
-  const shouldShowListFaucetButton =
-    !bindFaucets.length &&
-    selected_project?.location_uid !== "" &&
-    selected_project &&
-    selected_project &&
-    selectedIds.length === 0;
-
   useEffect(() => {
     const fetchFaucets = async () => {
-      if (
-        selected_project?.location_uid &&
-        selected_project?.location_uid !== lastLocationUid
-      ) {
+      setUnbindfaucets([]);
+      setBindFaucets([]);
+      if (selected_project?.location_uid) {
         const data = await fetchbindfaucet(selected_project?.location_uid);
-        setBindFaucets(data || []);
-        setLastLocationUid(selected_project?.location_uid);
+        setBindFaucets(data);
+        if (data != []) {
+          dispatch(setisbindReducer(true));
+          setShowAddFaucet(false);
+          setShowListFaucetButton(false);
+        }
+        if (data == []) {
+          dispatch(setisbindReducer(false));
+          setShowAddFaucet(false);
+          setShowListFaucetButton(true);
+        }
       }
     };
 
     fetchFaucets();
-  }, [selected_project?.location_uid, lastLocationUid]);
+  }, [selected_project]);
+
   const handleListFaucetClick = async () => {
     const data = await fetchlistfaucet(project_CRUD.selected_project.hub_uid);
     if (data) {
@@ -90,6 +99,13 @@ export default function SelectFaucetGroupComponent() {
         return [...prevSelectedIds, selectedFaucetUid];
       }
     });
+    if (!isbindfaucet) {
+      setShowAddFaucet(true);
+      setShowListFaucetButton(false);
+    } else {
+      setShowAddFaucet(false);
+      setShowListFaucetButton(false);
+    }
   };
   const handleAddButtonClick = async () => {
     const results = await Promise.all(
@@ -97,7 +113,6 @@ export default function SelectFaucetGroupComponent() {
         bindfaucetapi(selected_project.location_uid, faucetUid)
       )
     );
-    console.log(results);
   };
   return (
     <div className="overflow-x-auto relative min-h-[300px]">
@@ -121,40 +136,79 @@ export default function SelectFaucetGroupComponent() {
               </tr>
             </thead>
             <tbody className="bg-[#EFEFEF]">
-              {unbindfaucets.map((unbindfaucet, index) => (
-                <tr key={unbindfaucet.faucet_uid}>
-                  <td className="px-5 py-3 text-sm"></td>
-                  <td className="px-5 py-3 text-sm text-center">
-                    {unbindfaucet.faucet_uid}
-                  </td>
-                  <td className="px-5 py-3 text-sm text-center">
-                    {unbindfaucet.faucet_status}
-                  </td>
-                  <td className="px-5 py-3 border-gray-200 text-sm flex items-center justify-center">
-                    <label className="flex cursor-pointer items-center justify-center">
-                      <input
-                        type="checkbox"
-                        name="projectSelection"
-                        checked={selectedIds.includes(unbindfaucet.faucet_uid)}
-                        onChange={() =>
-                          handleSelectChange(unbindfaucet.faucet_uid)
-                        }
-                        className="sr-only"
-                      />
-                      <span className="block w-4 h-4 rounded bg-[#D9D9D9] flex items-center justify-center">
-                        {selectedIds.includes(unbindfaucet?.faucet_uid) && (
-                          <svg className="w-3 h-3" viewBox="0 0 24 24">
-                            <path
-                              fill="#0C659E"
-                              d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
-                            />
-                          </svg>
-                        )}
-                      </span>
-                    </label>
-                  </td>
-                </tr>
-              ))}
+              {bindFaucets.length > 0
+                ? bindFaucets.map((faucet) => (
+                    <tr key={faucet.faucet_uid}>
+                      <td className="px-5 py-3 text-sm">
+                        {faucet.faucet_name}
+                      </td>
+                      <td className="px-5 py-3 text-sm text-center">
+                        {faucet.faucet_uid}
+                      </td>
+                      <td className="px-5 py-3 text-sm text-center">
+                        {faucet.faucet_status}
+                      </td>
+                      <td className="px-5 py-3 border-gray-200 text-sm flex items-center justify-center">
+                        <label className="flex cursor-pointer items-center justify-center">
+                          <input
+                            type="checkbox"
+                            name="projectSelection"
+                            checked={selectedIds.includes(faucet.faucet_uid)}
+                            onChange={() =>
+                              handleSelectChange(faucet.faucet_uid)
+                            }
+                            className="sr-only"
+                          />
+                          <span className="block w-4 h-4 rounded bg-[#D9D9D9] flex items-center justify-center">
+                            {selectedIds.includes(faucet?.faucet_uid) && (
+                              <svg className="w-3 h-3" viewBox="0 0 24 24">
+                                <path
+                                  fill="#0C659E"
+                                  d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                                />
+                              </svg>
+                            )}
+                          </span>
+                        </label>
+                      </td>
+                    </tr>
+                  ))
+                : unbindfaucets.map((unbindfaucet, index) => (
+                    <tr key={unbindfaucet.faucet_uid}>
+                      <td className="px-5 py-3 text-sm"></td>
+                      <td className="px-5 py-3 text-sm text-center">
+                        {unbindfaucet.faucet_uid}
+                      </td>
+                      <td className="px-5 py-3 text-sm text-center">
+                        {unbindfaucet.faucet_status}
+                      </td>
+                      <td className="px-5 py-3 border-gray-200 text-sm flex items-center justify-center">
+                        <label className="flex cursor-pointer items-center justify-center">
+                          <input
+                            type="checkbox"
+                            name="projectSelection"
+                            checked={selectedIds.includes(
+                              unbindfaucet.faucet_uid
+                            )}
+                            onChange={() =>
+                              handleSelectChange(unbindfaucet.faucet_uid)
+                            }
+                            className="sr-only"
+                          />
+                          <span className="block w-4 h-4 rounded bg-[#D9D9D9] flex items-center justify-center">
+                            {selectedIds.includes(unbindfaucet?.faucet_uid) && (
+                              <svg className="w-3 h-3" viewBox="0 0 24 24">
+                                <path
+                                  fill="#0C659E"
+                                  d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                                />
+                              </svg>
+                            )}
+                          </span>
+                        </label>
+                      </td>
+                    </tr>
+                  ))}
               {emptyRowsArray.map((_, index) => (
                 <tr key={`empty-${index}`}>
                   <td className="px-5 py-3 border-gray-200 text-sm">
@@ -168,7 +222,7 @@ export default function SelectFaucetGroupComponent() {
             </tbody>
           </table>
           <div className="absolute bottom-0 right-0 mb-10 mr-2">
-            {shouldShowListFaucetButton ? (
+            {ShowListFaucetButton && (
               <button
                 type="button"
                 className="text-[#118BBB] font-medium rounded-lg text-sm px-5 py-2.5"
@@ -176,16 +230,18 @@ export default function SelectFaucetGroupComponent() {
               >
                 List Faucet
               </button>
-            ) : (
+            )}
+            {ShowAddFaucet && (
               <button
                 type="button"
                 className="text-[#118BBB] font-medium rounded-lg text-sm px-5 py-2.5"
                 onClick={handleAddButtonClick}
-                disabled={selectedIds.length === 0} 
+                disabled={selectedIds.length === 0}
               >
                 Add
               </button>
             )}
+            {!ShowListFaucetButton && !ShowAddFaucet && <></>}
           </div>
         </div>
       </div>

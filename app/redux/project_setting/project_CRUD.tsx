@@ -336,11 +336,8 @@ const project_CRUD_Slice = createSlice({
     ) => {
       state.selected_project = action.payload;
     },
-    selectprojectReducer: (
-      state,
-      action: PayloadAction<ProjectItem | null>
-    ) => {
-      state.selected_project = action.payload;
+    setisbindReducer: (state, action: PayloadAction<ProjectItem | null>) => {
+      state.isbindfaucet = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -477,5 +474,6 @@ const project_CRUD_Slice = createSlice({
       });
   },
 });
-export const { selectprojectReducer } = project_CRUD_Slice.actions;
+export const { selectprojectReducer, setisbindReducer } =
+  project_CRUD_Slice.actions;
 export default project_CRUD_Slice.reducer;
