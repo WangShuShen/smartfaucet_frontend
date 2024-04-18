@@ -68,7 +68,7 @@ const Navbar = () => {
               className="rounded-full w-10 h-10 z-12"
               alt="human_photo"
             />
-            <Link href="/">
+            <Link href="/login">
               <button className="btn bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-24 lg:text-lg md:text-md sm:text-sm xs:text-xs">
                 登出
               </button>
