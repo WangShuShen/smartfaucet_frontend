@@ -19,7 +19,7 @@ import Figure from './Figure_component/Figure_component';
 import TimeOption from './Time_component/Time_component';
 import { fetchMockData } from './mockAPI';
 
-export default function FigureSegment({ buildingId }) {
+export default function FigureSegment() {
     const [timeFrame, setTimeFrame] = useState('周');
     const [chartData, setChartData] = useState<any[]>([]);
 
@@ -35,10 +35,9 @@ export default function FigureSegment({ buildingId }) {
     // }, [timeFrame]);
 
     useEffect(() => {
-        if (buildingId) {
-            fetchMockData(timeFrame, buildingId).then(setChartData);
-        }
-    }, [timeFrame, buildingId]);
+        const selectedBuildingId = 1; // 假設這是用戶選擇的建築物ID
+        fetchMockData(timeFrame, selectedBuildingId).then(setChartData);
+    }, [timeFrame]);
 
       
 
@@ -47,11 +46,13 @@ export default function FigureSegment({ buildingId }) {
     //     const apiTimeFrame = newTimeFrame === '周' ? 'week' : newTimeFrame === '月' ? 'month' : 'year';
     //     setTimeFrame(apiTimeFrame);
     // };
-
+    const handleTimeChange = (newTimeFrame) => {
+        setTimeFrame(newTimeFrame);
+    };
 
     return (
         <div className='flex flex-col w-full bg-white rounded-b-2xl block pl-8'>
-            <TimeOption onTimeChange={setTimeFrame} />
+            <TimeOption onTimeChange={handleTimeChange} />
             <Figure chartData={chartData} />
         </div>
     );

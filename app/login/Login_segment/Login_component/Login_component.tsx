@@ -20,7 +20,7 @@ export default function Login_Component() {
             return;
         }
         console.log('Login attempt');
-        router.push('/project_setting');
+
     };
 
     const handleForgotPasswordClick = () => {

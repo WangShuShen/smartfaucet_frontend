@@ -9,19 +9,15 @@ const buildingOptions = [
     // 根據需要添加更多建築物
 ];
 
-export default function SelectBuildingComponent({ onBuildingSelect }) {
+export default function SelectBuildingComponent() {
     const [selectedBuilding, setSelectedBuilding] = useState(buildingOptions[0].value);
-    const handleChange = (e) => {
-        setSelectedBuilding(e.target.value);
-        onBuildingSelect(e.target.value); // 這裡調用了從父組件傳入的回調函數
-    };
+
     return (
-        <div className='flex justify-end items-center mt-1 mb-4'>
-            <span className='text-sky-800 font-semibold'>已設置完成的 </span>
-            <select 
-                className="bg-white border border-blue-900 border-2 text-sky-700 font-semibold rounded-md ml-5 mr-10 px-2 py-0.5" 
+        <div className='flex justify-end items-center'>
+            <span>已設置完成的 </span>
+            <select className="bg-white border border-blue-900 border-2 text-sky-700 rounded-md ml-5 mr-10 px-2" 
                 value={selectedBuilding}
-                onChange={handleChange}
+                onChange={(e) => setSelectedBuilding(e.target.value)}
             >
                 {buildingOptions.map((option) => (
                     <option key={option.value} value={option.value}>

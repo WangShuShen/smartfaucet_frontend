@@ -6,7 +6,7 @@ import Register_Segment from './Register_segment/Register_segment';
 export default function Register_Page() {
     return (
         <div className="bg-[url('/register_background.png')] bg-cover bg-center flex h-screen caret-transparent" >
-            <Link href="/start">
+            <Link href="/login">
                     <img src="/back.png" alt="Back to home" className="w-1/12 cursor-pointer absolute top-16 right-12" />
             </Link>
             <div className='flex-1'>
