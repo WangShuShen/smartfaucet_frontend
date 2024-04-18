@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 const BackButton = () => {
   const router = useRouter();
   const handleBack = () => {
-    router.back(); // 調用此函數以返回上一頁
+    router.back(); 
   };
   return (
     <div className="flex hover:cursor-pointer" onClick={handleBack}>

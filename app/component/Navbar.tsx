@@ -28,7 +28,7 @@ const Navbar = () => {
               onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
             >
               <img
-                className="w-full xs:h-6 sm:h-6 md:h-8 lg:h-8" // 不同斷點的高度調整
+                className="w-full xs:h-6 sm:h-6 md:h-8 lg:h-8" 
                 src="/hamburger_icon.svg"
                 alt="hamburger_icon"
               />
@@ -36,7 +36,7 @@ const Navbar = () => {
             <Link href="/">
               <button className="outline-none mobile-menu-button mx-2">
                 <img
-                  className="w-auto xs:h-10 sm:h-8 md:h-12 lg:h-12" // 不同斷點的高度調整
+                  className="w-auto xs:h-10 sm:h-8 md:h-12 lg:h-12" 
                   src="/home_icon.svg"
                   alt="home_icon"
                 />
@@ -46,7 +46,7 @@ const Navbar = () => {
             <Link href="/">
               <button className="flex items-center py-4 px-4">
                 <img
-                  className="w-auto xs:h-8 sm:h-8 md:h-12 lg:h-12" // 不同斷點的高度調整
+                  className="w-auto xs:h-8 sm:h-8 md:h-12 lg:h-12" 
                   src="/logo.svg"
                   alt="logo"
                 />

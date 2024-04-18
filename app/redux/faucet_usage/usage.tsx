@@ -51,7 +51,7 @@ const faucetUsageReducer = createSlice({
   name: "faucetUsage",
   initialState,
   reducers: {
-    // 可以添加一些同步的 reducers
+
   },
   extraReducers: (builder) => {
     builder

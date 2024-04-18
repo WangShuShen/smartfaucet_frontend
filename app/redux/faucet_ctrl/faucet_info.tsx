@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
 
-// 定義 Faucet 類型
 export type Faucet_Info = {
   faucet_uid: string;
   faucet_status:
@@ -13,21 +12,18 @@ export type Faucet_Info = {
   faucet_hierarchy: string;
 };
 
-// 定義 State 類型
 type Faucet_Info_State = {
-  faucet_info: Faucet_Info | null; // 改為單個 Faucet_Info 物件或 null
+  faucet_info: Faucet_Info | null; 
   loading_info: boolean;
   error_info: string | null;
 };
 
-// 初始狀態
 const initialState: Faucet_Info_State = {
-  faucet_info: null, // 初始為 null
+  faucet_info: null, 
   loading_info: false,
   error_info: null,
 };
 
-// 非同步 thunk 動作，用於獲取蓮蓬頭資料
 export const fetchFaucetInfo = createAsyncThunk<
   Faucet_Info,
   string,
@@ -58,12 +54,11 @@ export const fetchFaucetInfo = createAsyncThunk<
   }
 });
 
-// 建立 slice
 const faucetsInfoSlice = createSlice({
   name: "faucetinfo",
   initialState,
   reducers: {
-    // 這裡可以加入您自定義的 reducers
+
   },
   extraReducers: (builder) => {
     builder

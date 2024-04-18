@@ -1,4 +1,3 @@
-// components/dropdown_button.tsx
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
@@ -27,7 +26,7 @@ export default function DropdownButton({
     options.find((option) => option.value === currentSetting) || options[0];
   const currentSetting = useSelector(
     (state: RootState) =>
-      state.faucetSetting.faucetDetail?.faucet_ctrl[settingKey]
+      state.faucetSetting.faucetDetail?.faucet_ctrl.energySavingValue
   );
   const handleSelectionChange = (option: DropdownOption) => {
     setSelectedOption(option);

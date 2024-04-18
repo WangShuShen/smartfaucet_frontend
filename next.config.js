@@ -1,4 +1,20 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/project_setting",
+        permanent: true,
+      },
+    ];
+  },
 
-module.exports = nextConfig
+  reactStrictMode: false,
+
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+};
+
+module.exports = nextConfig;

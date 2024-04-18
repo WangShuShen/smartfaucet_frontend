@@ -1,4 +1,3 @@
-// faucetinfo_hooks.ts
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFaucetInfo } from "@/app/redux/faucet_ctrl/faucet_info";

@@ -1,4 +1,3 @@
-// 在 store.ts（或類似文件）中
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";

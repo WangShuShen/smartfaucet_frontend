@@ -1,4 +1,3 @@
-// useTimeFrameDispatch.js
 import { useDispatch,useSelector } from 'react-redux';
 import { fetchFigureWeeklyUsage, fetchFigureMonthlyUsage, fetchFigureYearlyUsage, setSelectedTimeFrame } from '../../../../redux/faucet_usage/figure';
 import type { AppDispatch,RootState } from "../../../../redux/store";

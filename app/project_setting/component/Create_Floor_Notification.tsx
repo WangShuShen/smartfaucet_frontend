@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setFloor } from "@/app/redux/project_setting/project_CRUD";
+import { useDispatch, useSelector } from "react-redux";
+import { setFloorapi } from "@/app/redux/project_setting/project_CRUD";
 
 interface NotificationProps {
   message: string;
@@ -12,12 +12,20 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const selected_project = useSelector(
+    (state: RootState) => state.project_CRUD.selected_project
+  );
   const dispatch = useDispatch();
 
   const handleSave = () => {
     if (selectedValue) {
       const floorWithLabel = `${selectedValue}樓`;
-      dispatch(setFloor(floorWithLabel));
+      dispatch(
+        setFloorapi({
+          floor_name: floorWithLabel,
+          building_uid: selected_project.building_uid,
+        })
+      );
       onClose();
     } else {
     }

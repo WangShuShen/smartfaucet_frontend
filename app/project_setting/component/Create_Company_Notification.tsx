@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setBuilding} from "@/app/redux/project_setting/project_CRUD";
+import { setCompanyapi } from "@/app/redux/project_setting/project_CRUD";
+
 interface NotificationProps {
   message: string;
   onClose: () => void;
@@ -13,16 +14,14 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
   const handleSave = () => {
-    dispatch(setBuilding(inputValue));
+    dispatch(setCompanyapi(inputValue));
     onClose();
   };
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-md w-full">
         <div className="flex items-center">
-          <label className="text-[#0C659E] mr-3 font-medium">
-            任務/建築物：
-          </label>
+          <label className="text-[#0C659E] mr-3 font-medium">專案/公司：</label>
           <input
             type="text"
             value={inputValue}
