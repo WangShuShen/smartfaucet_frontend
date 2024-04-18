@@ -82,7 +82,7 @@ const Navbar = () => {
             {/* 可以在這裡添加Mobile Menu的連結 */}
             <AnimatedLink href="/">專案設定</AnimatedLink>
             <AnimatedLink href="/faucet_ctrl">水龍頭控制狀態</AnimatedLink>
-            <AnimatedLink href="/">用水和碳排數據</AnimatedLink>
+            <AnimatedLink href="/water_carbon_data">用水和碳排數據</AnimatedLink>
             <AnimatedLink href="/">系統人員設定資訊</AnimatedLink>
             <AnimatedAccountSetting href="/">帳號設定</AnimatedAccountSetting>
           </div>
