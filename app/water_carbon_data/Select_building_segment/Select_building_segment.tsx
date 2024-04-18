@@ -4,7 +4,7 @@ import Select_building from './Select_building_component/Select_building_compone
 
 export default function Select_building_Segment({ onBuildingSelect }) {
     return (
-        <div className='flex justify-end items-center'>
+        <div className='flex justify-end items-center w-full'>
             <Select_building onBuildingSelect={onBuildingSelect}/>
         </div>
     );
