@@ -12,7 +12,7 @@ export default function DashboardLayout({
       <div className="bg-bg-gradient w-auto">
         <Navbar></Navbar>
         <div className="flex justify-between items-center">
-          <Title text="用水及炭排數據" />
+          <Title text="用水及碳排數據" />
           <BackButton />
         </div>
         {children}
