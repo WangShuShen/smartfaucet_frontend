@@ -133,16 +133,18 @@ export default function Project_button_Segment() {
 
   return (
     <div className="lg:flex lg:justify-between md:block md:justify-center">
-      <div className="md:flex lg:flex-col justify-end w-[70%] sm:hidden">
-        <Search_engine_Component />
+      <div className="flex flex-col justify-end w-[30%]">
+        <div className="lg:flex md:hidden sm:hidden xs:hidden">
+          <Search_engine_Component />
+        </div>
       </div>
 
-      <div className="w-auto h-40 bg-gradient-to-b from-custom-from to-custom-to rounded-xl flex flex-col mx-6">
+      <div className="lg:w-auto md:w-auto sm:w-[70%] xs:w-[60%] lg:ml-0 md:ml-10 sm:ml-32 xs:ml-36 h-40 bg-gradient-to-b from-custom-from to-custom-to rounded-xl flex flex-col mx-6">
         <div className="basis-1/4 flex items-center justify-center">
           <p className="text-white font-bold">新增 +</p>
         </div>
         <div className="basis-3/4 justify-center items-center">
-          <div className="flex justify-between items-center w-full px-6">
+          <div className="flex justify-between items-center px-6 w-auto">
             {Create_Project_Data.map((button, index) => (
               <CRUD_Project_Button
                 key={index}
@@ -155,7 +157,7 @@ export default function Project_button_Segment() {
         </div>
       </div>
 
-      <div className="w-auto h-40 bg-gradient-to-b from-[#727272] to-[#959595] rounded-xl flex flex-col mx-6">
+      <div className="lg:w-auto md:w-auto sm:w-[70%] xs:w-[60%] lg:ml-0 md:ml-10 sm:ml-32 xs:ml-36 h-40 bg-gradient-to-b from-[#727272] to-[#959595] rounded-xl flex flex-col mx-6">
         <div className="basis-1/4 flex items-center justify-center">
           <p className="text-white font-bold">刪除 X</p>
         </div>

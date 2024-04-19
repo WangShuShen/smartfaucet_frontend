@@ -112,7 +112,7 @@ export default function Project_setting_Page() {
         </div>
       )}
       <div className="block">
-        <div className="">
+        <div className="flex justify-center">
           <Project_button_Segment />
         </div>
         <div className="">
