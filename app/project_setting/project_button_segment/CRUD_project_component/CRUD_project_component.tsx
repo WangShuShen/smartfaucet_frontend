@@ -52,7 +52,11 @@ export default function CRUD_Project_Button({ imgSrc, text, isDisabled }) {
       style={{ width: "95px", height: "95px" }}
       disabled={isDisabled}
     >
-      <img src={imgSrc} alt={text} className="w-16 h-16 ml-5 mb-1" />
+      <img
+        src={imgSrc}
+        alt={text}
+        className="lg:w-16 lg:h-16 md:w-8 md:h-8 sm:w-8 sm:h-8 xs:w-8 xs:h-8 lg:ml-5 md:ml-8 sm:ml-6 xs:ml-4 mb-1"
+      />
       <span className="text-[#727171]">{text}</span>
     </button>
   );

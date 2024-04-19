@@ -139,7 +139,7 @@ export default function Project_button_Segment() {
         </div>
       </div>
 
-      <div className="lg:w-auto md:w-auto sm:w-[70%] xs:w-[60%] lg:ml-0 md:ml-10 sm:ml-32 xs:ml-36 h-40 bg-gradient-to-b from-custom-from to-custom-to rounded-xl flex flex-col mx-6">
+      <div className="lg:w-auto md:w-auto sm:w-[70%] xs:w-[49%] lg:ml-0 md:ml-10 sm:ml-32 xs:ml-48 h-40 bg-gradient-to-b from-custom-from to-custom-to rounded-xl flex flex-col mx-6 justify-center mr-2">
         <div className="basis-1/4 flex items-center justify-center">
           <p className="text-white font-bold">新增 +</p>
         </div>
@@ -157,7 +157,7 @@ export default function Project_button_Segment() {
         </div>
       </div>
 
-      <div className="lg:w-auto md:w-auto sm:w-[70%] xs:w-[60%] lg:ml-0 md:ml-10 sm:ml-32 xs:ml-36 h-40 bg-gradient-to-b from-[#727272] to-[#959595] rounded-xl flex flex-col mx-6">
+      <div className="lg:w-auto md:w-auto sm:w-[70%] xs:w-[49%] lg:ml-0 md:ml-10 sm:ml-32 xs:ml-48 h-40 bg-gradient-to-b from-[#727272] to-[#959595] rounded-xl flex flex-col mx-6 mr-2">
         <div className="basis-1/4 flex items-center justify-center">
           <p className="text-white font-bold">刪除 X</p>
         </div>
@@ -174,7 +174,7 @@ export default function Project_button_Segment() {
           </div>
         </div>
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row justify-center">
         {Project_Managerment_Data.map((button, index) => (
           <Project_managerment_Component
             key={index}
