@@ -155,18 +155,20 @@ export default function Member_Setting_Page() {
   return (
     <div>
       <div className="flex items-center justify-start h-screen">
-        <div className="container mx-auto p-4 bg-white w-[40%] lg:h-[500px] md:h-[400px] sm:h-[400px] xs:h-[300px] rounded-md">
+        <div className="container mx-auto p-4 bg-white lg:w-[40%] md:w-[40%] sm:w-[60%] xs:w-[80%] lg:h-[500px] md:h-[400px] sm:h-[400px] xs:h-[300px] rounded-md">
           <div className="text-[#02253C] text-3xl font-semibold my-16 flex justify-center">
             帳號設定
           </div>
 
           <form
             onSubmit={handleNewPasswordSubmit}
-            className="flex flex-col items-center w-full"
+            className="flex flex-col items-center w-full lg:px-40 md:px-5 sm:px-0 xs:px-0"
           >
             <div className="w-full flex items-center justify-start pl-4">
               <img src="/register_user.svg" alt="User" className="mr-2" />
-              <span>123</span>
+              <span className="font-[#02253C] font-bold">
+                tapdino@gmail.com
+              </span>
             </div>
             <div className="flex items-center justify-start w-full pl-4">
               <img
@@ -210,7 +212,7 @@ export default function Member_Setting_Page() {
             </div>
             <button
               type="submit"
-              className="bg-[#0096CA] text-white font-semibold text-xl rounded-lg p-2 mt-12 w-[45%]"
+              className="bg-[#0096CA] text-white font-semibold text-xl rounded-lg p-2 mt-12 w-[80%]"
             >
               送出
             </button>
