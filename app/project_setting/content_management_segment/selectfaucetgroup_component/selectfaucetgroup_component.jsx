@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 async function fetchlistfaucet(hubUid) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API as string;
+    const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API;
     const response = await axios.post(apiUrl, {
       hub_uid: hubUid,
     });
@@ -21,7 +21,7 @@ async function fetchlistfaucet(hubUid) {
 }
 async function fetchbindfaucet(location_Uid) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API as string;
+    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API;
     const response = await axios.post(apiUrl, {
       location_uid: location_Uid,
     });
@@ -33,7 +33,7 @@ async function fetchbindfaucet(location_Uid) {
 }
 async function bindfaucetapi(location_Uid, faucet_uid) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API as string;
+    const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API;
     const response = await axios.post(apiUrl, {
       faucet_uid: faucet_uid,
       f_location_uid: location_Uid,
@@ -47,17 +47,15 @@ async function bindfaucetapi(location_Uid, faucet_uid) {
 export default function SelectFaucetGroupComponent() {
   const dispatch = useDispatch();
   const selected_project = useSelector(
-    (state: RootState) => state.project_CRUD.selected_project
+    (state) => state.project_CRUD.selected_project
   );
-  const isbindfaucet = useSelector(
-    (state: RootState) => state.project_CRUD.isbindfaucet
-  );
+  const isbindfaucet = useSelector((state) => state.project_CRUD.isbindfaucet);
   const [unbindfaucets, setUnbindfaucets] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
   const [bindFaucets, setBindFaucets] = useState([]);
   const [ShowListFaucetButton, setShowListFaucetButton] = useState(false);
   const [ShowAddFaucet, setShowAddFaucet] = useState(false);
-  const project_CRUD = useSelector((state: RootState) => state.project_CRUD);
+  const project_CRUD = useSelector((state) => state.project_CRUD);
   const emptyRows = Math.max(5 - unbindfaucets.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
 
