@@ -43,9 +43,18 @@ export const fetchFaucetSetting = createAsyncThunk<
   }
   try {
     const apiUrl = process.env.NEXT_PUBLIC_FETCH_FAUCET_SETTING_API as string;
-    const response = await axios.post(apiUrl, {
-      faucet_uid: faucetUid,
-    });
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post(
+      apiUrl,
+      {
+        faucet_uid: faucetUid,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     let energySavingMode = "";
     let energySavingValue = "";
     if (response.data.energy_saving_mode) {
@@ -68,8 +77,8 @@ export const fetchFaucetSetting = createAsyncThunk<
       irSensingTest: response.data.infrared_test,
       firmwareUpdate: response.data.firmware_update,
       infraredDistance: response.data.infrared_distance,
-      energySavingMode,
-      energySavingValue,
+      energySavingMode: response.data.energy_saving_mode,
+      energySavingValue: response.data.energy_saving_time,
     };
     return { faucet_ctrl: faucetControlData };
   } catch (error) {

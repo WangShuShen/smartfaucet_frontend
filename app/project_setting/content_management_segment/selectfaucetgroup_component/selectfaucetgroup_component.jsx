@@ -10,9 +10,18 @@ import axios from "axios";
 async function fetchlistfaucet(hubUid) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      hub_uid: hubUid,
-    });
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post(
+      apiUrl,
+      {
+        hub_uid: hubUid,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
@@ -22,9 +31,19 @@ async function fetchlistfaucet(hubUid) {
 async function fetchbindfaucet(location_Uid) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      location_uid: location_Uid,
-    });
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post(
+      apiUrl,
+
+      {
+        location_uid: location_Uid,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
@@ -34,10 +53,19 @@ async function fetchbindfaucet(location_Uid) {
 async function bindfaucetapi(location_Uid, faucet_uid) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      faucet_uid: faucet_uid,
-      f_location_uid: location_Uid,
-    });
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post(
+      apiUrl,
+      {
+        faucet_uid: faucet_uid,
+        f_location_uid: location_Uid,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);

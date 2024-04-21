@@ -29,7 +29,16 @@ export const fetchFaucets = createAsyncThunk<
 >("faucets/fetchFaucets", async (_, thunkAPI) => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_FACUETLIST_API as string;
-    const response = await axios.post(apiUrl);
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post(
+      apiUrl,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return response.data.map((item: any) => ({
       faucet_uid: item.faucet_uid,

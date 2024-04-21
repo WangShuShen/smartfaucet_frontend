@@ -13,13 +13,13 @@ export type Faucet_Info = {
 };
 
 type Faucet_Info_State = {
-  faucet_info: Faucet_Info | null; 
+  faucet_info: Faucet_Info | null;
   loading_info: boolean;
   error_info: string | null;
 };
 
 const initialState: Faucet_Info_State = {
-  faucet_info: null, 
+  faucet_info: null,
   loading_info: false,
   error_info: null,
 };
@@ -34,7 +34,16 @@ export const fetchFaucetInfo = createAsyncThunk<
   }
   try {
     const apiUrl = process.env.NEXT_PUBLIC_FACUETINFO_API as string;
-    const response = await axios.post(apiUrl, { faucet_uid: faucetUid });
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post(
+      apiUrl,
+      { faucet_uid: faucetUid },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     const faucetInfo: Faucet_Info = {
       faucet_uid: response.data.faucet_uid,
@@ -57,9 +66,7 @@ export const fetchFaucetInfo = createAsyncThunk<
 const faucetsInfoSlice = createSlice({
   name: "faucetinfo",
   initialState,
-  reducers: {
-
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchFaucetInfo.pending, (state) => {

@@ -23,7 +23,16 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
     const fetchHubUids = async () => {
       try {
         const apiUrl = process.env.NEXT_PUBLIC_HUBLIST_API as string;
-        const response = await axios.post(apiUrl);
+        const token = localStorage.getItem("accessToken");
+        const response = await axios.post(
+          apiUrl,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setHubOptions(response.data);
       } catch (error) {
         console.error("Error fetching hub UIDs:", error);

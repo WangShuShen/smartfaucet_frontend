@@ -19,7 +19,6 @@ const initialState: FaucetUsageUpdateState = {
   error_usage: null,
 };
 
-
 export const fetchLatestUsage = createAsyncThunk<
   FaucetUsageUpdate,
   string,
@@ -27,7 +26,16 @@ export const fetchLatestUsage = createAsyncThunk<
 >("faucets/fetchFaucetsUsage", async (faucetUid: string, thunkAPI) => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_FACUETCONSUMPTION_API as string;
-    const response = await axios.post(apiUrl, { faucet_uid: faucetUid });
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.post(
+      apiUrl,
+      { faucet_uid: faucetUid },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     const faucetusage: FaucetUsageUpdate = {
       total_usage_count: response.data.total_usage_count,
@@ -43,16 +51,13 @@ export const fetchLatestUsage = createAsyncThunk<
       console.error("Unexpected error:", error);
       return thunkAPI.rejectWithValue("An unknown error occurred");
     }
-
   }
 });
 
 const faucetUsageReducer = createSlice({
   name: "faucetUsage",
   initialState,
-  reducers: {
-
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchLatestUsage.pending, (state) => {

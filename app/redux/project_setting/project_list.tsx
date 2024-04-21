@@ -33,7 +33,22 @@ export const fetchProject = createAsyncThunk<
 >("project/fetchHierarch", async (_, thunkAPI) => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_PROJECTLIST_API as string;
-    const response = await axios.post(apiUrl);
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("No access token available");
+    }
+
+    const response = await axios.post(
+      apiUrl,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
     if (
       response.data &&
       Array.isArray(response.data) &&
