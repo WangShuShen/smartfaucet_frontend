@@ -5,8 +5,23 @@ import AnimatedLink from "./animations/AnimatedUnderlineLink";
 import AnimatedMenu from "./animations/AnimatedMenu";
 import AnimatedAccountSetting from "./animations/AnimatedAccountSetting";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import { logout } from './service/Logout_hook'; 
+
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      const refreshToken = localStorage.getItem('refreshToken');
+      await logout(refreshToken);
+      router.push('/login');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <>
@@ -58,11 +73,12 @@ const Navbar = () => {
               className="rounded-full w-10 h-10 z-12"
               alt="human_photo"
             />
-            <Link href="/login">
-              <button className="btn bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-24 lg:text-lg md:text-md sm:text-sm xs:text-xs">
-                登出
-              </button>
-            </Link>
+            <button 
+            className="btn bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-24 lg:text-lg md:text-md sm:text-sm xs:text-xs"
+            onClick={handleLogout}
+            >
+              登出
+            </button>
           </div>
         </div>
 

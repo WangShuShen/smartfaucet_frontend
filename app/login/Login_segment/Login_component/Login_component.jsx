@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { login } from './service/Login_hook'; // 引入之前模組化的 login 函數
+
 
 export default function Login_Component() {
     const [username, setUsername] = useState('');
@@ -12,15 +14,22 @@ export default function Login_Component() {
     const [showPassword, setShowPassword] = useState(false); // 新增状态控制密码是否显示
     const router = useRouter();
 
-    const handleLoginSubmit = (event) => {
+    const handleLoginSubmit =async (event) => {
         event.preventDefault();
         if (!username.trim() || !password.trim()) {
             console.log('使用者名稱和密碼都是必填項');
             alert('使用者名稱和密碼都是必填項。');
             return;
         }
-        console.log('Login attempt');
-        router.push('/project_setting');
+        try {
+            const data = await login(username, password);
+            console.log('Login successful');
+            // 將用戶導向到項目設置頁面，並攜帶 access token
+            router.push(`/project_setting?access=${encodeURIComponent(data.access)}`);
+        } catch (error) {
+            console.error('Login error:', error);
+            alert(error.message);
+        }
     };
 
     const handleForgotPasswordClick = () => {
