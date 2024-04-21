@@ -1,6 +1,6 @@
-
 export async function login(email, password) {
-  const response = await fetch('http://34.92.110.239:34749/api/0.1/member/SignInManager/login', {
+
+  const response = await fetch(process.env.NEXT_PUBLIC_LOGIN_API, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,5 +1,5 @@
 export async function logout(refreshToken) {
-    const response = await fetch('http://34.92.110.239:34749/api/0.1/member/SignInManager/logout', {
+    const response = await fetch(process.env.NEXT_PUBLIC_LOGOUT_API, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
