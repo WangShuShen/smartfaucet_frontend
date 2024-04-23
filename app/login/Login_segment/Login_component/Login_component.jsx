@@ -125,7 +125,7 @@ export default function Login_Component() {
                                     className="min-w-0 p-2 font-semibold focus:outline-none min-w-0"
                                 />
                                 <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
-                                <button onClick={handleForgotPasswordClick} className="whitespace-nowrap text-sm text-neutral-500 border-b-2 border-neutral-500">忘記密碼</button>                
+                                <button type="button" onClick={handleForgotPasswordClick} className="whitespace-nowrap text-sm text-neutral-500 border-b-2 border-neutral-500">忘記密碼</button>                
                             </div>
                         </div>
                         {/* <div className="flex items-center ">
