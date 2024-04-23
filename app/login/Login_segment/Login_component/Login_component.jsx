@@ -25,7 +25,7 @@ export default function Login_Component() {
             const data = await login(username, password);
             console.log('Login successful');
             // 將用戶導向到項目設置頁面，並攜帶 access token
-            router.push(`/project_setting?access=${encodeURIComponent(data.access)}`);
+            router.push(`/project_setting`);
         } catch (error) {
             console.error('Login error:', error);
             alert(error.message);
