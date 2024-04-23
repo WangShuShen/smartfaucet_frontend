@@ -111,18 +111,18 @@ export default function Login_Component() {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 placeholder="輸入帳號或電子郵件"
-                                className="flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none"
+                                className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none"
                             />
                         </div>
                         <div className="flex items-center mt-2">
                             <img src="/register_pwd.svg" alt="Lock" className="mr-2"/>
-                            <div className='flex-1 border-b-2 border-neutral-500 flex items-center justify-between '>
+                            <div className='min-w-0 flex-1 border-b-2 border-neutral-500 flex items-center justify-between '>
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="輸入密碼"
-                                    className="p-2 font-semibold focus:outline-none min-w-0"
+                                    className="min-w-0 p-2 font-semibold focus:outline-none min-w-0"
                                 />
                                 <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                 <button onClick={handleForgotPasswordClick} className="whitespace-nowrap text-sm text-neutral-500 border-b-2 border-neutral-500">忘記密碼</button>                
@@ -166,7 +166,7 @@ export default function Login_Component() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="輸入電子信箱獲取臨時密碼"
-                                className="flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none"
+                                className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none"
                             />
                         </div>
                         <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
@@ -185,13 +185,13 @@ export default function Login_Component() {
                         <form onSubmit={handleVerificationSubmit} className="flex flex-col ">
                             <div className="flex items-center ">
                                 <img src="/register_captcha.svg" alt="Verification" className="mr-2"/>
-                                <div className='flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
+                                <div className='min-w-0 flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         value={verification}
                                         onChange={(e) => setVerification(e.target.value)}
                                         placeholder="請輸入密碼"
-                                        className="p-2 font-semibold focus:outline-none"
+                                        className="min-w-0 p-2 font-semibold focus:outline-none"
                                     />
                                     <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                 </div>
@@ -212,26 +212,26 @@ export default function Login_Component() {
                             <form onSubmit={handleNewPasswordSubmit} className="flex flex-col ">
                                 <div className="flex items-center ">
                                     <img src="/register_pwd.svg" alt="Verification" className="mr-2"/>
-                                    <div className='flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
+                                    <div className='min-w-0 flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
                                         <input
                                             type={showPassword ? "text" : "password"}
                                             value={newPassword}
                                             onChange={(e) => setNewPassword(e.target.value)}
                                             placeholder="新密碼"
-                                            className="p-2 font-semibold focus:outline-none"
+                                            className="min-w-0 p-2 font-semibold focus:outline-none"
                                         />
                                         <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                     </div>
                                 </div>
                                 <div className="flex items-center mt-2">
                                     <img src="/register_pwd2.svg" alt="Verification" className="mr-2"/>
-                                    <div className='flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
+                                    <div className='min-w-0 flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
                                         <input
                                             type={showPassword ? "text" : "password"}
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                             placeholder="再次輸入新密碼"
-                                            className="p-2 font-semibold focus:outline-none"
+                                            className="min-w-0 p-2 font-semibold focus:outline-none"
                                         />
                                         <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                     </div>
