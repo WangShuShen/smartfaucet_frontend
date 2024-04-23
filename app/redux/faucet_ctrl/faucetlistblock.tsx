@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
+import { createApiClient } from "@/utils/apiClient";
 export type Faucet = {
   faucet_uid: string;
   faucet_status:
@@ -29,17 +30,13 @@ export const fetchFaucets = createAsyncThunk<
 >("faucets/fetchFaucets", async (_, thunkAPI) => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_FACUETLIST_API as string;
-    const token = localStorage.getItem("accessToken");
-    const response = await axios.post(
-      apiUrl,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const postApiClient = createApiClient(
+      "post",
+      process.env.REACT_APP_LISTASSIGNAPPLICATION_URL
     );
 
+    const payload = {};
+    const response = await postApiClient(apiUrl, payload);
     return response.data.map((item: any) => ({
       faucet_uid: item.faucet_uid,
       faucet_status: item.faucet_status,
