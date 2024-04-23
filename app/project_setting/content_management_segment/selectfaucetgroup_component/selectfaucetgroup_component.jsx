@@ -81,6 +81,7 @@ export default function SelectFaucetGroupComponent() {
   const [unbindfaucets, setUnbindfaucets] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
   const [bindFaucets, setBindFaucets] = useState([]);
+  const [refreshflag, setrefreshflag] = useState(false);
   const [ShowListFaucetButton, setShowListFaucetButton] = useState(false);
   const [ShowAddFaucet, setShowAddFaucet] = useState(false);
   const project_CRUD = useSelector((state) => state.project_CRUD);
@@ -94,12 +95,12 @@ export default function SelectFaucetGroupComponent() {
       if (selected_project?.location_uid) {
         const data = await fetchbindfaucet(selected_project?.location_uid);
         setBindFaucets(data);
-        if (data != []) {
+        if (data.length > 0) {
           dispatch(setisbindReducer(true));
           setShowAddFaucet(false);
           setShowListFaucetButton(false);
         }
-        if (data == []) {
+        if (data.length === 0) {
           dispatch(setisbindReducer(false));
           setShowAddFaucet(false);
           setShowListFaucetButton(true);
@@ -108,7 +109,7 @@ export default function SelectFaucetGroupComponent() {
     };
 
     fetchFaucets();
-  }, [selected_project]);
+  }, [selected_project, refreshflag]);
 
   const handleListFaucetClick = async () => {
     const data = await fetchlistfaucet(project_CRUD.selected_project.hub_uid);
@@ -139,7 +140,9 @@ export default function SelectFaucetGroupComponent() {
         bindfaucetapi(selected_project.location_uid, faucetUid)
       )
     );
+    setrefreshflag((prev) => !prev);
   };
+
   return (
     <div className="overflow-x-auto relative min-h-[300px]">
       <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
