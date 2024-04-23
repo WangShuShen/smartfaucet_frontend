@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-
+import { createApiClient } from "@/utils/apiClient";
 type Project = {
   projects: Array<{
     project_company_uid?: string;
@@ -33,21 +33,10 @@ export const fetchProject = createAsyncThunk<
 >("project/fetchHierarch", async (_, thunkAPI) => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_PROJECTLIST_API as string;
-    const token = localStorage.getItem("accessToken");
+    const postApiClient = createApiClient("post", apiUrl);
 
-    if (!token) {
-      return thunkAPI.rejectWithValue("No access token available");
-    }
-
-    const response = await axios.post(
-      apiUrl,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const payload = {};
+    const response = await postApiClient(apiUrl, payload);
 
     if (
       response.data &&

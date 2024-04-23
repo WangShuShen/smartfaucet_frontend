@@ -30,10 +30,7 @@ export const fetchFaucets = createAsyncThunk<
 >("faucets/fetchFaucets", async (_, thunkAPI) => {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_FACUETLIST_API as string;
-    const postApiClient = createApiClient(
-      "post",
-      process.env.REACT_APP_LISTASSIGNAPPLICATION_URL
-    );
+    const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {};
     const response = await postApiClient(apiUrl, payload);

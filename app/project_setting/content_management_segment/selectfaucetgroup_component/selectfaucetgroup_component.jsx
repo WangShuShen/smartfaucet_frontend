@@ -1,27 +1,18 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/app/redux/store";
-import { fetchProject } from "@/app/redux/project_setting/project_list";
-import {
-  selectprojectReducer,
-  setisbindReducer,
-} from "@/app/redux/project_setting/project_CRUD";
+import { createApiClient } from "@/utils/apiClient";
+import { setisbindReducer } from "@/app/redux/project_setting/project_CRUD";
 import axios from "axios";
 async function fetchlistfaucet(hubUid) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API;
-    const token = localStorage.getItem("accessToken");
-    const response = await axios.post(
-      apiUrl,
-      {
-        hub_uid: hubUid,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {
+      hub_uid: hubUid,
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
@@ -31,19 +22,13 @@ async function fetchlistfaucet(hubUid) {
 async function fetchbindfaucet(location_Uid) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API;
-    const token = localStorage.getItem("accessToken");
-    const response = await axios.post(
-      apiUrl,
+    const postApiClient = createApiClient("post", apiUrl);
 
-      {
-        location_uid: location_Uid,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const payload = {
+      location_uid: location_Uid,
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
@@ -53,19 +38,14 @@ async function fetchbindfaucet(location_Uid) {
 async function bindfaucetapi(location_Uid, faucet_uid) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API;
-    const token = localStorage.getItem("accessToken");
-    const response = await axios.post(
-      apiUrl,
-      {
-        faucet_uid: faucet_uid,
-        f_location_uid: location_Uid,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {
+      faucet_uid: faucet_uid,
+      f_location_uid: location_Uid,
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);

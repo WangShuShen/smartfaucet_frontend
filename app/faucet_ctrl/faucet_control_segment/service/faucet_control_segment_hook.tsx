@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFaucetSetting } from "@/app/redux/faucet_ctrl/faucet_control";
 import type { RootState, AppDispatch } from "@/app/redux/store";
-import axios from "axios";
+
+import { createApiClient } from "@/utils/apiClient";
 export const useFaucetSetting = (faucetUid: string) => {
   const dispatch = useDispatch<AppDispatch>();
   const { faucetDetail, loading_detail, error_detail } = useSelector(
@@ -47,19 +48,12 @@ export const saveFaucetSettings = async (faucetUid: string, settings: any) => {
       firmware_update: settings.firmwareUpdate,
       infrared_test: settings.irSensingTest,
     };
-    const token = localStorage.getItem("accessToken");
-    const response = await axios.post(
-      API_BASE_URL,
-      {
-        faucet_uid: faucetUid,
-        ...formattedSettings,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const postApiClient = createApiClient("post", API_BASE_URL);
+    const payload = {
+      faucet_uid: faucetUid,
+      ...formattedSettings,
+    };
+    const response = await postApiClient(API_BASE_URL, payload);
   } catch (error) {
     console.error("Error saving faucet settings:", error);
   }

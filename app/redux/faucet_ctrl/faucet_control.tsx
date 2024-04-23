@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-
+import { createApiClient } from "@/utils/apiClient";
 type FaucetControl = {
   waterShutoffDelay: string;
   flowRate: string;
@@ -43,18 +43,13 @@ export const fetchFaucetSetting = createAsyncThunk<
   }
   try {
     const apiUrl = process.env.NEXT_PUBLIC_FETCH_FAUCET_SETTING_API as string;
-    const token = localStorage.getItem("accessToken");
-    const response = await axios.post(
-      apiUrl,
-      {
-        faucet_uid: faucetUid,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {
+      faucet_uid: faucetUid,
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     let energySavingMode = "";
     let energySavingValue = "";
     if (response.data.energy_saving_mode) {

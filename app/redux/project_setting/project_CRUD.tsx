@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { createApiClient } from "@/utils/apiClient";
 type ProjectItem = {
   project_company_uid?: string;
   project_company_name?: string;
@@ -66,18 +66,13 @@ export const setCompanyapi = createAsyncThunk(
     }
     try {
       const apiUrl = process.env.NEXT_PUBLIC_COMPANYCREATE_API as string;
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        apiUrl,
-        {
-          project_company_name: companyname,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const postApiClient = createApiClient("post", apiUrl);
+
+      const payload = {
+        project_company_name: companyname,
+      };
+      const response = await postApiClient(apiUrl, payload);
+
       return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -106,19 +101,14 @@ export const setBuildingapi = createAsyncThunk(
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_BUILDINGCREATE_API as string;
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        apiUrl,
-        {
-          building_name: building_name,
-          f_project_company_uid: project_company_uid,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const postApiClient = createApiClient("post", apiUrl);
+
+      const payload = {
+        building_name: building_name,
+        f_project_company_uid: project_company_uid,
+      };
+      const response = await postApiClient(apiUrl, payload);
+
       return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -144,19 +134,14 @@ export const setFloorapi = createAsyncThunk(
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_FLOORCREATE_API as string;
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        apiUrl,
-        {
-          floor_name: floor_name,
-          f_building_uid: building_uid,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const postApiClient = createApiClient("post", apiUrl);
+
+      const payload = {
+        floor_name: floor_name,
+        f_building_uid: building_uid,
+      };
+      const response = await postApiClient(apiUrl, payload);
+
       return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -182,19 +167,14 @@ export const setHubapi = createAsyncThunk(
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_HUBCREATE_API as string;
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        apiUrl,
-        {
-          hub_uid: hub_uid,
-          f_floor_uid: f_floor_uid,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const postApiClient = createApiClient("post", apiUrl);
+
+      const payload = {
+        hub_uid: hub_uid,
+        f_floor_uid: f_floor_uid,
+      };
+      const response = await postApiClient(apiUrl, payload);
+
       return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -220,19 +200,14 @@ export const setLocationapi = createAsyncThunk(
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_LOCATIONCREATE_API as string;
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        apiUrl,
-        {
-          location_name: location_name,
-          f_hub_uid: f_hub_uid,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const postApiClient = createApiClient("post", apiUrl);
+
+      const payload = {
+        location_name: location_name,
+        f_hub_uid: f_hub_uid,
+      };
+      const response = await postApiClient(apiUrl, payload);
+
       return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -255,18 +230,13 @@ export const removeCompanyapi = createAsyncThunk(
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_COMPANYREMOVE_API as string;
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        apiUrl,
-        {
-          project_company_uid: project_company_Uid,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const postApiClient = createApiClient("post", apiUrl);
+
+      const payload = {
+        project_company_uid: project_company_Uid,
+      };
+      const response = await postApiClient(apiUrl, payload);
+
       return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -289,18 +259,13 @@ export const removeBuildingapi = createAsyncThunk(
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_BUILDINGREMOVE_API as string;
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        apiUrl,
-        {
-          building_uid: building_Uid,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const postApiClient = createApiClient("post", apiUrl);
+
+      const payload = {
+        building_uid: building_Uid,
+      };
+      const response = await postApiClient(apiUrl, payload);
+
       return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -323,18 +288,13 @@ export const removeFloorapi = createAsyncThunk(
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_FLOORREMOVE_API as string;
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        apiUrl,
-        {
-          floor_uid: floor_Uid,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const postApiClient = createApiClient("post", apiUrl);
+
+      const payload = {
+        floor_uid: floor_Uid,
+      };
+      const response = await postApiClient(apiUrl, payload);
+
       return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -357,18 +317,13 @@ export const removeHubapi = createAsyncThunk(
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_HUBREMOVE_API as string;
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        apiUrl,
-        {
-          hub_uid: hub_Uid,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const postApiClient = createApiClient("post", apiUrl);
+
+      const payload = {
+        hub_uid: hub_Uid,
+      };
+      const response = await postApiClient(apiUrl, payload);
+
       return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -391,18 +346,13 @@ export const removeLocationapi = createAsyncThunk(
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_LOCATIONREMOVE_API as string;
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.post(
-        apiUrl,
-        {
-          location_uid: location_Uid,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const postApiClient = createApiClient("post", apiUrl);
+
+      const payload = {
+        location_uid: location_Uid,
+      };
+      const response = await postApiClient(apiUrl, payload);
+
       return handleApiResponse(response);
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -1,6 +1,5 @@
 "use client";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
 class ApiFactory {
   createClient(method, baseURL) {
@@ -48,8 +47,6 @@ class ApiFactory {
             ] = `Bearer ${refreshResponse.data.accessToken}`;
             return client(originalRequest);
           } catch (refreshError) {
-            const router = useRouter();
-            router.push("/login");
             return Promise.reject(refreshError);
           }
         }
