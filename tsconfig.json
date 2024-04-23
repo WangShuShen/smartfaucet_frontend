@@ -22,6 +22,17 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/login/Login_segment/Login_segment.jsx",
+    "app/login/Login_segment/Login_component/Login_component.jsx",
+    "app/member_setting/layout.tsx",
+    "app/project_setting/content_management_segment/projectlistblock_component/projectlistblock_component.jsx",
+    "app/project_setting/content_management_segment/selectfaucetgroup_component/selectfaucetgroup_component.jsx",
+    "app/project_setting/content_management_segment/Top_label_component/Top_label_component.jsx"
+  ],
   "exclude": ["node_modules"]
 }

@@ -21,7 +21,7 @@ import { fetchMockData } from './mockAPI';
 
 export default function FigureSegment({ buildingId }) {
     const [timeFrame, setTimeFrame] = useState('周');
-    const [chartData, setChartData] = useState<any[]>([]);
+    const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
         if (buildingId) {

@@ -1,7 +1,7 @@
 import Provider from "./redux/provider";
 
 export default function SimpleLayout({
-  children, // will be a page or nested layout
+  children, 
 }: {
   children: React.ReactNode;
 }) {

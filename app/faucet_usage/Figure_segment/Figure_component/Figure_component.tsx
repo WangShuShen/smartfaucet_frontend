@@ -11,7 +11,7 @@ export default function ExampleChart() {
   const series = [
     {
       name: "Usage",
-      data: chartData.map((item) => item.total_usage_count),
+      data: chartData.map((item) => item.usage_count),
     },
   ];
 

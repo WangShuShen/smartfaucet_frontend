@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "./redux/provider";
+import AuthCheck from './component/AuthCheck';
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider>{children}</Provider>
+        <Provider>
+          <AuthCheck /> {/* 當沒有access token會強制路由到login頁面 */}
+          {children}
+        </Provider>
       </body>
     </html>
   );

@@ -121,7 +121,6 @@ function createDropdownOptions(
   const controlDetails = details.faucet_ctrl;
 
   Object.keys(optionsMap).forEach((key) => {
-    // 確保每個鍵都有一個有效的值
     const controlValue = controlDetails[key] ?? "";
     updatedOptions[key] = optionsMap[key].map((option) => ({
       ...option,
@@ -141,12 +140,12 @@ export default function Faucet_Control_Segment() {
   );
   const disabledStyle = {
     opacity:
-      faucet_status === "electromagneticvalve_status" ||
+      faucet_status === "solenoidfault_status" ||
       faucet_status === "errorconnection_status"
         ? 0.5
         : 1,
     pointerEvents:
-      faucet_status === "electromagneticvalve_status" ||
+      faucet_status === "solenoidfault_status" ||
       faucet_status === "errorconnection_status"
         ? "none"
         : "auto",
@@ -154,7 +153,7 @@ export default function Faucet_Control_Segment() {
 
   const [savebuttonisOpen, setsavebuttonIsOpen] = useState(false);
   const handleClick = () => {
-    console.log("OnClick!");
+
   };
   const handleSaveClick = () => {
     const faucetSettings = faucetDetail?.faucet_ctrl;
@@ -248,7 +247,7 @@ export default function Faucet_Control_Segment() {
           <div className="flex-1  p-4">
             <ControlButton
               options={updatedOptionsMap.maxIRWaterCheckDuration}
-              segmentTitle="最常感應水確認時間"
+              segmentTitle="最長感應水確認時間"
               settingKey="maxIRWaterCheckDuration"
             />
           </div>

@@ -1,8 +1,7 @@
-// components/faucet_control_segment.tsx
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateFaucetSetting } from "@/app/redux/faucet_ctrl/faucet_control";
-import { RootState } from "@/app/redux/store";
+
 interface ButtonOption {
   label: string;
   value: string;
@@ -69,7 +68,7 @@ export default function ControlButton({
               margin: "0 2px",
               backgroundColor:
                 selected === option.value ? "#81c0c0" : "#d0d0d0",
-            }} // 添加水平间隔
+            }}
           >
             {option.label}
           </button>

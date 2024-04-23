@@ -5,11 +5,11 @@ import {
   useFaucetUsage,
 } from "@/app/faucet_ctrl/faucetitem_segment/faucetinfo_component/service/faucetinfo_hooks";
 import { useFaucetSetting } from "@/app/faucet_ctrl/faucet_control_segment/service/faucet_control_segment_hook";
-// Define a type for the faucet object
+
 type Faucet = {
   faucet_uid: string;
   faucet_status:
-    | "electromagneticvalve_status"
+    | "solenoidfault_status"
     | "normalconnection_status"
     | "humanfixed_status"
     | "errorconnection_status";
@@ -27,14 +27,14 @@ export default function FaucetListBlock_Component() {
   const faucetsetting = useFaucetSetting(selectedFaucetUid || "");
   const handleFaucetClick = (faucetUid: string, index: number) => {
     setSelectedCard(index);
-    setSelectedFaucetUid(faucetUid); // 更新選中的水龍頭 UID
+    setSelectedFaucetUid(faucetUid);
   };
   const getRingColor = (
     status: Faucet["faucet_status"],
     isSelected: boolean
   ): string => {
     if (!isSelected) return "hidden";
-    return status === "electromagneticvalve_status" ||
+    return status === "solenoidfault_status" ||
       status === "errorconnection_status"
       ? "ring-red-500"
       : "ring-[#D9D9D9]";

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from "../store";
-
+import { createApiClient } from "@/utils/apiClient";
 type FaucetControl = {
   waterShutoffDelay: string;
   flowRate: string;
@@ -43,17 +43,21 @@ export const fetchFaucetSetting = createAsyncThunk<
   }
   try {
     const apiUrl = process.env.NEXT_PUBLIC_FETCH_FAUCET_SETTING_API as string;
-    const response = await axios.post(apiUrl, {
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {
       faucet_uid: faucetUid,
-    });
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     let energySavingMode = "";
     let energySavingValue = "";
     if (response.data.energy_saving_mode) {
       const modeValue = response.data.energy_saving_mode.split(" ");
       if (modeValue.length > 0) {
-        energySavingMode = modeValue[0]; // 取 "ON"
+        energySavingMode = modeValue[0];
         if (modeValue.length > 1) {
-          energySavingValue = modeValue[1]; // 取 "10"
+          energySavingValue = modeValue[1];
         }
       }
     }
@@ -68,8 +72,8 @@ export const fetchFaucetSetting = createAsyncThunk<
       irSensingTest: response.data.infrared_test,
       firmwareUpdate: response.data.firmware_update,
       infraredDistance: response.data.infrared_distance,
-      energySavingMode, // 分配 "ON"
-      energySavingValue,
+      energySavingMode: response.data.energy_saving_mode,
+      energySavingValue: response.data.energy_saving_time,
     };
     return { faucet_ctrl: faucetControlData };
   } catch (error) {

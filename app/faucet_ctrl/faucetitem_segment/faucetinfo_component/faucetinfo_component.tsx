@@ -42,7 +42,7 @@ export default function FaucetInfo(faucetUid: string) {
     router.push("/faucet_usage");
   };
   return (
-    <div className="flex card w-1/2 h-72 ml-10">
+    <div className="flex card w-1/2 h-72">
       <div className="flex pt-2">
         <img
           src="faucetexample_outlook.svg"
