@@ -4,11 +4,8 @@ import dynamic from "next/dynamic";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-interface FigureComponentProps {
-  chartData: Array<{ date: string; total_usage_count: number }>;
-}
 
-export default function FigureComponent({ chartData }: FigureComponentProps) {
+export default function FigureComponent({ chartData }) {
     const series = [{
         name: "Usage",
         data: chartData.map(item => item.total_usage_count),
