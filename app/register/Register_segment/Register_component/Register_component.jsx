@@ -76,31 +76,31 @@ export default function Register_Component() {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="輸入帳號或電子郵件"
-                        className="flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none"
+                        className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none sm:text-sm md:text-md lg:text-lg"
                     />
                 </div>
                 <div className="flex items-center mt-4">
                     <img src="/register_pwd.svg" alt="Verification" className="mr-2"/>
-                    <div className='flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
+                    <div className='min-w-0 flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
                         <input
                             type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="新密碼"
-                            className="p-2 font-semibold focus:outline-none"
+                            className="min-w-0 p-2 font-semibold focus:outline-non sm:text-sm md:text-md lg:text-lg"
                         />
                         <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                     </div>
                 </div>
                 <div className="flex items-center mt-4">
                     <img src="/register_pwd2.svg" alt="Verification" className="mr-2"/>
-                    <div className='flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
+                    <div className='min-w-0 flex-1  border-b-2 border-neutral-500 flex items-center justify-between'>
                         <input
                             type={showPassword ? "text" : "password"}
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             placeholder="再次輸入新密碼"
-                            className="p-2 font-semibold focus:outline-none"
+                            className="min-w-0 p-2 font-semibold focus:outline-none sm:text-sm md:text-md lg:text-lg"
                         />
                         <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                     </div>

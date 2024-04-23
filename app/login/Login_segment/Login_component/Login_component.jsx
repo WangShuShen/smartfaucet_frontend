@@ -111,7 +111,7 @@ export default function Login_Component() {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 placeholder="輸入帳號或電子郵件"
-                                className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none"
+                                className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none sm:text-sm md:text-md lg:text-lg"
                             />
                         </div>
                         <div className="flex items-center mt-2">
@@ -122,7 +122,7 @@ export default function Login_Component() {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="輸入密碼"
-                                    className="min-w-0 p-2 font-semibold focus:outline-none min-w-0"
+                                    className="min-w-0 p-2 font-semibold focus:outline-none min-w-0 sm:text-sm md:text-md lg:text-lg"
                                 />
                                 <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                 <button type="button" onClick={handleForgotPasswordClick} className="whitespace-nowrap text-sm text-neutral-500 border-b-2 border-neutral-500">忘記密碼</button>                
@@ -166,7 +166,7 @@ export default function Login_Component() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="輸入電子信箱獲取臨時密碼"
-                                className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none"
+                                className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none sm:text-sm md:text-md lg:text-lg"
                             />
                         </div>
                         <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
@@ -191,7 +191,7 @@ export default function Login_Component() {
                                         value={verification}
                                         onChange={(e) => setVerification(e.target.value)}
                                         placeholder="請輸入密碼"
-                                        className="min-w-0 p-2 font-semibold focus:outline-none"
+                                        className="min-w-0 p-2 font-semibold focus:outline-none sm:text-sm md:text-md lg:text-lg"
                                     />
                                     <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                 </div>
@@ -218,7 +218,7 @@ export default function Login_Component() {
                                             value={newPassword}
                                             onChange={(e) => setNewPassword(e.target.value)}
                                             placeholder="新密碼"
-                                            className="min-w-0 p-2 font-semibold focus:outline-none"
+                                            className="min-w-0 p-2 font-semibold focus:outline-none sm:text-sm md:text-md lg:text-lg"
                                         />
                                         <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                     </div>
@@ -231,7 +231,7 @@ export default function Login_Component() {
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                             placeholder="再次輸入新密碼"
-                                            className="min-w-0 p-2 font-semibold focus:outline-none"
+                                            className="min-w-0 p-2 font-semibold focus:outline-none sm:text-sm md:text-md lg:text-lg"
                                         />
                                         <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                     </div>
