@@ -39,7 +39,7 @@ export default function Login_Component() {
         setShowPassword(false);
     };
 
-    const handleForgotPasswordSubmit = (event) => {
+    const handleForgotPasswordSubmit = async (event) => {
         event.preventDefault();
         if (!email.trim()) {
             console.log('電子郵件是必填項');
@@ -47,13 +47,33 @@ export default function Login_Component() {
             // 在这里可以设置错误状态并显示错误消息
             return;
         }
-        console.log('Request temporary password for email');
-        // 假設下一步是輸入驗證碼
-        setCurrentStep('verification');
-        router.push('/login?step=verification'); 
+    
+        try {
+            const response = await fetch(process.env.NEXT_PUBLIC_Send_Temp_Password_API, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email })
+            });
+    
+            if (!response.ok) {
+                throw new Error('無法發送臨時密碼。');
+            }
+    
+            const data = await response.json();
+            console.log('Temporary password sent:', data.status);  // 可以根據實際需求調整
+            alert('臨時密碼已發送至您的電子郵件。');
+            // 假設下一步是輸入驗證碼
+            setCurrentStep('verification');
+            router.push('/login?step=verification');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('錯誤: ' + error.message);
+        }
     };
 
-    const handleVerificationSubmit = (event) => {
+    const handleVerificationSubmit = async (event) => {
         event.preventDefault();
         if (!verification.trim()) {
             console.log('臨時密碼是必填項');
@@ -61,10 +81,33 @@ export default function Login_Component() {
             // 在这里可以设置错误状态并显示错误消息
             return;
         }
-        console.log('Temporary password verification for verification');
-        setCurrentStep('newPassword');
-        router.push('/login?step=newPassword');
-        setShowPassword(false);
+    
+        try {
+            const response = await fetch(process.env.NEXT_PUBLIC_Send_Verify_Temp_Password_API, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,  // 確保已從適當的來源獲取 email 變數
+                    temp_password: verification  // verification 是用戶輸入的臨時密碼
+                })
+            });
+    
+            if (!response.ok) {
+                throw new Error('臨時密碼驗證失敗');
+            }
+    
+            const data = await response.json();
+            console.log('Access Token:', data.access);  // 這裡顯示取得的訪問權限令牌，或做其他處理
+            alert('臨時密碼驗證成功！');
+            setCurrentStep('newPassword');  // 更新狀態以進入設置新密碼的步驟
+            router.push('/login?step=newPassword');
+            setShowPassword(false);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('錯誤: ' + error.message);
+        }
     };
 
     const handleNewPasswordSubmit = (event) => {
