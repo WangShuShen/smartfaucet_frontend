@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { RootState } from "@/app/redux/store";
 import { fetchProject } from "@/app/redux/project_setting/project_list";
 import { selectprojectReducer } from "@/app/redux/project_setting/project_CRUD";
 

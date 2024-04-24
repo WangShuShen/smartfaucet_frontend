@@ -15,12 +15,12 @@ type Faucet = {
     | "errorconnection_status";
 };
 
-export default function FaucetListBlock_Component() {
+export default function FaucetListBlock_Component({ location }) {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [selectedFaucetUid, setSelectedFaucetUid] = useState<string | null>(
     null
   );
-  const { faucets, loading, error } = useFaucetListBlock();
+  const { faucets, loading, error } = useFaucetListBlock({ location });
 
   const faucetInfo = useFaucetInfo(selectedFaucetUid || "");
   const faucetusage = useFaucetUsage(selectedFaucetUid || "");
@@ -73,7 +73,7 @@ export default function FaucetListBlock_Component() {
             >
               <div className="flex flex-col items-center p-4 relative">
                 <img
-                  src={`/${
+                  src={`/faucet_ctrl/${
                     selectedCard === index
                       ? `${faucet.faucet_status}_select`
                       : faucet.faucet_status
@@ -82,7 +82,7 @@ export default function FaucetListBlock_Component() {
                   className="mb-4 z-10 pb-2"
                 />
                 <img
-                  src="/TAP-145015.svg"
+                  src="/faucet_ctrl/TAP-145015.svg"
                   alt="TAP-145015"
                   className="mb-2 z-10"
                 />
