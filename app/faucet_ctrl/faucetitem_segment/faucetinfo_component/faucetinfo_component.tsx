@@ -45,7 +45,7 @@ export default function FaucetInfo(faucetUid: string) {
     <div className="flex card w-1/2 h-72">
       <div className="flex pt-2">
         <img
-          src="faucetexample_outlook.svg"
+          src="/faucet_ctrl/faucetexample_outlook.svg"
           alt="faucetexample_outlook"
           className="rounded-xl"
         />

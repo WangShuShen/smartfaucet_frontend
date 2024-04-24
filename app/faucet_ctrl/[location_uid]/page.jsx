@@ -1,25 +1,25 @@
 "use client";
 import React from "react";
-import FaucetItem from "./faucetitem_segment/faucetitem_segment";
-import Faucet_Control from "./faucet_control_segment/faucet_control_segment";
+import FaucetItem from "../faucetitem_segment/faucetitem_segment";
+import Faucet_Control from "../faucet_control_segment/faucet_control_segment";
 import { useSelector } from "react-redux";
-import type { RootState } from "@/app/redux/store";
 import LoadingScreen from "@/app/component/LoadingScreen";
-import Notification from "./component/Notification";
+import Notification from "../component/Notification";
 import { hideNotification } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
-export default function Faucet_Ctrl_Page() {
+export default function Faucet_Ctrl_Page({ params }) {
   const dispatch = useDispatch();
-  const loading_state = useSelector((state: RootState) => state.app.isLoading);
+  const loading_state = useSelector((state) => state.app.isLoading);
 
   const { isNotification, notificationMessage } = useSelector(
-    (state: RootState) => state.app
+    (state) => state.app
   );
 
   const handleCloseNotification = () => {
     dispatch(hideNotification());
   };
   if (loading_state) return <LoadingScreen></LoadingScreen>;
+
   return (
     <div className="block w-[100%] m-auto">
       {isNotification && (
@@ -30,7 +30,7 @@ export default function Faucet_Ctrl_Page() {
           />
         </div>
       )}
-      <FaucetItem></FaucetItem>
+      <FaucetItem location={params.location_uid}></FaucetItem>
       <Faucet_Control></Faucet_Control>
     </div>
   );

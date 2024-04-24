@@ -19,7 +19,7 @@ export const useFaucetSetting = (faucetUid: string) => {
     ) {
       dispatch(fetchFaucetSetting(faucetuid));
     }
-  }, [dispatch, faucetuid]);
+  }, [faucetuid]);
 
   return { faucetDetail, loading_detail, error_detail };
 };

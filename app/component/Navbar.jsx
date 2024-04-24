@@ -5,9 +5,8 @@ import AnimatedLink from "./animations/AnimatedUnderlineLink";
 import AnimatedMenu from "./animations/AnimatedMenu";
 import AnimatedAccountSetting from "./animations/AnimatedAccountSetting";
 import Link from "next/link";
-import { useRouter } from 'next/navigation';
-import { logout } from './service/Logout_hook'; 
-
+import { useRouter } from "next/navigation";
+import { logout } from "./service/Logout_hook";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,9 +14,9 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const refreshToken = localStorage.getItem('refreshToken');
+      const refreshToken = localStorage.getItem("refreshToken");
       await logout(refreshToken);
-      router.push('/login');
+      router.push("/login");
     } catch (error) {
       alert(error.message);
     }
@@ -41,7 +40,7 @@ const Navbar = () => {
             >
               <img
                 className="w-full xs:h-6 sm:h-6 md:h-8 lg:h-8"
-                src="/hamburger_icon.svg"
+                src="/Navbar/hamburger_icon.svg"
                 alt="hamburger_icon"
               />
             </button>
@@ -49,7 +48,7 @@ const Navbar = () => {
               <button className="outline-none mobile-menu-button mx-2">
                 <img
                   className="w-auto xs:h-10 sm:h-8 md:h-12 lg:h-12"
-                  src="/home_icon.svg"
+                  src="/Navbar/home_icon.svg"
                   alt="home_icon"
                 />
               </button>
@@ -59,7 +58,7 @@ const Navbar = () => {
               <button className="flex items-center py-4 px-4">
                 <img
                   className="w-auto xs:h-8 sm:h-8 md:h-12 lg:h-12"
-                  src="/logo.svg"
+                  src="/Navbar/logo.svg"
                   alt="logo"
                 />
               </button>
@@ -69,13 +68,13 @@ const Navbar = () => {
           <div className="relative flex items-center">
             {" "}
             <img
-              src="/human_photo.jpg"
+              src="/Navbar/human_photo.jpg"
               className="rounded-full w-10 h-10 z-12"
               alt="human_photo"
             />
-            <button 
-            className="btn bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-24 lg:text-lg md:text-md sm:text-sm xs:text-xs"
-            onClick={handleLogout}
+            <button
+              className="btn bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-24 lg:text-lg md:text-md sm:text-sm xs:text-xs"
+              onClick={handleLogout}
             >
               登出
             </button>
