@@ -132,11 +132,6 @@ export default function Project_button_Segment() {
 
   const Project_Managerment_Data = [
     {
-      imgSrc: "/project_setting/project_setting_save.svg",
-      text: "儲存",
-      onClick: () => console.log("儲存操作"),
-    },
-    {
       imgSrc: "/project_setting/project_setting_edit.svg",
       text: "編輯位置",
       onClick: () =>

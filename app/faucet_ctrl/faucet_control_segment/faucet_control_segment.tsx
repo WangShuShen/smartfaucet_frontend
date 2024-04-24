@@ -7,11 +7,15 @@ import DropdownButton from "./components/dropdown_button";
 import InputButton from "./components/input_button";
 import Button from "./components/button";
 import { useFaucetSetting } from "./service/faucet_control_segment_hook";
-import { saveFaucetSettings } from "./service/faucet_control_segment_hook";
+import {
+  saveFaucetSettings,
+  resetFaucetSettings,
+} from "./service/faucet_control_segment_hook";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/app/redux/store";
 import { setNotification } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
+
 const waterShutoffDelayOptions = [
   { label: "1sec", value: "1" },
   { label: "10sec", value: "10" },
@@ -155,13 +159,18 @@ export default function Faucet_Control_Segment({ location }) {
         : "auto",
   };
 
-  const [savebuttonisOpen, setsavebuttonIsOpen] = useState(false);
-  const handleClick = () => {};
+  const handleResetClick = () => {
+    dispatch(setNotification("回復原廠設定成功"));
+    if (faucetuid ) {
+      resetFaucetSettings(faucetuid).then(() => {});
+    } else {
+      console.error("No faucet setting to save.");
+    }
+  };
   const handleSaveClick = () => {
     const faucetSettings = faucetDetail?.faucet_ctrl;
     dispatch(setNotification("設定已儲存"));
     if (faucetuid && faucetSettings) {
-      setsavebuttonIsOpen(!savebuttonisOpen);
       saveFaucetSettings(faucetuid, faucetSettings).then(() => {});
     } else {
       console.error("No faucet setting to save.");
@@ -300,7 +309,7 @@ export default function Faucet_Control_Segment({ location }) {
               />
             </div>
             <div className="flex flex-grow-1 p-2 flex-col h-full justify-end items-start ">
-              <Button label="回復原廠設定" onClick={handleClick} />
+              <Button label="回復原廠設定" onClick={handleResetClick} />
               <Button label="存檔" onClick={handleSaveClick} />
             </div>
           </div>

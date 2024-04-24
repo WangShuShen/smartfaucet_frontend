@@ -57,3 +57,17 @@ export const saveFaucetSettings = async (faucetUid, settings) => {
     console.error("Error saving faucet settings:", error);
   }
 };
+
+export const resetFaucetSettings = async (faucetUid) => {
+  try {
+    const API_BASE_URL = process.env.NEXT_PUBLIC_FETCH_RESET_FAUCET_SETTING_API;
+
+    const postApiClient = createApiClient("post", API_BASE_URL);
+    const payload = {
+      faucet_uid: faucetUid,
+    };
+    const response = await postApiClient(API_BASE_URL, payload);
+  } catch (error) {
+    console.error("Error saving faucet settings:", error);
+  }
+};

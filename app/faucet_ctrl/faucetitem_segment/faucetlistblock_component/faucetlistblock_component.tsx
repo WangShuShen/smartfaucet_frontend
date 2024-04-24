@@ -63,7 +63,7 @@ export default function FaucetListBlock_Component({ location }) {
     );
   return (
     <div className="flex">
-      <div className="flex bg-[#EFEFEF] overflow-x-auto rounded-md h-76">
+      <div className="flex bg-[#EFEFEF] overflow-x-auto rounded-md h-76 ">
         <div className="flex flex-nowrap">
           {faucets.map((faucet: Faucet, index) => (
             <div
