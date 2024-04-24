@@ -105,14 +105,14 @@ export default function Project_setting_Page() {
   };
 
   return (
-    <div className="flex justify-center	">
+    <div className="flex justify-center">
       {isNotification && (
         <div className="fixed inset-0 flex justify-center items-center z-50">
           {renderNotificationComponent()}
         </div>
       )}
       <div className="block">
-        <div className="">
+        <div className="flex justify-center">
           <Project_button_Segment />
         </div>
         <div className="">

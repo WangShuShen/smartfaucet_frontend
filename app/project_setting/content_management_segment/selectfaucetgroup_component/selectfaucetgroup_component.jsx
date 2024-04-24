@@ -1,18 +1,18 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/app/redux/store";
-import { fetchProject } from "@/app/redux/project_setting/project_list";
-import {
-  selectprojectReducer,
-  setisbindReducer,
-} from "@/app/redux/project_setting/project_CRUD";
+import { createApiClient } from "@/utils/apiClient";
+import { setisbindReducer } from "@/app/redux/project_setting/project_CRUD";
 import axios from "axios";
 async function fetchlistfaucet(hubUid) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API as string;
-    const response = await axios.post(apiUrl, {
+    const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API;
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {
       hub_uid: hubUid,
-    });
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
@@ -21,10 +21,14 @@ async function fetchlistfaucet(hubUid) {
 }
 async function fetchbindfaucet(location_Uid) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API as string;
-    const response = await axios.post(apiUrl, {
+    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API;
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {
       location_uid: location_Uid,
-    });
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
@@ -33,11 +37,15 @@ async function fetchbindfaucet(location_Uid) {
 }
 async function bindfaucetapi(location_Uid, faucet_uid) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API as string;
-    const response = await axios.post(apiUrl, {
+    const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API;
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {
       faucet_uid: faucet_uid,
       f_location_uid: location_Uid,
-    });
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
@@ -47,17 +55,16 @@ async function bindfaucetapi(location_Uid, faucet_uid) {
 export default function SelectFaucetGroupComponent() {
   const dispatch = useDispatch();
   const selected_project = useSelector(
-    (state: RootState) => state.project_CRUD.selected_project
+    (state) => state.project_CRUD.selected_project
   );
-  const isbindfaucet = useSelector(
-    (state: RootState) => state.project_CRUD.isbindfaucet
-  );
+  const isbindfaucet = useSelector((state) => state.project_CRUD.isbindfaucet);
   const [unbindfaucets, setUnbindfaucets] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
   const [bindFaucets, setBindFaucets] = useState([]);
+  const [refreshflag, setrefreshflag] = useState(false);
   const [ShowListFaucetButton, setShowListFaucetButton] = useState(false);
   const [ShowAddFaucet, setShowAddFaucet] = useState(false);
-  const project_CRUD = useSelector((state: RootState) => state.project_CRUD);
+  const project_CRUD = useSelector((state) => state.project_CRUD);
   const emptyRows = Math.max(5 - unbindfaucets.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
 
@@ -68,12 +75,12 @@ export default function SelectFaucetGroupComponent() {
       if (selected_project?.location_uid) {
         const data = await fetchbindfaucet(selected_project?.location_uid);
         setBindFaucets(data);
-        if (data != []) {
+        if (data.length > 0) {
           dispatch(setisbindReducer(true));
           setShowAddFaucet(false);
           setShowListFaucetButton(false);
         }
-        if (data == []) {
+        if (data.length === 0) {
           dispatch(setisbindReducer(false));
           setShowAddFaucet(false);
           setShowListFaucetButton(true);
@@ -82,7 +89,7 @@ export default function SelectFaucetGroupComponent() {
     };
 
     fetchFaucets();
-  }, [selected_project]);
+  }, [selected_project, refreshflag]);
 
   const handleListFaucetClick = async () => {
     const data = await fetchlistfaucet(project_CRUD.selected_project.hub_uid);
@@ -113,7 +120,9 @@ export default function SelectFaucetGroupComponent() {
         bindfaucetapi(selected_project.location_uid, faucetUid)
       )
     );
+    setrefreshflag((prev) => !prev);
   };
+
   return (
     <div className="overflow-x-auto relative min-h-[300px]">
       <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">

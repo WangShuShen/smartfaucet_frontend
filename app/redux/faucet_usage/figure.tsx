@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { createApiClient } from "@/utils/apiClient";
 type FigureFaucetUsageData = {
   total_usage_count: number;
   total_usage_time: number;
@@ -31,9 +31,13 @@ export const fetchFigureWeeklyUsage = createAsyncThunk(
   async (faucetUid: string) => {
     const apiUrl = process.env
       .NEXT_PUBLIC_FETCH_FIGURE_WEEKLY_USAGE_API as string;
-    const response = await axios.post(apiUrl, {
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {
       faucet_uid: faucetUid,
-    });
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data as FigureFaucetUsageData[];
   }
 );
@@ -43,9 +47,13 @@ export const fetchFigureMonthlyUsage = createAsyncThunk(
   async (faucetUid: string) => {
     const apiUrl = process.env
       .NEXT_PUBLIC_FETCH_FIGURE_MONTHLY_USAGE_API as string;
-    const response = await axios.post(apiUrl, {
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {
       faucet_uid: faucetUid,
-    });
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data as FigureFaucetUsageData[];
   }
 );
@@ -55,9 +63,13 @@ export const fetchFigureYearlyUsage = createAsyncThunk(
   async (faucetUid: string) => {
     const apiUrl = process.env
       .NEXT_PUBLIC_FETCH_FIGURE_YEARLY_USAGE_API as string;
-    const response = await axios.post(apiUrl, {
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {
       faucet_uid: faucetUid,
-    });
+    };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data as FigureFaucetUsageData[];
   }
 );

@@ -25,7 +25,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Overlay when menu is open */}
       <div
         className={`fixed inset-0 bg-black opacity-50 z-10 ${
           isOpen ? "block" : "hidden"
@@ -35,15 +34,13 @@ const Navbar = () => {
 
       <nav className="navbar-bg-gradient shadow-lg relative z-20 w-full ">
         <div className="flex justify-between items-center h-full px-4 w-full">
-          {/* 將漢堡按鈕和Logo放在同一個容器內 */}
           <div className="flex items-center">
-            {/* Mobile menu button */}
             <button
               className="outline-none mobile-menu-button mx-2"
               onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
             >
               <img
-                className="w-full xs:h-6 sm:h-6 md:h-8 lg:h-8" 
+                className="w-full xs:h-6 sm:h-6 md:h-8 lg:h-8"
                 src="/hamburger_icon.svg"
                 alt="hamburger_icon"
               />
@@ -51,7 +48,7 @@ const Navbar = () => {
             <Link href="/">
               <button className="outline-none mobile-menu-button mx-2">
                 <img
-                  className="w-auto xs:h-10 sm:h-8 md:h-12 lg:h-12" 
+                  className="w-auto xs:h-10 sm:h-8 md:h-12 lg:h-12"
                   src="/home_icon.svg"
                   alt="home_icon"
                 />
@@ -61,20 +58,13 @@ const Navbar = () => {
             <Link href="/">
               <button className="flex items-center py-4 px-4">
                 <img
-                  className="w-auto xs:h-8 sm:h-8 md:h-12 lg:h-12" 
+                  className="w-auto xs:h-8 sm:h-8 md:h-12 lg:h-12"
                   src="/logo.svg"
                   alt="logo"
                 />
               </button>
             </Link>
           </div>
-          {/* <div className="overflow-hidden">
-            <img
-              src="/navbar_design_icon.svg"
-              className="absolute lg:-top-10 lg:-right-10 lg:flex md:hidden sm:hidden xs:hidden lg:h-32 md:h-36 z-0"
-              alt="navbar_design_icon"
-            />
-          </div> */}
 
           <div className="relative flex items-center">
             {" "}
@@ -95,12 +85,15 @@ const Navbar = () => {
         {/* Mobile Menu */}
         <AnimatedMenu isOpen={isOpen}>
           <div className="my-20 overflow-y-auto max-h-200">
-            {/* 可以在這裡添加Mobile Menu的連結 */}
             <AnimatedLink href="/">專案設定</AnimatedLink>
             <AnimatedLink href="/faucet_ctrl">水龍頭控制狀態</AnimatedLink>
-            <AnimatedLink href="/water_carbon_data">用水和碳排數據</AnimatedLink>
-            <AnimatedLink href="/">系統人員設定資訊</AnimatedLink>
-            <AnimatedAccountSetting href="/">帳號設定</AnimatedAccountSetting>
+            <AnimatedLink href="/water_carbon_data">
+              用水和碳排數據
+            </AnimatedLink>
+            <AnimatedLink href="/member_setting">系統人員設定資訊</AnimatedLink>
+            <AnimatedAccountSetting href="/account_setting">
+              帳號設定
+            </AnimatedAccountSetting>
           </div>
         </AnimatedMenu>
       </nav>

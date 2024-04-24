@@ -7,10 +7,8 @@ import { selectprojectReducer } from "@/app/redux/project_setting/project_CRUD";
 
 export default function ProjectListBlockComponent() {
   const dispatch = useDispatch();
-  const reduxProjects = useSelector(
-    (state: RootState) => state.project.projects
-  );
-  const project_CRUD = useSelector((state: RootState) => state.project_CRUD);
+  const reduxProjects = useSelector((state) => state.project.projects);
+  const project_CRUD = useSelector((state) => state.project_CRUD);
   const [projects, setProjects] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const emptyRows = Math.max(5 - projects.length, 0);

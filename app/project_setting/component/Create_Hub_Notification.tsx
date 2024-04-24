@@ -1,9 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";;
 import { useDispatch, useSelector } from "react-redux";
 import { setHubapi } from "@/app/redux/project_setting/project_CRUD";
-
+import { createApiClient } from "@/utils/apiClient";
 interface NotificationProps {
   message: string;
   onClose: () => void;
@@ -23,7 +22,11 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
     const fetchHubUids = async () => {
       try {
         const apiUrl = process.env.NEXT_PUBLIC_HUBLIST_API as string;
-        const response = await axios.post(apiUrl);
+        const postApiClient = createApiClient("post", apiUrl);
+
+        const payload = {};
+        const response = await postApiClient(apiUrl, payload);
+
         setHubOptions(response.data);
       } catch (error) {
         console.error("Error fetching hub UIDs:", error);

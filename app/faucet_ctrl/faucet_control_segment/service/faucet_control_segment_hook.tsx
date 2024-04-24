@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFaucetSetting } from "@/app/redux/faucet_ctrl/faucet_control";
 import type { RootState, AppDispatch } from "@/app/redux/store";
-import axios from "axios";
+
+import { createApiClient } from "@/utils/apiClient";
 export const useFaucetSetting = (faucetUid: string) => {
   const dispatch = useDispatch<AppDispatch>();
   const { faucetDetail, loading_detail, error_detail } = useSelector(
@@ -32,7 +33,7 @@ export const saveFaucetSettings = async (faucetUid: string, settings: any) => {
       return;
     }
     const formattedSettings = {
-      specification: settings.specification, 
+      specification: settings.specification,
       infrared_distance: settings.infraredDistance,
       solenoid_activation_duration: settings.solenoidActivationDuration,
       water_shutoff_delay: settings.waterShutoffDelay,
@@ -40,19 +41,20 @@ export const saveFaucetSettings = async (faucetUid: string, settings: any) => {
       flow_rate: settings.flowRate,
       auto_flushing12hr: settings.autoFlushing12hr,
       auto1sec_start_stop_switch: settings.auto1secStartStopSwitch,
-      energy_saving_mode:
-        settings.energySavingMode + " " + settings.energySavingValue,
+      energy_saving_mode: settings.energySavingMode,
+      energy_saving_time: settings.energySavingValue,
       carbon_credit_reduction: settings.carbonCreditReduction,
-      auto_fault_report: settings.autoFaultReport, 
+      auto_fault_report: settings.autoFaultReport,
       firmware_update: settings.firmwareUpdate,
       infrared_test: settings.irSensingTest,
     };
-    const response = await axios.post(API_BASE_URL, {
+    const postApiClient = createApiClient("post", API_BASE_URL);
+    const payload = {
       faucet_uid: faucetUid,
       ...formattedSettings,
-    });
+    };
+    const response = await postApiClient(API_BASE_URL, payload);
   } catch (error) {
     console.error("Error saving faucet settings:", error);
-
   }
 };

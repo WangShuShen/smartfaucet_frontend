@@ -22,6 +22,17 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/login/Login_segment/Login_segment.jsx", "app/login/Login_segment/Login_component/Login_component.jsx", "app/_app.", "app/register/page.jsx", "app/register/Register_segment/Register_segment.jsx", "app/register/Register_segment/Register_component/Register_component.jsx", "app/start/page.jsx", "app/start/Toggle_switch_segment/Toggle_switch_segment.jsx", "app/start/Toggle_switch_segment/Toggle_switch_component/Toggle_switch_component.jsx", "app/water_carbon_data/page.jsx", "app/water_carbon_data/layout.jsx", "app/water_carbon_data/Water_carbon_data_segment/Water_carbon_data_segment.jsx", "app/water_carbon_data/Water_carbon_data_segment/Usage_component/Usage_component.jsx", "app/water_carbon_data/Select_building_segment/Select_building_segment.jsx", "app/water_carbon_data/Select_building_segment/Select_building_component/Select_building_component.jsx", "app/water_carbon_data/Figure_segment/Figure_segment.jsx", "app/water_carbon_data/Figure_segment/Time_component/Time_component.jsx", "app/water_carbon_data/Figure_segment/Figure_component/Figure_component.jsx", "app/water_carbon_data/component/Title.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/login/Login_segment/Login_segment.jsx",
+    "app/login/Login_segment/Login_component/Login_component.jsx",
+    "app/member_setting/layout.tsx",
+    "app/project_setting/content_management_segment/projectlistblock_component/projectlistblock_component.jsx",
+    "app/project_setting/content_management_segment/selectfaucetgroup_component/selectfaucetgroup_component.jsx",
+    "app/project_setting/content_management_segment/Top_label_component/Top_label_component.jsx"
+  ],
   "exclude": ["node_modules"]
 }
