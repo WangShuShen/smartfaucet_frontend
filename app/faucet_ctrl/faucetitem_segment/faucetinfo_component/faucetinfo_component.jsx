@@ -6,7 +6,7 @@ import { useFaucetInfo, useFaucetUsage } from "./service/faucetinfo_hooks";
 import { setLoading } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
 
-export default function FaucetInfo(faucetUid: string) {
+export default function FaucetInfo(faucetUid) {
   const dispatch = useDispatch();
   const router = useRouter();
 
