@@ -1,18 +1,34 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createApiClient } from '@/utils/apiClient'; 
 import Usage from './Usage_component/Usage_component';
 
-export default function Water_carbon_data_Segment() {
+export default function Water_carbon_data_Segment({ buildingId }) {
+    const [totalUsageWater, setTotalUsageWater] = useState('0 GPM');
+    const [totalUsageCount, setTotalUsageCount] = useState('0 GPM');
+
+    useEffect(() => {
+        if (!buildingId) return;
+
+        const client = createApiClient('post', process.env.NEXT_PUBLIC_Building_Update_API);
+        client('', {
+            building_uid: buildingId
+        })
+        .then(response => {
+            setTotalUsageWater(`${response.data.total_usage_water} GPM`);
+            setTotalUsageCount(`${response.data.total_usage_count} GPM`);
+        })
+        .catch(error => console.error('Error fetching building data:', error));
+    }, [buildingId]);
+
     return (
         <div className='w-full flex justify-center items-center space-x-10 py-4 mb-5 bg-custom-cyan rounded-t-2xl shadow-md shadow-gray-950'>
             <div className='w-1/4'>
-                <Usage topText="總流水量" bottomText="7666GPM" ></Usage>
+                <Usage topText="總流水量" bottomText={totalUsageWater}></Usage>
             </div>
             <div className='w-1/4'>
-                <Usage topText="總用省水量" bottomText="4561GPM"></Usage>
+                <Usage topText="總用省水量" bottomText={totalUsageCount}></Usage>
             </div>
-            
-            
         </div>
     );
 }

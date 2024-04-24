@@ -11,7 +11,7 @@ export default function Water_carbon_data_Page() {
             <div className='flex flex-col w-11/12 justify-end items-center ' >
                 <Select_building_Segment onBuildingSelect={setSelectedBuildingId}/>
                 <div className='flex flex-col bg-white rounded-t-3xl h-fit w-full'>
-                    <Water_carbon_data_Segment />
+                    <Water_carbon_data_Segment buildingId={selectedBuildingId}/>
                     <Figure_Segment buildingId={selectedBuildingId}/>
                 </div>
             </div>

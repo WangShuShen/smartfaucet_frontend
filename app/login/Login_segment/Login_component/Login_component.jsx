@@ -24,6 +24,7 @@ export default function Login_Component() {
         try {
             const data = await login(username, password);
             console.log('Login successful');
+            console.log('Access Token:', localStorage.getItem("accessToken")); 
             // 將用戶導向到項目設置頁面，並攜帶 access token
             router.push(`/project_setting`);
         } catch (error) {

@@ -1,37 +1,40 @@
-// "use client";
-// import React from 'react';
-// import Figure from './Figure_component/Figure_component';
-// import TimeOption from './Time_component/Time_component';
-
-// export default function Figure_Segment() {
-//     return (
-//         <div className='flex flex-col w-full bg-white rounded-b-2xl block pl-8'>
-//                 <TimeOption />
-//                 <Figure />
-//         </div>
-//     );
-// }
-
-//Figure_segment.tsx
 "use client";
 import React, { useState, useEffect } from 'react';
 import Figure from './Figure_component/Figure_component';
 import TimeOption from './Time_component/Time_component';
-import { fetchMockData } from './mockAPI';
+import { createApiClient } from "@/utils/apiClient";
 
 export default function FigureSegment({ buildingId }) {
-    const [timeFrame, setTimeFrame] = useState('周');
+    const [timeFrame, setTimeFrame] = useState('week');
     const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
-        if (buildingId) {
-            fetchMockData(timeFrame, buildingId).then(setChartData);
-        }
+        if (!buildingId) return;
+
+        const apiUrls = {
+            week: process.env.NEXT_PUBLIC_Building_Week_API,
+            month: process.env.NEXT_PUBLIC_Building_Month_API,
+            year: process.env.NEXT_PUBLIC_Building_Year_API
+        };
+
+        const client = createApiClient('post', apiUrls[timeFrame]);
+
+        client('', {
+            building_uid: buildingId
+        })
+        .then(response => {
+            // Assuming the API returns data directly in the desired format
+            setChartData(response.data.map(item => ({
+                total_usage_count: item.usage_count,
+                date: item.date
+            })));
+        })
+        .catch(error => console.error('Error fetching data:', error));
     }, [timeFrame, buildingId]);
 
     return (
         <div className='flex flex-col w-full bg-white rounded-b-2xl block pl-8'>
-            <TimeOption onTimeChange={setTimeFrame} />
+            <TimeOption onTimeChange={(value) => setTimeFrame(value)} />
             <Figure chartData={chartData} />
         </div>
     );
