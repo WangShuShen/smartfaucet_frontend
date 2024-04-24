@@ -39,7 +39,7 @@ class ApiFactory {
             const refreshToken = localStorage.getItem("refreshToken");
             const refreshTokenURL = process.env.NEXT_PUBLIC_REFRESHTOKEN_API;
             const refreshResponse = await axios.post(refreshTokenURL, {
-              refreshToken,
+              refresh: refreshToken,
             });
             localStorage.setItem("accessToken", refreshResponse.data.access);
             client.defaults.headers.common[

@@ -149,13 +149,21 @@ export default function SelectFaucetGroupComponent() {
                 ? bindFaucets.map((faucet) => (
                     <tr key={faucet.faucet_uid}>
                       <td className="px-5 py-3 text-sm">
-                        {faucet.faucet_name}
+                        <img
+                          src={`/TAP-145015.svg`}
+                          alt={faucet.faucet_name}
+                          className="w-6 h-6"
+                        />
                       </td>
                       <td className="px-5 py-3 text-sm text-center">
                         {faucet.faucet_uid}
                       </td>
                       <td className="px-5 py-3 text-sm text-center">
-                        {faucet.faucet_status}
+                        <img
+                          src={`/${faucet.faucet_status}.svg`}
+                          alt={faucet.faucet_status}
+                          className="w-6 h-6"
+                        />
                       </td>
                       <td className="px-5 py-3 border-gray-200 text-sm flex items-center justify-center">
                         <label className="flex cursor-pointer items-center justify-center">

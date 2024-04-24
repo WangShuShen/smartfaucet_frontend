@@ -72,63 +72,66 @@ export default function Project_button_Segment() {
   }, [selected_project]);
   const Create_Project_Data = [
     {
-      imgSrc: "/project_setting_create_company.svg",
+      imgSrc: "/project_setting/project_setting_create_company.svg",
       text: "新增專案/公司",
       isDisabled: false,
     },
     {
-      imgSrc: "/project_setting_create_building.svg",
+      imgSrc: "/project_setting/project_setting_create_building.svg",
       text: "新增任務/建築物",
       isDisabled: createbuttonDisableStatus.createBuildingDisabled,
     },
     {
-      imgSrc: "/projectsetting_create_floor.svg",
+      imgSrc: "/project_setting/project_setting_create_floor.svg",
       text: "新增樓層",
       isDisabled: createbuttonDisableStatus.createFloorDisabled,
     },
     {
-      imgSrc: "/projectsetting_create_hub.svg",
+      imgSrc: "/project_setting/project_setting_create_hub.svg",
       text: "新增HUB",
       isDisabled: createbuttonDisableStatus.createHubDisabled,
     },
     {
-      imgSrc: "/projectsetting_create_location.svg",
+      imgSrc: "/project_setting/project_setting_create_location.svg",
       text: "新增位置",
       isDisabled: createbuttonDisableStatus.createLocationDisabled,
     },
   ];
   const Delete_Project_Data = [
     {
-      imgSrc: "/project_setting_delete_company.svg",
+      imgSrc: "/project_setting/project_setting_delete_company.svg",
       text: "刪除專案/公司",
       isDisabled: deletebuttonDisableStatus.deleteCompanyDisabled,
     },
     {
-      imgSrc: "/project_setting_delete_building.svg",
+      imgSrc: "/project_setting/project_setting_delete_building.svg",
       text: "刪除任務/建築物",
       isDisabled: deletebuttonDisableStatus.deleteBuildingDisabled,
     },
     {
-      imgSrc: "/projectsetting_delete_floor.svg",
+      imgSrc: "/project_setting/project_setting_delete_floor.svg",
       text: "刪除樓層",
       isDisabled: deletebuttonDisableStatus.deleteFloorDisabled,
     },
     {
-      imgSrc: "/projectsetting_delete_hub.svg",
+      imgSrc: "/project_setting/project_setting_delete_hub.svg",
       text: "刪除HUB",
       isDisabled: deletebuttonDisableStatus.deleteHubDisabled,
     },
     {
-      imgSrc: "/projectsetting_delete_location.svg",
+      imgSrc: "/project_setting/project_setting_delete_location.svg",
       text: "刪除位置",
       isDisabled: deletebuttonDisableStatus.deleteLocationDisabled,
     },
   ];
 
   const Project_Managerment_Data = [
-    { imgSrc: "/project_setting_save.svg", text: "儲存" },
-    { imgSrc: "/project_setting_edit.svg", text: "編輯任務/建築物" },
-    { imgSrc: "/project_setting_copy.svg", text: "複製" },
+    { imgSrc: "/project_setting/project_setting_save.svg", text: "儲存" },
+    {
+      imgSrc: "/project_setting/project_setting_edit.svg",
+      text: "編輯任務/建築物",
+    },
+    { imgSrc: "/project_setting/project_setting_copy.svg", text: "複製" },
   ];
 
   return (
