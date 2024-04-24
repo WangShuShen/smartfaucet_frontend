@@ -33,7 +33,7 @@ export default function FigureSegment({ buildingId }) {
     }, [timeFrame, buildingId]);
 
     return (
-        <div className='flex flex-col w-full bg-white rounded-b-2xl block pl-8'>
+        <div className='flex flex-col w-full bg-white rounded-b-2xl block pl-8 '>
             <TimeOption onTimeChange={(value) => setTimeFrame(value)} />
             <Figure chartData={chartData} />
         </div>
