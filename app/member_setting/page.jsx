@@ -78,11 +78,11 @@ export default function Member_Setting_Page() {
     <div>
       <div className="flex justify-end mb-2">
         <button className="btn bg-[#118BBB] mr-2">
-          <img src="/revise.svg" className="text-bold"></img>
+          <img src="/member_setting/revise.svg" className="text-bold"></img>
           授權使用者
         </button>
         <button className="btn bg-[#118BBB]">
-          <img src="/edit.svg" className="text-bold"></img>
+          <img src="/member_setting/edit.svg" className="text-bold"></img>
           編輯使用者
         </button>
       </div>
