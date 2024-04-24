@@ -5,6 +5,7 @@ import Search_engine_Component from "./Search_engine_component/Search_engine_com
 import Project_managerment_Component from "./Project_managerment_component/Project_managerment_component";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/app/redux/store";
+import { useRouter } from "next/navigation";
 export default function Project_button_Segment() {
   const [createbuttonDisableStatus, setcreateButtonDisableStatus] = useState({
     createBuildingDisabled: false,
@@ -22,6 +23,10 @@ export default function Project_button_Segment() {
   const selected_project = useSelector(
     (state: RootState) => state.project_CRUD.selected_project
   );
+  const isbind = useSelector(
+    (state: RootState) => state.project_CRUD.isbindfaucet
+  );
+  const router = useRouter();
   useEffect(() => {
     let createStatus = {
       createBuildingDisabled: false,
@@ -126,12 +131,22 @@ export default function Project_button_Segment() {
   ];
 
   const Project_Managerment_Data = [
-    { imgSrc: "/project_setting/project_setting_save.svg", text: "儲存" },
+    {
+      imgSrc: "/project_setting/project_setting_save.svg",
+      text: "儲存",
+      onClick: () => console.log("儲存操作"),
+    },
     {
       imgSrc: "/project_setting/project_setting_edit.svg",
-      text: "編輯任務/建築物",
+      text: "編輯位置",
+      onClick: () =>
+        router.push(`/faucet_ctrl/${selected_project.location_uid}`),
     },
-    { imgSrc: "/project_setting/project_setting_copy.svg", text: "複製" },
+    {
+      imgSrc: "/project_setting/project_setting_copy.svg",
+      text: "複製",
+      onClick: () => console.log("複製操作"),
+    },
   ];
 
   return (
@@ -183,6 +198,8 @@ export default function Project_button_Segment() {
             key={index}
             imgSrc={button.imgSrc}
             text={button.text}
+            isClickable={isbind}
+            onClick={button.onClick}
           />
         ))}
       </div>

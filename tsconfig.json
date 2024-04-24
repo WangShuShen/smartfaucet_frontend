@@ -33,6 +33,6 @@
     "app/project_setting/content_management_segment/projectlistblock_component/projectlistblock_component.jsx",
     "app/project_setting/content_management_segment/selectfaucetgroup_component/selectfaucetgroup_component.jsx",
     "app/project_setting/content_management_segment/Top_label_component/Top_label_component.jsx"
-, "app/component/Navbar.jsx", "app/faucet_ctrl/faucetitem_segment/faucetlistblock_component/faucetlistblock_component.tsx", "app/component/LoadingScreen.jsx", "app/component/BackButton.jsx", "app/component/Title.tsx", "app/account_setting/layout.tsx"  ],
+, "app/component/Navbar.jsx", "app/faucet_ctrl/faucetitem_segment/faucetlistblock_component/faucetlistblock_component.tsx", "app/component/LoadingScreen.jsx", "app/component/BackButton.jsx", "app/component/Title.tsx", "app/account_setting/layout.tsx", "app/faucet_ctrl/page.jsx", "app/project_setting/project_button_segment/Project_managerment_component/Project_managerment_component.jsx", "app/faucet_ctrl/faucetitem_segment/faucetitem_segment.jsx"  ],
   "exclude": ["node_modules"]
 }

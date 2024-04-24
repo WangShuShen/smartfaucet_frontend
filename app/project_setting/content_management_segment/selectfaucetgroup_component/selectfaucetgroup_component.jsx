@@ -72,6 +72,7 @@ export default function SelectFaucetGroupComponent() {
     const fetchFaucets = async () => {
       setUnbindfaucets([]);
       setBindFaucets([]);
+      dispatch(setisbindReducer(false));
       if (selected_project?.location_uid) {
         const data = await fetchbindfaucet(selected_project?.location_uid);
         setBindFaucets(data);
@@ -148,24 +149,24 @@ export default function SelectFaucetGroupComponent() {
               {bindFaucets.length > 0
                 ? bindFaucets.map((faucet) => (
                     <tr key={faucet.faucet_uid}>
-                      <td className="px-5 py-3 text-sm">
+                      <td className="pl-10 py-0 text-sm h-30">
                         <img
-                          src={`/TAP-145015.svg`}
+                          src={"/project_setting/TAP-145015.svg"}
                           alt={faucet.faucet_name}
-                          className="w-6 h-6"
+                          className="w-18 h-16"
                         />
                       </td>
                       <td className="px-5 py-3 text-sm text-center">
                         {faucet.faucet_uid}
                       </td>
-                      <td className="px-5 py-3 text-sm text-center">
+                      <td className="pl-16 pb-3 text-sm text-center">
                         <img
-                          src={`/${faucet.faucet_status}.svg`}
+                          src={`/project_setting/${faucet.faucet_status}.svg`}
                           alt={faucet.faucet_status}
-                          className="w-6 h-6"
+                          className="w-8 h-8"
                         />
                       </td>
-                      <td className="px-5 py-3 border-gray-200 text-sm flex items-center justify-center">
+                      <td className="px-5 pt-4 border-gray-200 text-sm flex items-center justify-center">
                         <label className="flex cursor-pointer items-center justify-center">
                           <input
                             type="checkbox"
@@ -192,14 +193,24 @@ export default function SelectFaucetGroupComponent() {
                   ))
                 : unbindfaucets.map((unbindfaucet, index) => (
                     <tr key={unbindfaucet.faucet_uid}>
-                      <td className="px-5 py-3 text-sm"></td>
+                      <td className="pl-10 py-0 text-sm h-30">
+                        <img
+                          src={"/project_setting/TAP-145015.svg"}
+                          alt={unbindfaucet.faucet_name}
+                          className="w-18 h-16"
+                        />
+                      </td>
                       <td className="px-5 py-3 text-sm text-center">
                         {unbindfaucet.faucet_uid}
                       </td>
-                      <td className="px-5 py-3 text-sm text-center">
-                        {unbindfaucet.faucet_status}
+                      <td className="pl-16 pb-3 text-sm text-center">
+                        <img
+                          src={`/project_setting/${unbindfaucet.faucet_status}.svg`}
+                          alt={unbindfaucet.faucet_status}
+                          className="w-8 h-8"
+                        />
                       </td>
-                      <td className="px-5 py-3 border-gray-200 text-sm flex items-center justify-center">
+                      <td className="px-5 pt-4 border-gray-200 text-sm flex items-center justify-center">
                         <label className="flex cursor-pointer items-center justify-center">
                           <input
                             type="checkbox"

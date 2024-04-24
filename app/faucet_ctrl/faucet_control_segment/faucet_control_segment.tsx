@@ -130,7 +130,7 @@ function createDropdownOptions(
 
   return updatedOptions;
 }
-export default function Faucet_Control_Segment() {
+export default function Faucet_Control_Segment({ location }) {
   const dispatch = useDispatch();
   const faucetuid = useSelector(
     (state: RootState) => state.faucetinfo.faucet_info?.faucet_uid
@@ -140,11 +140,15 @@ export default function Faucet_Control_Segment() {
   );
   const disabledStyle = {
     opacity:
+      !faucetuid ||
+      faucetuid === "" ||
       faucet_status === "solenoidfault_status" ||
       faucet_status === "errorconnection_status"
         ? 0.5
         : 1,
     pointerEvents:
+      !faucetuid ||
+      faucetuid === "" ||
       faucet_status === "solenoidfault_status" ||
       faucet_status === "errorconnection_status"
         ? "none"
@@ -152,9 +156,7 @@ export default function Faucet_Control_Segment() {
   };
 
   const [savebuttonisOpen, setsavebuttonIsOpen] = useState(false);
-  const handleClick = () => {
-
-  };
+  const handleClick = () => {};
   const handleSaveClick = () => {
     const faucetSettings = faucetDetail?.faucet_ctrl;
     dispatch(setNotification("設定已儲存"));

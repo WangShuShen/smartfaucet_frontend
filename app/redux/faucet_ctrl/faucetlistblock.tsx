@@ -25,14 +25,14 @@ const initialState: FaucetsState = {
 
 export const fetchFaucets = createAsyncThunk<
   Faucet[],
-  void,
+  string,
   { state: RootState }
->("faucets/fetchFaucets", async (_, thunkAPI) => {
+>("faucets/fetchFaucets", async (location, thunkAPI) => {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_FACUETLIST_API as string;
+    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API as string;
     const postApiClient = createApiClient("post", apiUrl);
 
-    const payload = {};
+    const payload = { location_uid: location };
     const response = await postApiClient(apiUrl, payload);
     return response.data.map((item: any) => ({
       faucet_uid: item.faucet_uid,
