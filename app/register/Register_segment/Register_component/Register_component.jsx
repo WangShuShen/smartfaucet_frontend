@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'; // 确保是正确的导入路径
 export default function Register_Component() {
     const defaultAvatar = '/register_user_picture.png'; // 默认头像路径
     const [avatar, setAvatar] = useState(defaultAvatar); // 默认头像
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // 新增状态控制密码是否显示
@@ -28,9 +28,9 @@ export default function Register_Component() {
 
     const avatarClass = avatar === defaultAvatar ? "w-1/4 h-1/4 mx-auto mt-4" : "w-1/4 h-1/4 mx-auto mt-4 rounded-full";
 
-    const handleRegisterSubmit = (event) => {
+    const handleRegisterSubmit = async (event) => {
         event.preventDefault();
-        if (!username.trim()) {
+        if (!email.trim()) {
             console.log('電子郵件是必填項');
             alert('電子郵件是必填項。');
             // 在这里可以设置错误状态并显示错误消息
@@ -47,8 +47,22 @@ export default function Register_Component() {
             return;
         }
 
-        console.log('New password set for username');
-        router.push('/login');
+        try {
+            const response = await fetch(process.env.NEXT_PUBLIC_Signup_API, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+            if (!response.ok) {
+                throw new Error('註冊失敗');
+            }
+            console.log('New password set for email');
+            router.push('/login');
+        } catch (error) {
+            alert(error.message);
+        }
     };
 
     const toggleShowPassword = () => {
@@ -73,8 +87,8 @@ export default function Register_Component() {
                     <img src="/register_user.svg" alt="User" className="mr-2"/>
                     <input
                         type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="輸入帳號或電子郵件"
                         className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none sm:text-sm md:text-md lg:text-lg"
                     />
