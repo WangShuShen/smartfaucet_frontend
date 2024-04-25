@@ -1,7 +1,10 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createApiClient } from "@/utils/apiClient";
-import { setisbindReducer } from "@/app/redux/project_setting/project_CRUD";
+import {
+  setisbindReducer,
+  selectfaucetReducer,
+} from "@/app/redux/project_setting/project_CRUD";
 import axios from "axios";
 async function fetchlistfaucet(hubUid) {
   try {
@@ -57,6 +60,9 @@ export default function SelectFaucetGroupComponent() {
   const selected_project = useSelector(
     (state) => state.project_CRUD.selected_project
   );
+  const setcopyfaucet_status = useSelector(
+    (state) => state.project_CRUD.setcopyfaucet_status
+  );
   const isbindfaucet = useSelector((state) => state.project_CRUD.isbindfaucet);
   const [unbindfaucets, setUnbindfaucets] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
@@ -72,6 +78,7 @@ export default function SelectFaucetGroupComponent() {
     const fetchFaucets = async () => {
       setUnbindfaucets([]);
       setBindFaucets([]);
+      setSelectedIds([]);
       dispatch(setisbindReducer(false));
       if (selected_project?.location_uid) {
         const data = await fetchbindfaucet(selected_project?.location_uid);
@@ -91,7 +98,11 @@ export default function SelectFaucetGroupComponent() {
 
     fetchFaucets();
   }, [selected_project, refreshflag]);
-
+  useEffect(() => {
+    if (setcopyfaucet_status === "ready") {
+      setSelectedIds([]);
+    }
+  }, [setcopyfaucet_status]);
   const handleListFaucetClick = async () => {
     const data = await fetchlistfaucet(project_CRUD.selected_project.hub_uid);
     if (data) {
@@ -101,12 +112,18 @@ export default function SelectFaucetGroupComponent() {
 
   const handleSelectChange = (selectedFaucetUid) => {
     setSelectedIds((prevSelectedIds) => {
+      let newSelectedIds;
       if (prevSelectedIds.includes(selectedFaucetUid)) {
-        return prevSelectedIds.filter((id) => id !== selectedFaucetUid);
+        newSelectedIds = prevSelectedIds.filter(
+          (id) => id !== selectedFaucetUid
+        );
       } else {
-        return [...prevSelectedIds, selectedFaucetUid];
+        newSelectedIds = [...prevSelectedIds, selectedFaucetUid];
       }
+      dispatch(selectfaucetReducer(newSelectedIds));
+      return newSelectedIds;
     });
+
     if (!isbindfaucet) {
       setShowAddFaucet(true);
       setShowListFaucetButton(false);

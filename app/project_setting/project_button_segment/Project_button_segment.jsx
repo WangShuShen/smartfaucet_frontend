@@ -3,10 +3,24 @@ import React, { useState, useEffect } from "react";
 import CRUD_Project_Button from "./CRUD_project_component/CRUD_project_component";
 import Search_engine_Component from "./Search_engine_component/Search_engine_component";
 import Project_managerment_Component from "./Project_managerment_component/Project_managerment_component";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/app/redux/store";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import { setNotification } from "@/app/redux/app/app";
+import { setcopyfaucetfromReducer } from "@/app/redux/project_setting/project_CRUD";
+import { createApiClient } from "@/utils/apiClient";
+async function useCopyFaucet({ faucet_Uids, from_faucet_Uid }) {
+  const apiUrl = process.env.NEXT_PUBLIC_FETCH_COPY_FAUCET_SETTING_API;
+  const postApiClient = createApiClient("post", apiUrl);
+
+  const payload = {
+    faucet_uid: faucet_Uids,
+    from_faucet_uid: from_faucet_Uid,
+  };
+  const response = await postApiClient(apiUrl, payload);
+}
+
 export default function Project_button_Segment() {
+  const dispatch = useDispatch();
   const [createbuttonDisableStatus, setcreateButtonDisableStatus] = useState({
     createBuildingDisabled: false,
     createFloorDisabled: false,
@@ -21,11 +35,18 @@ export default function Project_button_Segment() {
     deleteLocationDisabled: false,
   });
   const selected_project = useSelector(
-    (state: RootState) => state.project_CRUD.selected_project
+    (state) => state.project_CRUD.selected_project
   );
-  const isbind = useSelector(
-    (state: RootState) => state.project_CRUD.isbindfaucet
+  const selected_faucet = useSelector(
+    (state) => state.project_CRUD.selected_faucet
   );
+  const setcopyfaucet_status = useSelector(
+    (state) => state.project_CRUD.setcopyfaucet_status
+  );
+  const copyfaucetfrom = useSelector(
+    (state) => state.project_CRUD.copyfaucetfrom
+  );
+  const isbind = useSelector((state) => state.project_CRUD.isbindfaucet);
   const router = useRouter();
   useEffect(() => {
     let createStatus = {
@@ -134,13 +155,36 @@ export default function Project_button_Segment() {
     {
       imgSrc: "/project_setting/project_setting_edit.svg",
       text: "編輯位置",
+      clickable: isbind,
       onClick: () =>
         router.push(`/faucet_ctrl/${selected_project.location_uid}`),
     },
     {
       imgSrc: "/project_setting/project_setting_copy.svg",
       text: "複製",
-      onClick: () => console.log("複製操作"),
+      clickable:
+        isbind &&
+        selected_faucet?.length === 1 &&
+        setcopyfaucet_status === null,
+      onClick: () => {
+        dispatch(setcopyfaucetfromReducer(selected_faucet[0]));
+        dispatch(setNotification("選擇要COPY的faucet"));
+      },
+    },
+    {
+      imgSrc: "/project_setting/project_setting_save.svg",
+      text: "儲存複製",
+      clickable:
+        isbind &&
+        setcopyfaucet_status === "ready" &&
+        selected_faucet?.length > 0,
+      onClick: () => {
+        useCopyFaucet({
+          faucet_Uids: selected_faucet,
+          from_faucet_Uid: copyfaucetfrom,
+        });
+        dispatch(setNotification("faucet複製完成"));
+      },
     },
   ];
 
@@ -193,7 +237,7 @@ export default function Project_button_Segment() {
             key={index}
             imgSrc={button.imgSrc}
             text={button.text}
-            isClickable={isbind}
+            isClickable={button.clickable}
             onClick={button.onClick}
           />
         ))}

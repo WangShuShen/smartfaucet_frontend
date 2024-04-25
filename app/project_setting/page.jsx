@@ -13,19 +13,32 @@ import Remove_Building_Notification from "./component/Remove_Building_Notificati
 import Remove_Floor_Notification from "./component/Remove_Floor_Notification";
 import Remove_Hub_Notification from "./component/Remove_Hub_Notification";
 import Remove_Location_Notification from "./component/Remove_Location_Notification";
-
+import Notification from "./component/Notification";
+import CopyNotification from "./component/CopyNotification";
 import { hideNotification } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import type { RootState } from "@/app/redux/store";
-
+import { setcopyfaucetReducer } from "@/app/redux/project_setting/project_CRUD";
 export default function Project_setting_Page() {
   const dispatch = useDispatch();
   const { isNotification, notificationMessage } = useSelector(
-    (state: RootState) => state.app
+    (state) => state.app
+  );
+  const selected_faucet = useSelector(
+    (state) => state.project_CRUD.selected_faucet
+  );
+
+  const setcopyfaucet_status = useSelector(
+    (state) => state.project_CRUD.setcopyfaucet_status
+  );
+  const copyfaucetfrom = useSelector(
+    (state) => state.project_CRUD.copyfaucetfrom
   );
   const handleCloseNotification = () => {
     dispatch(hideNotification());
+    if (notificationMessage === "選擇要COPY的faucet") {
+      dispatch(setcopyfaucetReducer("ready"));
+    }
   };
   const renderNotificationComponent = () => {
     switch (notificationMessage) {
@@ -99,6 +112,22 @@ export default function Project_setting_Page() {
             onClose={handleCloseNotification}
           />
         );
+      case "選擇要COPY的faucet":
+        return (
+          <Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      case "faucet複製完成":
+        return (
+          <CopyNotification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+            copyFaucetFrom={copyfaucetfrom}
+            selectFaucet={selected_faucet}
+          />
+        );
       default:
         return <></>;
     }
@@ -118,7 +147,6 @@ export default function Project_setting_Page() {
         <div className="">
           <Content_Management></Content_Management>
         </div>
-        <div className="">{/* <State_Segment /> */}</div>
       </div>
     </div>
   );
