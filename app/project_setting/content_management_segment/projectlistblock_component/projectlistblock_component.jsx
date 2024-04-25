@@ -2,20 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchProject } from "@/app/redux/project_setting/project_list";
-import { selectprojectReducer } from "@/app/redux/project_setting/project_CRUD";
-
+import {
+  selectprojectReducer,
+  setUpdateUIDReducer,
+} from "@/app/redux/project_setting/project_CRUD";
+import { setNotification } from "@/app/redux/app/app";
 export default function ProjectListBlockComponent() {
   const dispatch = useDispatch();
   const reduxProjects = useSelector((state) => state.project.projects);
   const project_CRUD = useSelector((state) => state.project_CRUD);
+  const isNotification = useSelector((state) => state.app.isNotification);
   const [projects, setProjects] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const emptyRows = Math.max(5 - projects.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
-
+  const isClickable = (value) => value && value.trim() !== "";
   useEffect(() => {
     dispatch(fetchProject());
-  }, [project_CRUD]);
+  }, [project_CRUD, isNotification]);
 
   useEffect(() => {
     const projectsWithId = reduxProjects.map((project, index) => ({
@@ -32,6 +36,22 @@ export default function ProjectListBlockComponent() {
     setSelectedId(id);
     const selectedProject = projects.find((project) => project.id === id);
     dispatch(selectprojectReducer(selectedProject));
+  };
+  const handleCompanyNameClick = (selected_name, selected_uid) => {
+    dispatch(setUpdateUIDReducer(selected_uid));
+    dispatch(setNotification("更改Company Management"));
+  };
+  const handleBuildingNameClick = (selected_name, selected_uid) => {
+    dispatch(setUpdateUIDReducer(selected_uid));
+    dispatch(setNotification("更改Building Management"));
+  };
+  const handleFloorNameClick = (selected_name, selected_uid) => {
+    dispatch(setUpdateUIDReducer(selected_uid));
+    dispatch(setNotification("更改Floor Management"));
+  };
+  const handleLocationNameClick = (selected_name, selected_uid) => {
+    dispatch(setUpdateUIDReducer(selected_uid));
+    dispatch(setNotification("更改Location Management"));
   };
   return (
     <div className="overflow-x-auto">
@@ -85,29 +105,72 @@ export default function ProjectListBlockComponent() {
                     </label>
                   </td>
                   <td
-                    className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
+                    className={`px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px] ${
+                      isClickable(project.project_company_name)
+                        ? "cursor-pointer"
+                        : ""
+                    }`}
                     title={project.project_company_name}
+                    onClick={() =>
+                      isClickable(project.project_company_name) &&
+                      handleCompanyNameClick(
+                        project.project_company_name,
+                        project.project_company_uid
+                      )
+                    }
                   >
                     {project.project_company_name}
                   </td>
                   <td
-                    className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
+                    className={`px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px] ${
+                      isClickable(project.building_name) ? "cursor-pointer" : ""
+                    }`}
                     title={project.building_name}
+                    onClick={() =>
+                      isClickable(project.building_name) &&
+                      handleBuildingNameClick(
+                        project.building_name,
+                        project.building_uid
+                      )
+                    }
                   >
                     {project.building_name}
                   </td>
-                  <td className="px-5 py-3 border-gray-200 text-sm text-center relative truncate max-w-[30px]">
+                  <td
+                    className={`px-5 py-3 border-gray-200 text-sm text-center relative truncate max-w-[30px] ${
+                      isClickable(project.floor_name) ? "cursor-pointer" : ""
+                    }`}
+                    title={project.floor_name}
+                    onClick={() =>
+                      isClickable(project.floor_name) &&
+                      handleFloorNameClick(
+                        project.floor_name,
+                        project.floor_uid
+                      )
+                    }
+                  >
                     {project.floor_name}
                   </td>
                   <td
-                    className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
+                    className={
+                      "px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px] "
+                    }
                     title={project.hub_uid}
                   >
                     {project.hub_uid[0]}
                   </td>
                   <td
-                    className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
+                    className={`px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px] ${
+                      isClickable(project.location_name) ? "cursor-pointer" : ""
+                    }`}
                     title={project.location_name}
+                    onClick={() =>
+                      isClickable(project.location_name) &&
+                      handleLocationNameClick(
+                        project.location_name,
+                        project.location_uid
+                      )
+                    }
                   >
                     {project.location_name}
                   </td>

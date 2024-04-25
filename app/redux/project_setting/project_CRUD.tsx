@@ -29,6 +29,7 @@ type Project = {
 type ProjectState = {
   selected_project: ProjectItem;
   setcopyfaucet_status: string | null;
+  update_uid: string | null;
   copyfaucetfrom: string | null;
   set_projects: Project[];
   selected_faucet: Array | null;
@@ -39,6 +40,7 @@ type ProjectState = {
 const initialState: ProjectState = {
   selected_project: null,
   setcopyfaucet_status: null,
+  update_uid: null,
   copyfaucetfrom: null,
   selected_faucet: null,
   set_projects: [],
@@ -64,6 +66,7 @@ const handleApiResponse = (response: any) => {
       }))
     : [];
 };
+
 export const setCompanyapi = createAsyncThunk(
   "project_CRUD/setCompany",
   async (companyname: string, thunkAPI) => {
@@ -400,6 +403,9 @@ const project_CRUD_Slice = createSlice({
     setisbindReducer: (state, action: PayloadAction<ProjectItem | null>) => {
       state.isbindfaucet = action.payload;
     },
+    setUpdateUIDReducer: (state, action: PayloadAction<ProjectItem | null>) => {
+      state.update_uid = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -541,5 +547,6 @@ export const {
   selectfaucetReducer,
   setcopyfaucetReducer,
   setcopyfaucetfromReducer,
+  setUpdateUIDReducer,
 } = project_CRUD_Slice.actions;
 export default project_CRUD_Slice.reducer;

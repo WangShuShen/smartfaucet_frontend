@@ -15,8 +15,6 @@ export const Notification: React.FC<CopyNotificationProps> = ({
   selectFaucet,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  console.log(copyFaucetFrom);
-  console.log(selectFaucet);
   return (
     <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-sm w-full flex justify-center items-center flex-col">
       <div className="bg-white flex justify-center items-center mb-4 p-4 rounded w-4/5">

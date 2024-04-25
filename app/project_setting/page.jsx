@@ -13,12 +13,21 @@ import Remove_Building_Notification from "./component/Remove_Building_Notificati
 import Remove_Floor_Notification from "./component/Remove_Floor_Notification";
 import Remove_Hub_Notification from "./component/Remove_Hub_Notification";
 import Remove_Location_Notification from "./component/Remove_Location_Notification";
+import Update_Company_Notification from "./component/Update_Company_Notification";
+import Update_Building_Notification from "./component/Update_Building_Notification";
+import Update_Floor_Notification from "./component/Update_Floor_Notification";
+import Update_Location_Notification from "./component/Update_Location_Notification";
 import Notification from "./component/Notification";
 import CopyNotification from "./component/CopyNotification";
 import { hideNotification } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { setcopyfaucetReducer } from "@/app/redux/project_setting/project_CRUD";
+import {
+  setcopyfaucetReducer,
+  selectfaucetReducer,
+  setcopyfaucetfromReducer,
+  setUpdateUIDReducer,
+} from "@/app/redux/project_setting/project_CRUD";
 export default function Project_setting_Page() {
   const dispatch = useDispatch();
   const { isNotification, notificationMessage } = useSelector(
@@ -28,9 +37,6 @@ export default function Project_setting_Page() {
     (state) => state.project_CRUD.selected_faucet
   );
 
-  const setcopyfaucet_status = useSelector(
-    (state) => state.project_CRUD.setcopyfaucet_status
-  );
   const copyfaucetfrom = useSelector(
     (state) => state.project_CRUD.copyfaucetfrom
   );
@@ -38,6 +44,20 @@ export default function Project_setting_Page() {
     dispatch(hideNotification());
     if (notificationMessage === "選擇要COPY的faucet") {
       dispatch(setcopyfaucetReducer("ready"));
+      dispatch(selectfaucetReducer(null));
+    }
+    if (notificationMessage === "faucet複製完成") {
+      dispatch(setcopyfaucetReducer(null));
+      dispatch(selectfaucetReducer(null));
+      dispatch(setcopyfaucetfromReducer(null));
+    }
+    if (
+      notificationMessage === "更改Company Management" ||
+      notificationMessage === "更改Building Management" ||
+      notificationMessage === "更改Floor Management" ||
+      notificationMessage === "更改Loaction Management"
+    ) {
+      dispatch(setUpdateUIDReducer(null));
     }
   };
   const renderNotificationComponent = () => {
@@ -108,6 +128,34 @@ export default function Project_setting_Page() {
       case "刪除Location Management":
         return (
           <Remove_Location_Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      case "更改Company Management":
+        return (
+          <Update_Company_Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      case "更改Building Management":
+        return (
+          <Update_Building_Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      case "更改Floor Management":
+        return (
+          <Update_Floor_Notification
+            message={notificationMessage}
+            onClose={handleCloseNotification}
+          />
+        );
+      case "更改Location Management":
+        return (
+          <Update_Location_Notification
             message={notificationMessage}
             onClose={handleCloseNotification}
           />

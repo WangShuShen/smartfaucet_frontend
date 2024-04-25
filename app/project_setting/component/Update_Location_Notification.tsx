@@ -1,28 +1,30 @@
 "use client";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setLocationapi } from "@/app/redux/project_setting/project_CRUD";
-
+import { useSelector } from "react-redux";
+import { createApiClient } from "@/utils/apiClient";
 interface NotificationProps {
   message: string;
   onClose: () => void;
 }
+async function useUpdateAPI({ name, uid }) {
+  const apiUrl = process.env.NEXT_PUBLIC_LOCATIONUPDATE_API as string;
+  const postApiClient = createApiClient("post", apiUrl);
 
+  const payload = {
+    location_name: name,
+    location_uid: uid,
+  };
+  const response = await postApiClient(apiUrl, payload);
+}
 export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const selected_project = useSelector(
-    (state: RootState) => state.project_CRUD.selected_project
+  const update_uid = useSelector(
+    (state: RootState) => state.project_CRUD.update_uid
   );
-  const dispatch = useDispatch();
   const handleSave = () => {
-    dispatch(
-      setLocationapi({
-        location_name: inputValue,
-        f_hub_uid: selected_project.hub_uid,
-      })
-    );
+    useUpdateAPI({ name: inputValue, uid: update_uid });
     onClose();
   };
   return (
