@@ -22,6 +22,7 @@ export default function ExampleChart() {
     xaxis: {
       categories: chartData.map((item) => item.date),
     },
+    dataLabels: {enabled: false},
   };
 
   return (
