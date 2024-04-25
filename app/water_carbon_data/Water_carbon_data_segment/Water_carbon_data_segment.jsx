@@ -5,7 +5,7 @@ import Usage from './Usage_component/Usage_component';
 
 export default function Water_carbon_data_Segment({ buildingId }) {
     const [totalUsageWater, setTotalUsageWater] = useState('0 GPM');
-    const [totalUsageCount, setTotalUsageCount] = useState('0 GPM');
+    const [TotalUsageWaterSaved, setTotalUsageWaterSaved] = useState('0 GPM');
 
     useEffect(() => {
         if (!buildingId) return;
@@ -15,8 +15,8 @@ export default function Water_carbon_data_Segment({ buildingId }) {
             building_uid: buildingId
         })
         .then(response => {
-            setTotalUsageWater(`${response.data.total_usage_water} GPM`);
-            setTotalUsageCount(`${response.data.total_usage_count} GPM`);
+            setTotalUsageWater(`${response.data.total_usage_water} GAL`);
+            setTotalUsageWaterSaved(`${response.data.total_usage_water_saved} GAL`);
         })
         .catch(error => console.error('Error fetching building data:', error));
     }, [buildingId]);
@@ -27,7 +27,7 @@ export default function Water_carbon_data_Segment({ buildingId }) {
                 <Usage topText="總流水量" bottomText={totalUsageWater}></Usage>
             </div>
             <div className='w-1/4'>
-                <Usage topText="總用省水量" bottomText={totalUsageCount}></Usage>
+                <Usage topText="總用省水量" bottomText={TotalUsageWaterSaved}></Usage>
             </div>
         </div>
     );
