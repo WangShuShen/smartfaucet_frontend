@@ -17,9 +17,6 @@ export default function ProjectListBlockComponent() {
   const emptyRows = Math.max(5 - projects.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
   const isClickable = (value) => value && value.trim() !== "";
-  useEffect(() => {
-    dispatch(fetchProject());
-  }, [project_CRUD, isNotification]);
 
   useEffect(() => {
     const projectsWithId = reduxProjects.map((project, index) => ({
@@ -30,8 +27,12 @@ export default function ProjectListBlockComponent() {
     if (project_CRUD.selected_project === null && projects.length > 0) {
       setSelectedId(null);
     }
-  }, [reduxProjects]);
-
+  }, [reduxProjects, project_CRUD]);
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(fetchProject());
+    }, 100);
+  }, [project_CRUD, isNotification]);
   const handleSelectChange = (id) => {
     setSelectedId(id);
     const selectedProject = projects.find((project) => project.id === id);

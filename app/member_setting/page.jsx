@@ -8,72 +8,14 @@ import {
   setisbindReducer,
 } from "@/app/redux/project_setting/project_CRUD";
 import axios from "axios";
-async function fetchlistfaucet(hubUid) {
-  try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      hub_uid: hubUid,
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Axios error:", error.response || error.message);
-    return null;
-  }
-}
-async function fetchbindfaucet(location_Uid) {
-  try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      location_uid: location_Uid,
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Axios error:", error.response || error.message);
-    return null;
-  }
-}
-async function bindfaucetapi(location_Uid, faucet_uid) {
-  try {
-    const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      faucet_uid: faucet_uid,
-      f_location_uid: location_Uid,
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Axios error:", error.response || error.message);
-    return null;
-  }
-}
+
 export default function Member_Setting_Page() {
-  const dispatch = useDispatch();
-  const reduxProjects = useSelector((state) => state.project.projects);
-  const project_CRUD = useSelector((state) => state.project_CRUD);
+
   const [projects, setProjects] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const emptyRows = Math.max(10 - projects.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
 
-  useEffect(() => {
-    dispatch(fetchProject());
-  }, [project_CRUD]);
-
-  useEffect(() => {
-    const projectsWithId = reduxProjects.map((project, index) => ({
-      ...project,
-      id: `${project.project_company_uid}-${index}`,
-    }));
-    setProjects(projectsWithId);
-    if (project_CRUD.selected_project === null && projects.length > 0) {
-      setSelectedId(null);
-    }
-  }, [reduxProjects]);
-
-  const handleSelectChange = (id) => {
-    setSelectedId(id);
-    const selectedProject = projects.find((project) => project.id === id);
-    dispatch(selectprojectReducer(selectedProject));
-  };
   return (
     <div>
       <div className="flex justify-end mb-2">
