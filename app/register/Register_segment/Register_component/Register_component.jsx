@@ -33,37 +33,41 @@ export default function Register_Component() {
         if (!email.trim()) {
             console.log('電子郵件是必填項');
             alert('電子郵件是必填項。');
-            // 在这里可以设置错误状态并显示错误消息
             return;
-        }
-        else if (!password.trim() || !confirmPassword.trim()) {
+        } else if (!password.trim() || !confirmPassword.trim()) {
             console.log('密碼和確認新密碼都是必填項');
             alert('密碼和確認新密碼都是必填項。');
             return;
-        }
-        else if (password !== confirmPassword) {
-            // 如果密码不匹配，显示一个警告消息并直接返回，不继续执行后续代码
+        } else if (password !== confirmPassword) {
             alert('密碼與確認密碼不匹配，請重新輸入。');
             return;
         }
-
+    
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('password', password);
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput.files[0]) {
+            formData.append('picture', fileInput.files[0]);
+        }
+    
         try {
             const response = await fetch(process.env.NEXT_PUBLIC_Signup_API, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
+                body: formData  // 注意，我们不设置 'Content-Type': 'multipart/form-data'，浏览器会自动设置
             });
             if (!response.ok) {
                 throw new Error('註冊失敗');
             }
-            console.log('New password set for email');
+            console.log('Registration successful');
+            alert('註冊成功！');
             router.push('/login');
         } catch (error) {
-            alert(error.message);
+            console.error('Error:', error);
+            alert('錯誤: ' + error.message);
         }
     };
+    
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
