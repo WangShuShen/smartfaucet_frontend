@@ -54,11 +54,19 @@ export default function Register_Component() {
         try {
             const response = await fetch(process.env.NEXT_PUBLIC_Signup_API, {
                 method: 'POST',
+                headers: {
+                    // 不推荐这样做，因为这可能导致问题
+                    'Content-Type': `multipart/form-data; boundary=${formData._boundary}`
+                },
                 body: formData  // 注意，我们不设置 'Content-Type': 'multipart/form-data'，浏览器会自动设置
             });
             if (!response.ok) {
-                throw new Error('註冊失敗');
+                response.json().then(data => {
+                    console.error('注册失败:', data.message);  // 假设后端返回了具体的错误消息
+                    alert('注册失败: ' + data.message);
+                });
             }
+            
             console.log('Registration successful');
             alert('註冊成功！');
             router.push('/login');
