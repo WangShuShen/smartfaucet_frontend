@@ -67,7 +67,7 @@ export default function Account_Setting_Page() {
   const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [profile, setProfile] = useState(null);
-  const fileInputRef = useRef(null);
+
   useEffect(() => {
     loadData();
   }, []);
@@ -126,7 +126,7 @@ export default function Account_Setting_Page() {
           <div className="flex flex-col items-center w-full lg:px-40 md:px-5 sm:px-0 xs:px-0 -mt-12">
             <div className="relative">
               <img
-                src={profile}
+                src={profile || "/member_setting/default_profile.svg"}
                 alt="Profile"
                 className="rounded-full"
                 style={{ width: "100px", height: "100px" }}

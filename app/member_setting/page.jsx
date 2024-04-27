@@ -242,7 +242,10 @@ export default function Member_Setting_Page() {
                       >
                         <div className="flex justify-center items-center">
                           <img
-                            src={member.pictureUrl}
+                            src={
+                              member.pictureUrl ||
+                              "/member_setting/default_profile.svg"
+                            }
                             alt="Profile"
                             className="rounded-full h-[50px] w-[50px] mx-4"
                           />
