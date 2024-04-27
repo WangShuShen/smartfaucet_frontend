@@ -31,7 +31,7 @@ export default function ProjectListBlockComponent() {
   useEffect(() => {
     setTimeout(() => {
       dispatch(fetchProject());
-    }, 100);
+    }, 500);
   }, [project_CRUD, isNotification]);
   const handleSelectChange = (id) => {
     setSelectedId(id);
