@@ -111,7 +111,9 @@ const Navbar = () => {
               className="rounded-full mr-2"
               style={{ width: "50px", height: "50px" }}
             />
-            <span className="text-xs mr-2">Hi,{useremail}</span>
+            <span className="text-xs text-white font-bold mr-2">
+              Hi,{useremail}
+            </span>
             <button
               className="btn bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-24 lg:text-lg md:text-md sm:text-sm xs:text-xs"
               onClick={handleLogout}
