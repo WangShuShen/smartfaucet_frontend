@@ -38,8 +38,12 @@ export default function FaucetInfo(faucetUid) {
     );
 
   const handleClick = () => {
-    dispatch(setLoading(true));
-    router.push("/faucet_usage");
+    if (faucet_info?.faucet_uid) {
+      dispatch(setLoading(true));
+      router.push(`/faucet_usage/${faucet_info?.faucet_uid}`);
+    } else {
+      alert("請選擇Faucet！");
+    }
   };
   return (
     <div className="flex card w-1/2 h-72">
@@ -95,11 +99,9 @@ export default function FaucetInfo(faucetUid) {
         </div>
       </div>
       <div className="card-body justify-center text-center -mt-6 -ml-8">
-        <Link href="/faucet_usage">
-          <button className="btn w-full bg-[#118BBB]" onClick={handleClick}>
-            GPM
-          </button>
-        </Link>
+        <button className="btn w-full bg-[#118BBB]" onClick={handleClick}>
+          GPM
+        </button>
       </div>
     </div>
   );

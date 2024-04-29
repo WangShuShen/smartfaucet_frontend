@@ -4,14 +4,14 @@ import FaucetID from "./FaucetID_component/FaucetID_component";
 import Title from "./Title_component/Title_component";
 import UsageGroup from "./UsageGroup_component/UsageGroup_component";
 
-export default function Usage_Segment() {
+export default function Usage_Segment({ faucet_uid }) {
   return (
     <div className="flex justify-between">
       <div className="flex">
         <Title />
-        <FaucetID />
+        <FaucetID faucet_uid={faucet_uid} />
       </div>
-      <UsageGroup />
+      <UsageGroup faucet_uid={faucet_uid} />
     </div>
   );
 }
