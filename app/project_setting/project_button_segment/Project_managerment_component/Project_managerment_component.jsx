@@ -18,7 +18,7 @@ export default function Project_managerment_Component({
           if (isClickable) {
             onClick();
           } else {
-            console.log(
+            console.errpr(
               "Action blocked: Project management operations are not allowed."
             );
           }

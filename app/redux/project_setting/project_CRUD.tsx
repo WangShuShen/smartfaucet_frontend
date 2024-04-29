@@ -28,13 +28,21 @@ type Project = {
 };
 type ProjectState = {
   selected_project: ProjectItem;
+  setcopyfaucet_status: string | null;
+  update_uid: string | null;
+  copyfaucetfrom: string | null;
   set_projects: Project[];
+  selected_faucet: Array | null;
   set_projects_loading: boolean;
   isbindfaucet: boolean;
   set_projects_error: string | null;
 };
 const initialState: ProjectState = {
   selected_project: null,
+  setcopyfaucet_status: null,
+  update_uid: null,
+  copyfaucetfrom: null,
+  selected_faucet: null,
   set_projects: [],
   set_projects_loading: false,
   set_projects_error: null,
@@ -58,6 +66,7 @@ const handleApiResponse = (response: any) => {
       }))
     : [];
 };
+
 export const setCompanyapi = createAsyncThunk(
   "project_CRUD/setCompany",
   async (companyname: string, thunkAPI) => {
@@ -376,8 +385,26 @@ const project_CRUD_Slice = createSlice({
     ) => {
       state.selected_project = action.payload;
     },
+    selectfaucetReducer: (state, action: PayloadAction<ProjectItem | null>) => {
+      state.selected_faucet = action.payload;
+    },
+    setcopyfaucetReducer: (
+      state,
+      action: PayloadAction<ProjectItem | null>
+    ) => {
+      state.setcopyfaucet_status = action.payload;
+    },
+    setcopyfaucetfromReducer: (
+      state,
+      action: PayloadAction<ProjectItem | null>
+    ) => {
+      state.copyfaucetfrom = action.payload;
+    },
     setisbindReducer: (state, action: PayloadAction<ProjectItem | null>) => {
       state.isbindfaucet = action.payload;
+    },
+    setUpdateUIDReducer: (state, action: PayloadAction<ProjectItem | null>) => {
+      state.update_uid = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -514,6 +541,12 @@ const project_CRUD_Slice = createSlice({
       });
   },
 });
-export const { selectprojectReducer, setisbindReducer } =
-  project_CRUD_Slice.actions;
+export const {
+  selectprojectReducer,
+  setisbindReducer,
+  selectfaucetReducer,
+  setcopyfaucetReducer,
+  setcopyfaucetfromReducer,
+  setUpdateUIDReducer,
+} = project_CRUD_Slice.actions;
 export default project_CRUD_Slice.reducer;

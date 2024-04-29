@@ -9,6 +9,7 @@ export type Faucet = {
     | "normalconnection_status"
     | "humanfixed_status"
     | "errorconnection_status";
+  specification: string;
 };
 
 type FaucetsState = {
@@ -37,6 +38,7 @@ export const fetchFaucets = createAsyncThunk<
     return response.data.map((item: any) => ({
       faucet_uid: item.faucet_uid,
       faucet_status: item.faucet_status,
+      specification: item.specification,
     }));
   } catch (error) {
     if (axios.isAxiosError(error)) {

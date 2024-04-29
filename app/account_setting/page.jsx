@@ -1,176 +1,157 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
-import { fetchProject } from "@/app/redux/project_setting/project_list";
-import { selectprojectReducer } from "@/app/redux/project_setting/project_CRUD";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-async function fetchlistfaucet(hubUid) {
+import React, { useState, useEffect, useRef } from "react";
+import { createApiClient } from "@/utils/apiClient";
+async function fetchSelfAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      hub_uid: hubUid,
-    });
+    const apiUrl = process.env.NEXT_PUBLIC_SELFLIST_API;
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {};
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
     return null;
   }
 }
-async function fetchbindfaucet(location_Uid) {
+async function fetchSelfProfileAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      location_uid: location_Uid,
+    const apiUrl = process.env.NEXT_PUBLIC_SELFFIGURE_API;
+    const getApiClient = createApiClient("get", apiUrl);
+    const response = await getApiClient(apiUrl, {
+      responseType: "blob",
     });
+    return URL.createObjectURL(response.data);
+  } catch (error) {
+    console.error("Axios error:", error.response || error.message);
+    return null;
+  }
+}
+async function updateSelfProfileAPI(file) {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_SELFUPDATEFIGURE_API;
+    const postApiClient = createApiClient("post", apiUrl);
+    const formData = new FormData();
+    formData.append("picture", file);
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const response = await postApiClient(apiUrl, formData, config);
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
     return null;
   }
 }
-async function bindfaucetapi(location_Uid, faucet_uid) {
+
+async function updateSelfPasswordAPI({ old_string, new_string }) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      faucet_uid: faucet_uid,
-      f_location_uid: location_Uid,
-    });
+    const apiUrl = process.env.NEXT_PUBLIC_SELFUPDATEPASSWORD_API;
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = { old_password: old_string, new_password: new_string };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
     return null;
   }
 }
-export default function Member_Setting_Page() {
-  const dispatch = useDispatch();
-  const reduxProjects = useSelector((state) => state.project.projects);
-  const project_CRUD = useSelector((state) => state.project_CRUD);
-  const [projects, setProjects] = useState([]);
-  const [selectedId, setSelectedId] = useState(null);
-  const emptyRows = Math.max(10 - projects.length, 0);
-  const emptyRowsArray = Array(emptyRows).fill(null);
-
-  useEffect(() => {
-    dispatch(fetchProject());
-  }, [project_CRUD]);
-
-  useEffect(() => {
-    const projectsWithId = reduxProjects.map((project, index) => ({
-      ...project,
-      id: `${project.project_company_uid}-${index}`,
-    }));
-    setProjects(projectsWithId);
-    if (project_CRUD.selected_project === null && projects.length > 0) {
-      setSelectedId(null);
-    }
-  }, [reduxProjects]);
-
-  const handleSelectChange = (id) => {
-    setSelectedId(id);
-    const selectedProject = projects.find((project) => project.id === id);
-    dispatch(selectprojectReducer(selectedProject));
-  };
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [verification, setVerification] = useState("");
+export default function Account_Setting_Page() {
+  const [useremail, setUseremail] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [currentStep, setCurrentStep] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
+  const [profile, setProfile] = useState(null);
 
-  const handleLoginSubmit = (event) => {
-    event.preventDefault();
-    if (!username.trim() || !password.trim()) {
-      console.log("使用者名稱和密碼都是必填項");
-      alert("使用者名稱和密碼都是必填項。");
+  useEffect(() => {
+    loadData();
+  }, []);
+  async function loadData() {
+    const response = await fetchSelfAPI();
+    const profile_response = await fetchSelfProfileAPI();
+    setProfile(profile_response);
+    setUseremail(response.email);
+  }
+  const handleNewPasswordSubmit = async (e) => {
+    e.preventDefault();
+    if (!oldPassword || !newPassword) {
+      alert("舊密碼或新密碼不能為空！");
       return;
     }
-    console.log("Login attempt");
-    router.push("/project_setting");
-  };
 
-  const handleForgotPasswordClick = () => {
-    setCurrentStep("forgotPassword");
-    router.push("/login?step=forgotPassword");
-    setShowPassword(false);
-  };
-
-  const handleForgotPasswordSubmit = (event) => {
-    event.preventDefault();
-    if (!email.trim()) {
-      console.log("電子郵件是必填項");
-      alert("電子郵件是必填項。");
-      // 在这里可以设置错误状态并显示错误消息
-      return;
+    try {
+      await updateSelfPasswordAPI({
+        old_string: oldPassword,
+        new_string: newPassword,
+      });
+      alert("密碼更新成功！");
+      setOldPassword("");
+      setNewPassword("");
+    } catch (error) {
+      if (error.response && error.response.data) {
+        alert(`錯誤: ${error.response.data.message}`);
+      } else {
+        alert("更新密碼時發生未知錯誤。");
+      }
     }
-    console.log("Request temporary password for email");
-    // 假設下一步是輸入驗證碼
-    setCurrentStep("verification");
-    router.push("/login?step=verification");
+    loadData();
   };
-
-  const handleVerificationSubmit = (event) => {
-    event.preventDefault();
-    if (!verification.trim()) {
-      console.log("臨時密碼是必填項");
-      alert("臨時密碼是必填項。");
-      // 在这里可以设置错误状态并显示错误消息
-      return;
-    }
-    console.log("Temporary password verification for verification");
-    setCurrentStep("newPassword");
-    router.push("/login?step=newPassword");
-    setShowPassword(false);
-  };
-
-  const handleNewPasswordSubmit = (event) => {
-    event.preventDefault();
-    if (!newPassword.trim() || !confirmPassword.trim()) {
-      console.log("新密碼和確認新密碼都是必填項");
-      alert("新密碼和確認新密碼都是必填項。");
-      return;
-    } else if (newPassword !== confirmPassword) {
-      // 如果密码不匹配，显示一个警告消息并直接返回，不继续执行后续代码
-      alert("新密碼與確認密碼不匹配，請重新輸入。");
-      return;
-    }
-    console.log("New password set for email");
-    setCurrentStep("login");
-    router.push("/login");
-    setUsername("");
-    setPassword("");
-    setVerification("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setEmail("");
-    setShowPassword(false);
-  };
-
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+  const triggerFileInput = () => {
+    document.getElementById("fileInput").click();
+  };
+  const handleFileSelect = (event) => {
+    const fileInput = document.getElementById("fileInput");
+    if (fileInput.files[0]) {
+      const imageUrl = URL.createObjectURL(fileInput.files[0]);
+      setProfile(imageUrl);
+      updateSelfProfileAPI(fileInput.files[0]);
+    }
+    loadData();
   };
   return (
     <div>
       <div className="flex items-center justify-start h-screen">
-        <div className="container mx-auto p-4 bg-white lg:w-[40%] md:w-[40%] sm:w-[60%] xs:w-[80%] lg:h-[500px] md:h-[400px] sm:h-[400px] xs:h-[300px] rounded-md">
+        <div className="container mx-auto p-4 bg-white lg:w-[40%] md:w-[40%] sm:w-[60%] xs:w-[80%] lg:h-[70%] md:h-[100%] sm:h-[100%] xs:h-[100%] rounded-lg">
           <div className="text-[#02253C] text-3xl font-semibold my-16 flex justify-center">
             帳號設定
           </div>
-
-          <form
-            onSubmit={handleNewPasswordSubmit}
-            className="flex flex-col items-center w-full lg:px-40 md:px-5 sm:px-0 xs:px-0"
-          >
+          <div className="flex flex-col items-center w-full lg:px-40 md:px-5 sm:px-0 xs:px-0 -mt-12">
+            <div className="relative">
+              <img
+                src={profile || "/member_setting/default_profile.svg"}
+                alt="Profile"
+                className="rounded-full"
+                style={{ width: "100px", height: "100px" }}
+              />
+              <button
+                className="absolute bottom-0 right-0 p-2 bg-[#118BBB] rounded-full"
+                onClick={triggerFileInput}
+              >
+                <img src="/account_setting/edit.svg" alt="Edit Icon" />
+              </button>
+              <input
+                type="file"
+                id="fileInput"
+                accept="image/*"
+                onChange={handleFileSelect}
+                className="hidden"
+              />
+            </div>
+          </div>
+          <form className="flex flex-col items-center w-full lg:px-40 md:px-5 sm:px-0 xs:px-0 lg:mt-5 md:mt-15">
             <div className="w-full flex items-center justify-start pl-4">
               <img src="/register_user.svg" alt="User" className="mr-2" />
-              <span className="font-[#02253C] font-bold">
-                tapdino@gmail.com
-              </span>
+              <span className="font-[#02253C] font-bold">{useremail}</span>
             </div>
-            <div className="flex items-center justify-start w-full pl-4">
+            <div className="flex items-center justify-start w-full pl-4 mt-2">
               <img
                 src="/register_pwd.svg"
                 alt="Verification"
@@ -179,10 +160,10 @@ export default function Member_Setting_Page() {
               <div className="flex-1 border-b-2 border-neutral-500 flex items-center justify-between">
                 <input
                   type={showPassword ? "text" : "password"}
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="新密碼"
-                  className="p-2 font-semibold focus:outline-none"
+                  value={oldPassword}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  placeholder="請輸入舊密碼"
+                  className="p-2 font-semibold focus:outline-none -ml-2"
                 />
                 <img
                   src="/register_pwd_eye.svg"
@@ -193,14 +174,18 @@ export default function Member_Setting_Page() {
               </div>
             </div>
             <div className="flex items-center mt-2 justify-start w-full pl-4">
-              <img src="/confirm.svg" alt="Verification" className="mr-2" />
+              <img
+                src="/confirm.svg"
+                alt="Verification"
+                className="-ml-1 mr-2"
+              />
               <div className="flex-1 border-b-2 border-neutral-500 flex items-center justify-between">
                 <input
                   type={showPassword ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="再次輸入新密碼"
-                  className="p-2 font-semibold focus:outline-none"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="請輸入新密碼"
+                  className="p-2 font-semibold focus:outline-none -ml-2"
                 />
                 <img
                   src="/register_pwd_eye.svg"
@@ -211,6 +196,7 @@ export default function Member_Setting_Page() {
               </div>
             </div>
             <button
+              onClick={handleNewPasswordSubmit}
               type="submit"
               className="bg-[#0096CA] text-white font-semibold text-xl rounded-lg p-2 mt-12 w-[80%]"
             >

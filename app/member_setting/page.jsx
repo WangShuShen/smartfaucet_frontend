@@ -1,44 +1,95 @@
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/app/redux/store";
-import { fetchProject } from "@/app/redux/project_setting/project_list";
-import {
-  selectprojectReducer,
-  setisbindReducer,
-} from "@/app/redux/project_setting/project_CRUD";
-import axios from "axios";
-async function fetchlistfaucet(hubUid) {
+import React, { useState, useEffect } from "react";
+import { createApiClient } from "@/utils/apiClient";
+import Notification from "./component/Revise_Password_Notification.tsx";
+class Member {
+  constructor(memberData) {
+    this.id = memberData.email;
+    this.email = memberData.email;
+    this.isActive = memberData.is_active;
+    this.lastLogin = memberData.last_login;
+    this.role = memberData.role;
+    this.pictureUrl = memberData.picture_url || "/default_profile.svg";
+  }
+
+  get isActiveText() {
+    return this.isActive ? "有效" : "無效";
+  }
+
+  get formattedLastLogin() {
+    return this.lastLogin
+      ? new Date(this.lastLogin).toLocaleString()
+      : "從未登入";
+  }
+
+  async fetchProfileImage() {
+    if (!this.pictureUrl.startsWith("http")) {
+      return `/member_setting${this.pictureUrl}`;
+    }
+
+    try {
+      const getApiClient = createApiClient("get", this.pictureUrl);
+      const response = await getApiClient(this.pictureUrl, {
+        responseType: "blob",
+      });
+      return URL.createObjectURL(response.data);
+    } catch (error) {
+      console.error("Error fetching image:", error);
+      return "/default_profile.svg";
+    }
+  }
+}
+async function fetchMemberAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      hub_uid: hubUid,
-    });
+    const apiUrl = process.env.NEXT_PUBLIC_MEMBERLIST_API;
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = {};
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
     return null;
   }
 }
-async function fetchbindfaucet(location_Uid) {
+async function authorizeMemberAPI(email_string) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      location_uid: location_Uid,
-    });
+    const apiUrl = process.env.NEXT_PUBLIC_MEMBERAUTHORIZE_API;
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = { email: email_string };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
     return null;
   }
 }
-async function bindfaucetapi(location_Uid, faucet_uid) {
+async function unauthorizeMemberAPI(email_string) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API;
-    const response = await axios.post(apiUrl, {
-      faucet_uid: faucet_uid,
-      f_location_uid: location_Uid,
-    });
+    const apiUrl = process.env.NEXT_PUBLIC_MEMBERUNAUTHORIZE_API;
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = { email: email_string };
+    const response = await postApiClient(apiUrl, payload);
+
+    return response.data;
+  } catch (error) {
+    console.error("Axios error:", error.response || error.message);
+    return null;
+  }
+}
+
+async function deleteMemberAPI(email_string) {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_MEMBERDELETE_API;
+    const postApiClient = createApiClient("post", apiUrl);
+
+    const payload = { email: email_string };
+    const response = await postApiClient(apiUrl, payload);
+
     return response.data;
   } catch (error) {
     console.error("Axios error:", error.response || error.message);
@@ -46,44 +97,98 @@ async function bindfaucetapi(location_Uid, faucet_uid) {
   }
 }
 export default function Member_Setting_Page() {
-  const dispatch = useDispatch();
-  const reduxProjects = useSelector((state) => state.project.projects);
-  const project_CRUD = useSelector((state) => state.project_CRUD);
-  const [projects, setProjects] = useState([]);
+  const [members, setMembers] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
-  const emptyRows = Math.max(10 - projects.length, 0);
+  const emptyRows = Math.max(10 - members.length, 0);
   const emptyRowsArray = Array(emptyRows).fill(null);
-
+  const [isNotification, setisNotification] = useState(false);
   useEffect(() => {
-    dispatch(fetchProject());
-  }, [project_CRUD]);
-
-  useEffect(() => {
-    const projectsWithId = reduxProjects.map((project, index) => ({
-      ...project,
-      id: `${project.project_company_uid}-${index}`,
-    }));
-    setProjects(projectsWithId);
-    if (project_CRUD.selected_project === null && projects.length > 0) {
-      setSelectedId(null);
+    loadData();
+  }, []);
+  async function loadData() {
+    const response = await fetchMemberAPI();
+    if (response) {
+      const membersData = response.map((member) => new Member(member));
+      const membersWithImages = await Promise.all(
+        membersData.map(async (member) => ({
+          ...member,
+          pictureUrl: await member.fetchProfileImage(),
+          isActiveText: member.isActiveText,
+          formattedLastLogin: member.formattedLastLogin,
+        }))
+      );
+      setMembers(membersWithImages);
     }
-  }, [reduxProjects]);
-
+  }
   const handleSelectChange = (id) => {
     setSelectedId(id);
-    const selectedProject = projects.find((project) => project.id === id);
-    dispatch(selectprojectReducer(selectedProject));
+  };
+
+  const handleAuthorize = async () => {
+    if (selectedId) {
+      await authorizeMemberAPI(selectedId);
+      loadData();
+    }
+  };
+
+  const handleUnauthorize = async () => {
+    if (selectedId) {
+      await unauthorizeMemberAPI(selectedId);
+      loadData();
+    }
+  };
+
+  const handleChangePassword = async (newPassword) => {
+    setisNotification(true);
+  };
+
+  const handleDelete = async () => {
+    if (selectedId) {
+      await deleteMemberAPI(selectedId);
+      loadData();
+    }
+  };
+  const handleCloseNotification = () => {
+    setisNotification(false);
   };
   return (
     <div>
-      <div className="flex justify-end mb-2">
-        <button className="btn bg-[#118BBB] mr-2">
-          <img src="/member_setting/revise.svg" className="text-bold"></img>
+      {isNotification && (
+        <div className="fixed inset-0 flex justify-center items-center z-50">
+          <Notification
+            email={selectedId}
+            onClose={handleCloseNotification}
+          ></Notification>
+        </div>
+      )}
+      <div className="lg:flex justify-end mb-2 xs:block sm:inline-block">
+        <button
+          onClick={handleAuthorize}
+          className="btn lg:btn-lg xs:btn-sm bg-[#118BBB] mr-2"
+          disabled={!selectedId}
+        >
           授權使用者
         </button>
-        <button className="btn bg-[#118BBB]">
-          <img src="/member_setting/edit.svg" className="text-bold"></img>
-          編輯使用者
+        <button
+          onClick={handleUnauthorize}
+          className="btn lg:btn-lg xs:btn-sm bg-[#118BBB] mr-2"
+          disabled={!selectedId}
+        >
+          註銷使用者
+        </button>
+        <button
+          onClick={handleChangePassword}
+          className="btn lg:btn-lg xs:btn-sm bg-[#118BBB] mr-2"
+          disabled={!selectedId}
+        >
+          更改密碼
+        </button>
+        <button
+          onClick={handleDelete}
+          className="btn lg:btn-lg xs:btn-sm bg-[#118BBB] mr-2"
+          disabled={!selectedId}
+        >
+          刪除使用者
         </button>
       </div>
       <div className="flex justify-center item-center ">
@@ -96,7 +201,7 @@ export default function Member_Setting_Page() {
                     <th className="sticky top-0 z-10 px-5 py-3 bg-[#EFEFEF] text-center text-xs text-[#5F6162] uppercase tracking-wider ${hasUpdated.company ? 'bg-[#007BFF]' : 'bg-[#EFEFEF]'} text-[#5F6162]`}">
                       選取
                     </th>
-                    <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
+                    <th className="sticky top-0 z-10 px-5 py-3 text-start text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
                       使用者帳號
                     </th>
                     <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
@@ -108,19 +213,19 @@ export default function Member_Setting_Page() {
                   </tr>
                 </thead>
                 <tbody className="bg-[#EFEFEF]">
-                  {projects.map((project, index) => (
-                    <tr key={project.id}>
-                      <td className="px-5 py-3 border-gray-200 text-sm ">
-                        <label className="flex cursor-pointer">
+                  {members.map((member, index) => (
+                    <tr key={member.id}>
+                      <td className="px-2 py-3 border-gray-200 text-sm text-center">
+                        <label className="flex cursor-pointer justify-center">
                           <input
                             type="radio"
                             name="projectSelection"
-                            checked={selectedId === project.id}
-                            onChange={() => handleSelectChange(project.id)}
+                            checked={selectedId === member.id}
+                            onChange={() => handleSelectChange(member.id)}
                             className="sr-only"
                           />
-                          <span className="block w-4 h-4 rounded bg-[#D9D9D9] ml-14 relatives">
-                            {selectedId === project?.id && (
+                          <span className="block w-4 h-4 rounded bg-[#D9D9D9] ml-0 relatives">
+                            {selectedId === member?.id && (
                               <svg className="w-3 h-3" viewBox="0 0 18 24">
                                 <path
                                   fill="#0C659E"
@@ -132,19 +237,29 @@ export default function Member_Setting_Page() {
                         </label>
                       </td>
                       <td
-                        className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
-                        title={project.project_company_name}
+                        className="flex justify-start items-center px-0 py-3 border-gray-200 text-sm truncate max-w-[400px]"
+                        title={member.email}
                       >
-                        {project.project_company_name}
+                        <div className="flex justify-center items-center">
+                          <img
+                            src={
+                              member.pictureUrl ||
+                              "/member_setting/default_profile.svg"
+                            }
+                            alt="Profile"
+                            className="rounded-full h-[50px] w-[50px] mx-4"
+                          />
+                          <span>{member.email}</span>
+                        </div>
                       </td>
                       <td
                         className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
-                        title={project.building_name}
+                        title={member.isActiveText}
                       >
-                        {project.building_name}
+                        {member.isActiveText}
                       </td>
                       <td className="px-5 py-3 border-gray-200 text-sm text-center relative truncate max-w-[30px]">
-                        {project.floor_name}
+                        {member.formattedLastLogin}
                       </td>
                     </tr>
                   ))}

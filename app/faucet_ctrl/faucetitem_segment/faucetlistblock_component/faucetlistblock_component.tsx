@@ -5,7 +5,8 @@ import {
   useFaucetUsage,
 } from "@/app/faucet_ctrl/faucetitem_segment/faucetinfo_component/service/faucetinfo_hooks";
 import { useFaucetSetting } from "@/app/faucet_ctrl/faucet_control_segment/service/faucet_control_segment_hook";
-
+import { useDispatch } from "react-redux";
+import { setFaucetSpecification } from "@/app/redux/faucet_ctrl/faucet_info";
 type Faucet = {
   faucet_uid: string;
   faucet_status:
@@ -13,22 +14,35 @@ type Faucet = {
     | "normalconnection_status"
     | "humanfixed_status"
     | "errorconnection_status";
+  specification: string;
 };
 
 export default function FaucetListBlock_Component({ location }) {
+  const dispatch = useDispatch();
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [selectedFaucetUid, setSelectedFaucetUid] = useState<string | null>(
     null
   );
+  const [selectedSpecification, setSelectedSpecification] = useState<
+    string | null
+  >(null);
   const { faucets, loading, error } = useFaucetListBlock({ location });
-
   const faucetInfo = useFaucetInfo(selectedFaucetUid || "");
   const faucetusage = useFaucetUsage(selectedFaucetUid || "");
   const faucetsetting = useFaucetSetting(selectedFaucetUid || "");
   const handleFaucetClick = (faucetUid: string, index: number) => {
     setSelectedCard(index);
     setSelectedFaucetUid(faucetUid);
+    const spec = findFaucetSpecification(faucetUid);
+    dispatch(setFaucetSpecification(spec));
+    setSelectedSpecification(spec);
   };
+
+  const findFaucetSpecification = (faucetUid: string): string | null => {
+    const faucet = faucets.find((f) => f.faucet_uid === faucetUid);
+    return faucet ? faucet.specification : null;
+  };
+
   const getRingColor = (
     status: Faucet["faucet_status"],
     isSelected: boolean
@@ -63,7 +77,7 @@ export default function FaucetListBlock_Component({ location }) {
     );
   return (
     <div className="flex">
-      <div className="flex bg-[#EFEFEF] overflow-x-auto rounded-md h-76">
+      <div className="flex bg-[#EFEFEF] overflow-x-auto rounded-md h-76 ">
         <div className="flex flex-nowrap">
           {faucets.map((faucet: Faucet, index) => (
             <div
@@ -82,9 +96,9 @@ export default function FaucetListBlock_Component({ location }) {
                   className="mb-4 z-10 pb-2"
                 />
                 <img
-                  src="/faucet_ctrl/TAP-145015.svg"
-                  alt="TAP-145015"
-                  className="mb-2 z-10"
+                  src={`/faucet_ctrl/${faucet.specification}.svg`}
+                  alt={faucet.specification}
+                  className="mb-2 z-10 w-[144px] h-[171px]"
                 />
                 <div
                   className={`absolute top-8 left-4 right-4 bottom-16 rounded-lg ${getRingColor(

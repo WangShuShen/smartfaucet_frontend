@@ -1,8 +1,10 @@
-import React from 'react';
-import { useFaucetUsageData } from './service/UsageGroup_hooks';
+import React from "react";
+import { useFaucetUsageData } from "./service/UsageGroup_hooks";
 
-export default function UsageGroup_Component() {
-  const { latestUpdate, loading_usage, error_usage } = useFaucetUsageData();
+export default function UsageGroup_Component({ faucet_uid }) {
+  const { latestUpdate, loading_usage, error_usage } = useFaucetUsageData({
+    faucet_uid,
+  });
 
   if (loading_usage) return <div>Loading...</div>;
   if (error_usage) return <div>Error: {error_usage}</div>;
@@ -13,7 +15,7 @@ export default function UsageGroup_Component() {
         <div className="flex">
           <div className="font-bold text-[#118BBB]">總啟動次數 ▸ </div>
           <div className="font-bold text-[#5F6162]">
-            {latestUpdate ? `${latestUpdate.total_usage_count}次` : 'N/A'}
+            {latestUpdate ? `${latestUpdate.total_usage_count}次` : "N/A"}
           </div>
         </div>
       </div>
@@ -21,7 +23,7 @@ export default function UsageGroup_Component() {
         <div className="flex">
           <div className="font-bold text-[#118BBB]">總啟動時間 ▸ </div>
           <div className="font-bold text-[#5F6162]">
-            {latestUpdate ? `${latestUpdate.total_usage_time}秒` : 'N/A'}
+            {latestUpdate ? `${latestUpdate.total_usage_time}秒` : "N/A"}
           </div>
         </div>
       </div>
@@ -29,10 +31,10 @@ export default function UsageGroup_Component() {
         <div className="flex">
           <div className="font-bold text-[#118BBB]">總流量 ▸ </div>
           <div className="font-bold text-[#5F6162]">
-            {latestUpdate ? `${latestUpdate.total_usage_water}gal` : 'N/A'}
+            {latestUpdate ? `${latestUpdate.total_usage_water}gal` : "N/A"}
           </div>
         </div>
       </div>
     </div>
- );
+  );
 }

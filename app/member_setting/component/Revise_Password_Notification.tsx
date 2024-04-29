@@ -1,35 +1,44 @@
 "use client";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setLocationapi } from "@/app/redux/project_setting/project_CRUD";
-
+import { useDispatch } from "react-redux";
+import { createApiClient } from "@/utils/apiClient";
 interface NotificationProps {
   message: string;
   onClose: () => void;
 }
+async function updateMemberAPI({ email_string, new_password }) {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_MEMBERUPDATE_API;
+    const postApiClient = createApiClient("post", apiUrl);
 
-export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
+    const payload = { email: email_string, password: new_password };
+    const response = await postApiClient(apiUrl, payload);
+
+    return response.data;
+  } catch (error) {
+    console.error("Axios error:", error.response || error.message);
+    return null;
+  }
+}
+export const Notification: React.FC<NotificationProps> = ({
+  email,
+  onClose,
+}) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const selected_project = useSelector(
-    (state: RootState) => state.project_CRUD.selected_project
-  );
   const dispatch = useDispatch();
-  const handleSave = () => {
-    dispatch(
-      setLocationapi({
-        location_name: inputValue,
-        f_hub_uid: selected_project.hub_uid,
-      })
-    );
+  const handleSave = async () => {
+    await updateMemberAPI({ email_string: email, new_password: inputValue });
     onClose();
   };
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-md w-full">
         <div className="flex items-center">
-          <label className="text-[#0C659E] mr-3 font-medium">位置：</label>
+          <label className="text-[#0C659E] mr-3 font-medium">
+            欲更改的密碼：
+          </label>
           <input
             type="text"
             value={inputValue}

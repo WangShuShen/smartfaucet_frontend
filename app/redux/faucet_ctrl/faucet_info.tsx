@@ -10,6 +10,7 @@ export type Faucet_Info = {
     | "humanfixed_status"
     | "errorconnection_status";
   faucet_hierarchy: string;
+  specification: string;
 };
 
 type Faucet_Info_State = {
@@ -43,6 +44,7 @@ export const fetchFaucetInfo = createAsyncThunk<
       faucet_uid: response.data.faucet_uid,
       faucet_status: response.data.faucet_status,
       faucet_hierarchy: response.data.faucet_hierarchy,
+      specification: response.data.specification,
     };
 
     return faucetInfo;
@@ -60,7 +62,13 @@ export const fetchFaucetInfo = createAsyncThunk<
 const faucetsInfoSlice = createSlice({
   name: "faucetinfo",
   initialState,
-  reducers: {},
+  reducers: {
+    setFaucetSpecification: (state, action) => {
+      if (state.faucet_info) {
+        state.faucet_info.specification = action.payload;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchFaucetInfo.pending, (state) => {
@@ -76,5 +84,5 @@ const faucetsInfoSlice = createSlice({
       });
   },
 });
-
+export const { setFaucetSpecification } = faucetsInfoSlice.actions;
 export default faucetsInfoSlice.reducer;

@@ -3,9 +3,9 @@ import { RootState } from "@/app/redux/store";
 
 export const useChartData = () => {
   const { weeklyData, monthlyData, yearlyData, selectedTimeFrame } =
-    useSelector((state: RootState) => state.faucetFigure);
+    useSelector((state) => state.faucetFigure);
 
-  let data: any[] = [];
+  let data = [];
 
   switch (selectedTimeFrame) {
     case "周":

@@ -1,16 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFaucetSetting } from "@/app/redux/faucet_ctrl/faucet_control";
-import type { RootState, AppDispatch } from "@/app/redux/store";
 
 import { createApiClient } from "@/utils/apiClient";
-export const useFaucetSetting = (faucetUid: string) => {
-  const dispatch = useDispatch<AppDispatch>();
+export const useFaucetSetting = (faucetUid) => {
+  const dispatch = useDispatch();
   const { faucetDetail, loading_detail, error_detail } = useSelector(
-    (state: RootState) => state.faucetSetting
+    (state) => state.faucetSetting
   );
   const faucetuid = useSelector(
-    (state: RootState) => state.faucetinfo.faucet_info?.faucet_uid
+    (state) => state.faucetinfo.faucet_info?.faucet_uid
   );
   useEffect(() => {
     if (
@@ -24,7 +23,7 @@ export const useFaucetSetting = (faucetUid: string) => {
   return { faucetDetail, loading_detail, error_detail };
 };
 
-export const saveFaucetSettings = async (faucetUid: string, settings: any) => {
+export const saveFaucetSettings = async (faucetUid, settings) => {
   try {
     const API_BASE_URL = process.env.NEXT_PUBLIC_FETCH_SAVE_FAUCET_SETTING_API;
 
@@ -52,6 +51,20 @@ export const saveFaucetSettings = async (faucetUid: string, settings: any) => {
     const payload = {
       faucet_uid: faucetUid,
       ...formattedSettings,
+    };
+    const response = await postApiClient(API_BASE_URL, payload);
+  } catch (error) {
+    console.error("Error saving faucet settings:", error);
+  }
+};
+
+export const resetFaucetSettings = async (faucetUid) => {
+  try {
+    const API_BASE_URL = process.env.NEXT_PUBLIC_FETCH_RESET_FAUCET_SETTING_API;
+
+    const postApiClient = createApiClient("post", API_BASE_URL);
+    const payload = {
+      faucet_uid: faucetUid,
     };
     const response = await postApiClient(API_BASE_URL, payload);
   } catch (error) {
