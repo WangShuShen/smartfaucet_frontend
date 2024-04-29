@@ -47,6 +47,8 @@ class ApiFactory {
             ] = `Bearer ${refreshResponse.data.accessToken}`;
             return client(originalRequest);
           } catch (refreshError) {
+                localStorage.removeItem("refreshToken");
+                localStorage.removeItem("accessToken");
             return Promise.reject(refreshError);
           }
         }

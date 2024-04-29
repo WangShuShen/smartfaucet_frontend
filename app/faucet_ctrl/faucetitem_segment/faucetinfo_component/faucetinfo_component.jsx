@@ -4,12 +4,14 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useFaucetInfo, useFaucetUsage } from "./service/faucetinfo_hooks";
 import { setLoading } from "@/app/redux/app/app";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function FaucetInfo(faucetUid) {
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const specification = useSelector(
+    (state) => state.faucetinfo.faucet_info?.specification
+  );
   const { faucet_info, loading_info, error_info } = useFaucetInfo(faucetUid);
   const { latestUpdate, loading_usage, error_usage } =
     useFaucetUsage(faucetUid);
@@ -40,7 +42,7 @@ export default function FaucetInfo(faucetUid) {
   const handleClick = () => {
     if (faucet_info?.faucet_uid) {
       dispatch(setLoading(true));
-      router.push(`/faucet_usage/${faucet_info?.faucet_uid}`);
+      router.push(`/faucet_usage/${faucet_info?.faucet_uid}/${specification}`);
     } else {
       alert("請選擇Faucet！");
     }

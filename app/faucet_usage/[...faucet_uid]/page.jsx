@@ -12,10 +12,14 @@ export default function Faucet_usage_Page({ params }) {
   useEffect(() => {
     dispatch(setLoading(false));
   }, [dispatch]);
+  console.log(params);
   return (
     <div className="block">
-      <Usage_Segment faucet_uid={params.faucet_uid} />
-      <Figure_Segment faucet_uid={params.faucet_uid} />
+      <Usage_Segment
+        faucet_uid={params.faucet_uid[0]}
+        specification={params.faucet_uid[1]}
+      />
+      <Figure_Segment faucet_uid={params.faucet_uid[0]} />
     </div>
   );
 }

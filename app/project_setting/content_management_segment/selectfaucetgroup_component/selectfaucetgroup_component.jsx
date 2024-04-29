@@ -168,7 +168,7 @@ export default function SelectFaucetGroupComponent() {
                     <tr key={faucet.faucet_uid}>
                       <td className="pl-10 py-0 text-sm h-30">
                         <img
-                          src={"/project_setting/TAP-145015.svg"}
+                          src={`/project_setting/${faucet.specification}.svg`}
                           alt={faucet.faucet_name}
                           className="w-18 h-16"
                         />
@@ -212,7 +212,7 @@ export default function SelectFaucetGroupComponent() {
                     <tr key={unbindfaucet.faucet_uid}>
                       <td className="pl-10 py-0 text-sm h-30">
                         <img
-                          src={"/project_setting/TAP-145015.svg"}
+                          src={`/project_setting/${unbindfaucet.specification}.svg`}
                           alt={unbindfaucet.faucet_name}
                           className="w-18 h-16"
                         />

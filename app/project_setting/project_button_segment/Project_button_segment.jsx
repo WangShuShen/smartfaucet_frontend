@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { setNotification } from "@/app/redux/app/app";
 import { setcopyfaucetfromReducer } from "@/app/redux/project_setting/project_CRUD";
 import { createApiClient } from "@/utils/apiClient";
+import { setLoading } from "@/app/redux/app/app";
 async function useCopyFaucet({ faucet_Uids, from_faucet_Uid }) {
   const apiUrl = process.env.NEXT_PUBLIC_FETCH_COPY_FAUCET_SETTING_API;
   const postApiClient = createApiClient("post", apiUrl);
@@ -46,6 +47,7 @@ export default function Project_button_Segment() {
   const copyfaucetfrom = useSelector(
     (state) => state.project_CRUD.copyfaucetfrom
   );
+  const loading_info = useSelector((state) => state);
   const isbind = useSelector((state) => state.project_CRUD.isbindfaucet);
   const router = useRouter();
   useEffect(() => {
@@ -156,8 +158,10 @@ export default function Project_button_Segment() {
       imgSrc: "/project_setting/project_setting_edit.svg",
       text: "編輯位置",
       clickable: isbind,
-      onClick: () =>
-        router.push(`/faucet_ctrl/${selected_project.location_uid}`),
+      onClick: () => {
+        dispatch(setLoading(true));
+        router.push(`/faucet_ctrl/${selected_project.location_uid}`);
+      },
     },
     {
       imgSrc: "/project_setting/project_setting_copy.svg",
