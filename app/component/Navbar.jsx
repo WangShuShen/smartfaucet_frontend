@@ -127,7 +127,6 @@ const Navbar = () => {
         <AnimatedMenu isOpen={isOpen}>
           <div className="my-20 overflow-y-auto max-h-200">
             <AnimatedLink href="/project_setting">專案設定</AnimatedLink>
-            <AnimatedLink href="/faucet_ctrl">水龍頭控制狀態</AnimatedLink>
             <AnimatedLink href="/water_carbon_data">
               用水和碳排數據
             </AnimatedLink>
