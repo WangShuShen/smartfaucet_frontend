@@ -12,7 +12,6 @@ export default function Faucet_usage_Page({ params }) {
   useEffect(() => {
     dispatch(setLoading(false));
   }, [dispatch]);
-  console.log(params);
   return (
     <div className="block">
       <Usage_Segment

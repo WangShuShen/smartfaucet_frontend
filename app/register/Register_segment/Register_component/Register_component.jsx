@@ -31,13 +31,13 @@ export default function Register_Component() {
     const handleRegisterSubmit = async (event) => {
         event.preventDefault();
         if (!email.trim()) {
-            console.log('電子郵件是必填項');
+
             alert('電子郵件是必填項。');
             // 在这里可以设置错误状态并显示错误消息
             return;
         }
         else if (!password.trim() || !confirmPassword.trim()) {
-            console.log('密碼和確認新密碼都是必填項');
+  
             alert('密碼和確認新密碼都是必填項。');
             return;
         }
@@ -58,7 +58,7 @@ export default function Register_Component() {
             if (!response.ok) {
                 throw new Error('註冊失敗');
             }
-            console.log('New password set for email');
+
             router.push('/login');
         } catch (error) {
             alert(error.message);
