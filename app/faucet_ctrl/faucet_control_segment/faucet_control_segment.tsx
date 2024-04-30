@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ControlButton from "./components/control_button";
 import Slider from "./components/slider";
 import DropdownButton from "./components/dropdown_button";
@@ -15,7 +15,21 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/app/redux/store";
 import { setNotification } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
+import { createApiClient } from "@/utils/apiClient";
+async function fetchSelfAPI() {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_SELFLIST_API;
+    const postApiClient = createApiClient("post", apiUrl);
 
+    const payload = {};
+    const response = await postApiClient(apiUrl, payload);
+
+    return response.data;
+  } catch (error) {
+    console.error("Axios error:", error.response || error.message);
+    return null;
+  }
+}
 const waterShutoffDelayOptions = [
   { label: "1sec", value: "1" },
   { label: "10sec", value: "10" },
@@ -142,6 +156,7 @@ export default function Faucet_Control_Segment({ location }) {
   const faucet_status = useSelector(
     (state: RootState) => state.faucetinfo.faucet_info?.faucet_status
   );
+  const [role, setRole] = useState("");
   const disabledStyle = {
     opacity:
       !faucetuid ||
@@ -158,10 +173,21 @@ export default function Faucet_Control_Segment({ location }) {
         ? "none"
         : "auto",
   };
+  const disabledStyle_role = {
+    opacity: role === "manager" ? 1 : 0.5,
+    pointerEvents: role === "manager" ? "auto" : "none",
+  };
 
+  useEffect(() => {
+    loadData();
+  }, []);
+  async function loadData() {
+    const response = await fetchSelfAPI();
+    setRole(response.role);
+  }
   const handleResetClick = () => {
     dispatch(setNotification("回復原廠設定成功"));
-    if (faucetuid ) {
+    if (faucetuid) {
       resetFaucetSettings(faucetuid).then(() => {});
     } else {
       console.error("No faucet setting to save.");
@@ -247,11 +273,13 @@ export default function Faucet_Control_Segment({ location }) {
             options={updatedOptionsMap.flowRate}
             segmentTitle="選擇水波器功能"
             settingKey="flowRate"
+            style={disabledStyle_role}
           />
           <ControlButton
             options={updatedOptionsMap.solenoidActivationDuration}
             segmentTitle="電磁閥啟動時間"
             settingKey="solenoidActivationDuration"
+            style={disabledStyle_role}
           />
         </div>
         <div className="w-full sm:w-2/3 sm:flex-none  p-4 flex flex-col">
@@ -279,6 +307,7 @@ export default function Faucet_Control_Segment({ location }) {
                   options={updatedOptionsMap.energySavingMode}
                   segmentTitle="進入省電時間"
                   settingKey="energySavingMode"
+                  style={disabledStyle_role}
                 />
                 <div className="flex flex-col h-full">
                   <div className="flex-1 "></div>
@@ -286,6 +315,7 @@ export default function Faucet_Control_Segment({ location }) {
                     <DropdownButton
                       options={updatedOptionsMap.energySavingValue}
                       settingKey="energySavingValue"
+                      style={disabledStyle_role}
                     />
                   </div>
                 </div>

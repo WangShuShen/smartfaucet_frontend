@@ -17,6 +17,7 @@ interface DropdownButtonProps {
 export default function DropdownButton({
   options,
   settingKey,
+  style,
 }: DropdownButtonProps) {
   const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState<DropdownOption>(
@@ -36,7 +37,10 @@ export default function DropdownButton({
     setSelectedOption(findSelectedOption());
   }, [currentSetting, options]);
   return (
-    <div className="px-0 py-0.5 md:px-0 md:py-0.5 w-auto md:max-w-[6.25rem] mx-auto">
+    <div
+      className="px-0 py-0.5 md:px-0 md:py-0.5 w-auto md:max-w-[6.25rem] mx-auto"
+      style={style}
+    >
       <Listbox value={selectedOption} onChange={handleSelectionChange}>
         {({ open }) => (
           <div className="relative mt-1">

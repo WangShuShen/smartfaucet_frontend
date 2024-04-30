@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect } from "react";
-import Figure_Segment from "../Figure_segment/Figure_segment";
-import Usage_Segment from "../Usage_segment/Usage_segment";
-import SimpleLayout from "../../simple-layout";
+import Figure_Segment from "./Figure_segment/Figure_segment";
+import Usage_Segment from "./Usage_segment/Usage_segment";
+import SimpleLayout from "../simple-layout";
 import { setLoading } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";

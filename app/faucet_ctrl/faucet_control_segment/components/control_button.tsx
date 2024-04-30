@@ -18,6 +18,7 @@ export default function ControlButton({
   options,
   segmentTitle,
   settingKey,
+  style,
 }: ControlButtonProps) {
   const dispatch = useDispatch();
   const initialSelected =
@@ -38,7 +39,7 @@ export default function ControlButton({
     setSelected(newSelected);
   }, []);
   return (
-    <div className="p-3">
+    <div className="p-3" style={style}>
       {segmentTitle && (
         <h2 className="text-stone-600 text-lg font-bold mb-2 text-lg sm:text-xs md:sm lg:text-lg">
           {segmentTitle}

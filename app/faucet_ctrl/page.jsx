@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useEffect } from "react";
 import FaucetItem from "./faucetitem_segment/faucetitem_segment";
 import Faucet_Control from "./faucet_control_segment/faucet_control_segment";
 import { useSelector } from "react-redux";
@@ -21,9 +22,12 @@ export default function Faucet_Ctrl_Page() {
     dispatch(hideNotification());
   };
   if (loading_state) return <LoadingScreen></LoadingScreen>;
-  if (true) {
-    router.push("/project_setting");
-  }
+  useEffect(() => {
+    if (true) {
+      // 替換 true 為你的實際條件
+      router.push("/project_setting");
+    }
+  }, [router]);
   return (
     <div className="block w-[100%] m-auto">
       {isNotification && (
@@ -34,8 +38,8 @@ export default function Faucet_Ctrl_Page() {
           />
         </div>
       )}
-      <FaucetItem></FaucetItem>
-      <Faucet_Control></Faucet_Control>
+      {/* <FaucetItem location={params.location_uid}></FaucetItem>
+      <Faucet_Control></Faucet_Control> */}
     </div>
   );
 }
