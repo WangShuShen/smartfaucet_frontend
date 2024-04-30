@@ -12,6 +12,7 @@ export default function Login_Component() {
     const [currentStep, setCurrentStep] = useState('login'); // 新增狀態控制顯示的界面
     const [email, setEmail] = useState('');
     const [showPassword, setShowPassword] = useState(false); // 新增状态控制密码是否显示
+    const [accessToken, setAccessToken] = useState('');  // 狀態變量來存儲修改密碼的 access token
     const router = useRouter();
 
     const handleLoginSubmit =async (event) => {
@@ -78,7 +79,6 @@ export default function Login_Component() {
         if (!verification.trim()) {
             console.log('臨時密碼是必填項');
             alert('臨時密碼是必填項。');
-            // 在这里可以设置错误状态并显示错误消息
             return;
         }
     
@@ -89,8 +89,8 @@ export default function Login_Component() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    email: email,  // 確保已從適當的來源獲取 email 變數
-                    temp_password: verification  // verification 是用戶輸入的臨時密碼
+                    email: email,
+                    temp_password: verification
                 })
             });
     
@@ -99,9 +99,9 @@ export default function Login_Component() {
             }
     
             const data = await response.json();
-            console.log('Access Token:', data.access);  // 這裡顯示取得的訪問權限令牌，或做其他處理
+            setAccessToken(data.access);  // 儲存獲得的 token
             alert('臨時密碼驗證成功！');
-            setCurrentStep('newPassword');  // 更新狀態以進入設置新密碼的步驟
+            setCurrentStep('newPassword');
             router.push('/login?step=newPassword');
             setShowPassword(false);
         } catch (error) {
@@ -109,31 +109,51 @@ export default function Login_Component() {
             alert('錯誤: ' + error.message);
         }
     };
-
-    const handleNewPasswordSubmit = (event) => {
+    
+    const handleNewPasswordSubmit = async (event) => {
         event.preventDefault();
         if (!newPassword.trim() || !confirmPassword.trim()) {
             console.log('新密碼和確認新密碼都是必填項');
             alert('新密碼和確認新密碼都是必填項。');
             return;
-        }
-        else if (newPassword !== confirmPassword) {
-            // 如果密码不匹配，显示一个警告消息并直接返回，不继续执行后续代码
+        } else if (newPassword !== confirmPassword) {
             alert('新密碼與確認密碼不匹配，請重新輸入。');
             return;
         }
-        console.log('New password set for email');
-        setCurrentStep('login');
-        router.push('/login'); 
-        setUsername('');
-        setPassword('');
-        setVerification('');
-        setNewPassword('');
-        setConfirmPassword('');
-        setEmail('');
-        setShowPassword(false);
+    
+        try {
+            const response = await fetch(process.env.NEXT_PUBLIC_Update_Password_API, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`  // 使用之前獲得的 token
+                },
+                body: JSON.stringify({
+                    password: newPassword
+                })
+            });
+    
+            if (!response.ok) {
+                throw new Error('更新密碼失敗，請稍後再試。');
+            }
+    
+            alert('密碼已成功更新！');
+            console.log('New password set for email');
+            setCurrentStep('login');
+            router.push('/login');
+            setUsername('');
+            setPassword('');
+            setVerification('');
+            setNewPassword('');
+            setConfirmPassword('');
+            setEmail('');
+            setShowPassword(false);
+        } catch (error) {
+            console.error('Error:', error);
+            alert('錯誤: ' + error.message);
+        }
     };
-
+    
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -195,7 +215,7 @@ export default function Login_Component() {
                     </form>
                 </div>
             );
-        case 'forgotPassword':
+        case 'forgotPassword': 
             return (
                 <div className="container mx-auto p-4 bg-white w-full h-full">
                     <img src="/register_logo.svg" alt="T.A.P. Logo" className=" mb-4" />
@@ -213,13 +233,13 @@ export default function Login_Component() {
                                 className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none sm:text-sm md:text-md lg:text-lg"
                             />
                         </div>
-                        <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
+                        <button type="submit" onClick={handleForgotPasswordSubmit} className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
                             送出
                         </button>
                     </form>
                 </div>
             );
-            case 'verification':
+            case 'verification': 
                 return (
                     <div className="container mx-auto p-4 bg-white w-full h-full">
                         <img src="/register_logo.svg" alt="T.A.P. Logo" className="mb-4" />
@@ -240,7 +260,7 @@ export default function Login_Component() {
                                     <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                 </div>
                             </div>
-                            <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
+                            <button type="submit" onClick={handleVerificationSubmit} className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
                                 下一步
                             </button>
                         </form>
@@ -280,7 +300,7 @@ export default function Login_Component() {
                                         <img src="/register_pwd_eye.svg" alt="Verification" className="mr-2 cursor-pointer" onClick={toggleShowPassword}/>
                                     </div>
                                 </div>
-                                <button type="submit" className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
+                                <button type="submit" onClick={handleNewPasswordSubmit} className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12">
                                     送出
                                 </button>
                             </form>
