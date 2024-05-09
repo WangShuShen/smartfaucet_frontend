@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import Provider from "./redux/provider";
-import AuthCheck from './component/AuthCheck';
-
-
+import "../globals.css";
+import Provider from "../redux/provider";
+import AuthCheck from "../[lng]/component/AuthCheck";
+import { ReactElement } from "react";
+import { dir } from "i18next";
+const languages = ["en", "zh-Hant"];
+type RootLayoutProps = { children: ReactElement; params: { lng: string } };
+export async function generateStaticParams() {
+  return languages.map((lng) => ({ lng }));
+}
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -14,11 +19,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+  params: { lng },
+}: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang={lng} dir={dir(lng)}>
       <body className={inter.className}>
         <Provider>
           <AuthCheck /> {/* 當沒有access token會強制路由到login頁面 */}

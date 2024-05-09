@@ -3,8 +3,8 @@ import { useFaucetListBlock } from "./service/faucetlistblock_hooks";
 import {
   useFaucetInfo,
   useFaucetUsage,
-} from "@/app/faucet_ctrl/faucetitem_segment/faucetinfo_component/service/faucetinfo_hooks";
-import { useFaucetSetting } from "@/app/faucet_ctrl/faucet_control_segment/service/faucet_control_segment_hook";
+} from "@/app/[lng]/faucet_ctrl/faucetitem_segment/faucetinfo_component/service/faucetinfo_hooks";
+import { useFaucetSetting } from "@/app/[lng]/faucet_ctrl/faucet_control_segment/service/faucet_control_segment_hook";
 import { useDispatch } from "react-redux";
 import { setFaucetSpecification } from "@/app/redux/faucet_ctrl/faucet_info";
 type Faucet = {

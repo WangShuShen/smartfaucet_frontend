@@ -1,7 +1,7 @@
-import Provider from "./redux/provider";
+import Provider from "../redux/provider";
 
 export default function SimpleLayout({
-  children, 
+  children,
 }: {
   children: React.ReactNode;
 }) {

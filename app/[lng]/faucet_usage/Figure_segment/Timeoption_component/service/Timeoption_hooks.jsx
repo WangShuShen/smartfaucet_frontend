@@ -4,7 +4,7 @@ import {
   fetchFigureMonthlyUsage,
   fetchFigureYearlyUsage,
   setSelectedTimeFrame,
-} from "../../../../redux/faucet_usage/figure";
+} from "../../../../../redux/faucet_usage/figure";
 
 export const useTimeFrameDispatch = ({ faucet_uid }) => {
   const dispatch = useDispatch();

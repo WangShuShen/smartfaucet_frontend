@@ -28,14 +28,25 @@ export default function Toggle_switch_Component({ onToggle }) {
           }`}
         />
       </div>
-      <button
-        onClick={toggleLanguage}
-        className={`text-base font-bold mt-6 ${
-          isEnabled ? "text-blue-500" : "text-white"
-        }`}
-      >
-        EN｜CH
-      </button>
+      <div className="flex">
+        <button
+          onClick={toggleLanguage}
+          className={`text-base font-bold mt-6 ${
+            isEnabled ? "text-blue-500" : "text-white"
+          }`}
+        >
+          EN
+        </button>
+        <span className="text-white mt-6 mx-2">|</span>
+        <button
+          onClick={toggleLanguage}
+          className={`text-base font-bold mt-6 ${
+            isEnabled ? "text-blue-500" : "text-white"
+          }`}
+        >
+          中
+        </button>
+      </div>
     </div>
   );
 }
