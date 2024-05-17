@@ -1,23 +1,31 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { login } from "./service/Login_hook"; // 引入之前模組化的 login 函數
-
+import { login } from "./service/Login_hook";
+import { useLanguage } from "@/utils/loadLanguage";
+import useLang from "@/app/component/useLang";
 export default function Login_Component() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [verification, setVerification] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [currentStep, setCurrentStep] = useState("login"); // 新增狀態控制顯示的界面
+  const [currentStep, setCurrentStep] = useState("login");
   const [email, setEmail] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // 新增状态控制密码是否显示
-  const [accessToken, setAccessToken] = useState(""); // 狀態變量來存儲修改密碼的 access token
+  const [showPassword, setShowPassword] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
   const router = useRouter();
+  const lang = useLang();
+
+  const languageData = useLanguage("login", lang);
+
+  if (!languageData) {
+    return <div>Loading...</div>;
+  }
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     if (!username.trim() || !password.trim()) {
-
       alert("使用者名稱和密碼都是必填項。");
       return;
     }
@@ -41,9 +49,7 @@ export default function Login_Component() {
   const handleForgotPasswordSubmit = async (event) => {
     event.preventDefault();
     if (!email.trim()) {
-
       alert("電子郵件是必填項。");
-      // 在这里可以设置错误状态并显示错误消息
       return;
     }
 
@@ -78,7 +84,6 @@ export default function Login_Component() {
   const handleVerificationSubmit = async (event) => {
     event.preventDefault();
     if (!verification.trim()) {
-
       alert("臨時密碼是必填項。");
       return;
     }
@@ -103,7 +108,7 @@ export default function Login_Component() {
       }
 
       const data = await response.json();
-      setAccessToken(data.access); // 儲存獲得的 token
+      setAccessToken(data.access);
       alert("臨時密碼驗證成功！");
       setCurrentStep("newPassword");
       router.push("/login?step=newPassword");
@@ -117,7 +122,6 @@ export default function Login_Component() {
   const handleNewPasswordSubmit = async (event) => {
     event.preventDefault();
     if (!newPassword.trim() || !confirmPassword.trim()) {
-
       alert("新密碼和確認新密碼都是必填項。");
       return;
     } else if (newPassword !== confirmPassword) {
@@ -172,7 +176,7 @@ export default function Login_Component() {
         <div className="container mx-auto p-4 bg-white w-full h-full">
           <img src="/register_logo.svg" alt="T.A.P. Logo" className=" mb-4" />
           <div className="text-blue-950 text-2xl font-semibold my-16">
-            登入以繼續
+            {languageData.login_to_continue}
           </div>
           <form onSubmit={handleLoginSubmit} className="flex flex-col ">
             <div className="flex items-center mt-4">
@@ -181,7 +185,7 @@ export default function Login_Component() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="輸入帳號或電子郵件"
+                placeholder={languageData.input_email}
                 className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none sm:text-sm md:text-md lg:text-lg"
               />
             </div>
@@ -192,7 +196,7 @@ export default function Login_Component() {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="輸入密碼"
+                  placeholder={languageData.input_password}
                   className="min-w-0 p-2 font-semibold focus:outline-none min-w-0 sm:text-sm md:text-md lg:text-lg"
                 />
                 <img
@@ -206,7 +210,7 @@ export default function Login_Component() {
                   onClick={handleForgotPasswordClick}
                   className="whitespace-nowrap text-sm text-neutral-500 border-b-2 border-neutral-500"
                 >
-                  忘記密碼
+                  {languageData.forget_password}
                 </button>
               </div>
             </div>
@@ -228,14 +232,14 @@ export default function Login_Component() {
               type="submit"
               className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-8"
             >
-              登入
+              {languageData.login}
             </button>
             <div className="flex justify-between mt-4">
               <a
                 href="/register"
                 className="text-blue-950 text-xl font-bold my-3 mx-auto"
               >
-                註冊帳號
+                {languageData.register}
               </a>
             </div>
           </form>
@@ -246,7 +250,7 @@ export default function Login_Component() {
         <div className="container mx-auto p-4 bg-white w-full h-full">
           <img src="/register_logo.svg" alt="T.A.P. Logo" className=" mb-4" />
           <div className="text-blue-950 text-2xl font-extrabold my-16">
-            忘記密碼
+            {languageData.forget_password}
           </div>
           <form
             onSubmit={handleForgotPasswordSubmit}

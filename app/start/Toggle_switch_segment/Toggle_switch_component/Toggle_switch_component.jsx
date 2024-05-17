@@ -10,7 +10,12 @@ export default function Toggle_switch_Component({ onToggle }) {
   };
 
   // Define a dummy function for language toggling
-  const toggleLanguage = () => {};
+  const toggleEN = () => {
+    localStorage.setItem("lang", "en");
+  };
+  const toggleCH = () => {
+    localStorage.setItem("lang", "ch");
+  };
 
   return (
     <div className="flex flex-col items-center justify-between">
@@ -28,14 +33,25 @@ export default function Toggle_switch_Component({ onToggle }) {
           }`}
         />
       </div>
-      <button
-        onClick={toggleLanguage}
-        className={`text-base font-bold mt-6 ${
-          isEnabled ? "text-blue-500" : "text-white"
-        }`}
-      >
-        EN｜CH
-      </button>
+      <div className="flex">
+        <button
+          onClick={toggleEN}
+          className={`text-base font-bold mt-6 ${
+            isEnabled ? "text-blue-500" : "text-white"
+          }`}
+        >
+          EN
+        </button>
+        <span className="text-white mt-6 mx-2">|</span>
+        <button
+          onClick={toggleCH}
+          className={`text-base font-bold mt-6 ${
+            isEnabled ? "text-blue-500" : "text-white"
+          }`}
+        >
+          中
+        </button>
+      </div>
     </div>
   );
 }
