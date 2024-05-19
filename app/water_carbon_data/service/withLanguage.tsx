@@ -5,7 +5,11 @@ import useLang from "@/app/component/useLang";
 const withLanguage = (WrappedComponent: React.ComponentType<any>) => {
   return (props: any) => {
     const lang = useLang();
-    const languageData = useLanguage("project_setting", lang);
+    const languageData = useLanguage("water_carbon_data", lang);
+
+    useEffect(() => {
+      console.log("Language data:", languageData);
+    }, [languageData]);
 
     if (!languageData) {
       return <div>Loading...</div>;
