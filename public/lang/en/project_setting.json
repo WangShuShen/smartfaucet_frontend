@@ -30,5 +30,17 @@
     "select_field": "Please select the fields below.",
     "copied_from": "{copyFaucetFrom} device settings have been copied",
     "copied_to": "Copied to {selectFaucet}"
+  },
+  "notification": {
+    "add_company": "Add new project/company",
+    "add_building": "Add new task/building",
+    "add_floor": "Add new floor",
+    "add_hub": "Add new hub",
+    "add_location": "Add new location",
+    "delete_company": "Delete project/company",
+    "delete_building": "Delete task/building",
+    "delete_floor": "Delete floor",
+    "delete_hub": "Delete hub",
+    "delete_location": "Delete location"
   }
 }

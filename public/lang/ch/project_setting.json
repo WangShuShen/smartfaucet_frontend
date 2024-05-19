@@ -30,5 +30,17 @@
     "select_field": "請勾選下方的欄位資料。",
     "copied_from": "已將 {copyFaucetFrom} 裝置設定",
     "copied_to": "複製至 {selectFaucet}"
+  },
+  "notification": {
+    "add_company": "新增專案/公司",
+    "add_building": "新增任務/建築物",
+    "add_floor": "新增樓層",
+    "add_hub": "新增HUB",
+    "add_location": "新增位置",
+    "delete_company": "刪除專案/公司",
+    "delete_building": "刪除任務/建築物",
+    "delete_floor": "刪除樓層",
+    "delete_hub": "刪除HUB",
+    "delete_location": "刪除位置"
   }
 }
