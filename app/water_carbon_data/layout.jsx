@@ -1,14 +1,17 @@
+"use client";
+
 import Navbar from "../component/Navbar";
 import Title from "./component/Title";
 import BackButton from "@/app/component/BackButton";
+import withLanguage from "./service/withLanguage";
 
-export default function DashboardLayout({ children }) {
+const DashboardLayout = ({ children, languageData }) => {
   return (
     <section>
       <div className="bg-bg-gradient w-auto">
         <Navbar></Navbar>
         <div className="flex justify-between items-center">
-          <Title text="用水及碳排數據" />
+          <Title text={languageData.title} />
           <BackButton />
         </div>
         {children}
@@ -16,3 +19,5 @@ export default function DashboardLayout({ children }) {
     </section>
   );
 }
+
+export default withLanguage(DashboardLayout);

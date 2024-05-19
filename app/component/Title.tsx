@@ -7,15 +7,10 @@ interface TitleProps {
 
 const Title: React.FC<TitleProps> = ({ text }) => {
   return (
-    <div className="flex items-center justify-center h-16 lg:-ml-6 md:-ml-6 sm:-ml-4 xs:-ml-14">
-      <span className="flex items-center justify-center z-10 font-bold text-white lg:text-xl md:text-xl sm:text-xl xs:text-lg lg:-mr-28 md:-mr-28 sm:-mr-28 xs:-ml-0 xs:-mt-6 ">
+    <div className="relative inline-flex items-center justify-center bg-cover bg-center p-4" style={{ backgroundImage: 'url("/page_title.svg")' }}>
+      <span className="text-white text-center font-bold lg:text-xl md:text-xl sm:text-xl xs:text-sm mr-5">
         {text}
       </span>
-      <img
-        className="lg:w-3/4 md:w-3/4 sm:w-3/4 xs:w-1/2 lg:ml-0 md:ml-0 sm:ml-0 xs:-ml-24 xs:-mt-6 "
-        src="/page_title.svg"
-        alt="Page Title Background"
-      />
     </div>
   );
 };
