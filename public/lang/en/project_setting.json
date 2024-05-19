@@ -1,0 +1,30 @@
+{
+  "label": {
+    "company": "Project/Company:",
+    "building": "Task/Building:",
+    "floor": "Floor:",
+    "hub": "Hub:",
+    "location": "Location:"
+  },
+  "button": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "done": "Done"
+  },
+  "placeholder": {
+    "select_floor": "Please select a floor",
+    "select_hub": "Please select a hub"
+  },
+  "message": {
+    "note": "Note:",
+    "delete_building": "Deleting task/building {buildingName} will also remove the following hierarchical settings. You will need to reconfigure them.",
+    "delete_company": "Deleting project/company {companyName} will also remove all hierarchical settings associated with this company. You will need to reconfigure them.",
+    "delete_floor": "Deleting floor {floorName} will also remove the following hierarchical settings. You will need to reconfigure them.",
+    "delete_hub": "Deleting hub {hubName} will also remove the following hierarchical settings. You will need to reconfigure them.",
+    "delete_location": "Deleting location {locationName} will also remove the following hierarchical settings. You will need to reconfigure them.",
+    "select_field": "Please select the fields below.",
+    "copied_from": "Copied settings from {copyFaucetFrom}",
+    "copied_to": "Copied to {selectFaucet}"
+  }
+}
