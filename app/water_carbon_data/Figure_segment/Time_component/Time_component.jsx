@@ -1,10 +1,11 @@
 import React from 'react';
+import withLanguage from './../../service/withLanguage';
 
-export default function TimeOptionComponent({ onTimeChange }) {
+const TimeOptionComponent = ({ onTimeChange, languageData }) => {
   const options = [
-    { label: '周', value: 'week' },
-    { label: '月', value: 'month' },
-    { label: '年', value: 'year' }
+    { label: languageData.select.week, value: 'week' },
+    { label: languageData.select.month, value: 'month' },
+    { label: languageData.select.year, value: 'year' }
   ];
 
   return (
@@ -21,3 +22,5 @@ export default function TimeOptionComponent({ onTimeChange }) {
     </div>
   );
 }
+
+export default withLanguage(TimeOptionComponent);

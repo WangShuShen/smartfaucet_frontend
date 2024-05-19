@@ -1,0 +1,13 @@
+{
+    "usage": {
+      "total_usage_water": "Total Water Usage",
+      "total_usage_water_saved": "Total Water Saved"
+    },
+    "select": {
+      "completed_setup": "Completed Setup",
+      "week": "Week",
+      "month": "Month",
+      "year": "Year"
+    }
+  }
+  
