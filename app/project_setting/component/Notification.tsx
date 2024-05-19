@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import withLanguage from "./withLanguage";
+import withLanguage from "./../service/withLanguage";
 
 interface NotificationProps {
   message: string;
