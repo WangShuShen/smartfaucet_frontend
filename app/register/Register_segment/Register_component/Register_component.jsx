@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation"; // 确保是正确的导入路径
+import { useLanguage } from "@/utils/loadLanguage";
+import useLang from "@/app/component/useLang";
 
 export default function Register_Component() {
+  const lang = useLang();
+  const languageData = useLanguage("register", lang);
+
   const defaultAvatar = "/register_user_picture.png"; // 默认头像路径
   const [avatar, setAvatar] = useState(defaultAvatar); // 默认头像
   const [email, setEmail] = useState("");
@@ -9,6 +14,10 @@ export default function Register_Component() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); // 新增状态控制密码是否显示
   const router = useRouter();
+
+  if (!languageData) {
+    return <div>Loading...</div>;
+  }
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -34,13 +43,13 @@ export default function Register_Component() {
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
     if (!email.trim()) {
-      alert("電子郵件是必填項。");
+      alert(languageData.alert.email_required);
       return;
     } else if (!password.trim() || !confirmPassword.trim()) {
-      alert("密碼和確認新密碼都是必填項。");
+      alert(languageData.alert.password_required);
       return;
     } else if (password !== confirmPassword) {
-      alert("密碼與確認密碼不匹配，請重新輸入。");
+      alert(languageData.alert.password_mismatch);
       return;
     }
 
@@ -55,25 +64,20 @@ export default function Register_Component() {
     try {
       const response = await fetch(process.env.NEXT_PUBLIC_Signup_API, {
         method: "POST",
-        headers: {
-          // 不推荐这样做，因为这可能导致问题
-          "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-        },
         body: formData, // 注意，我们不设置 'Content-Type': 'multipart/form-data'，浏览器会自动设置
       });
       if (!response.ok) {
-        response.json().then((data) => {
-          console.error("注册失败:", data.message); // 假设后端返回了具体的错误消息
-          alert("注册失败: " + data.message);
-        });
+        const data = await response.json();
+        console.error(languageData.alert.register_failed, data.message); // 假设后端返回了具体的错误消息
+        alert(languageData.alert.register_failed + data.message);
       }
 
-      console.log("Registration successful");
-      alert("註冊成功！");
+      console.log(languageData.alert.register_success);
+      alert(languageData.alert.register_success);
       router.push("/login");
     } catch (error) {
-      console.error("Error:", error);
-      alert("錯誤: " + error.message);
+      console.error(languageData.alert.error, error);
+      alert(languageData.alert.error + error.message);
     }
   };
 
@@ -85,7 +89,7 @@ export default function Register_Component() {
     <div className="container mx-auto p-4 bg-white w-full h-full">
       <div className="flex items-end space-x-2 ">
         <img src="/register_logo.svg" alt="T.A.P. Logo" className="" />
-        <div className="text-blue-950 text-xl font-extrabold">註冊帳號</div>
+        <div className="text-blue-950 text-xl font-extrabold">{languageData.title}</div>
       </div>
       <div className="text-center">
         <input
@@ -105,7 +109,7 @@ export default function Register_Component() {
           className="text-center text-gray-300 font-bold mt-1 cursor-pointer"
           onClick={triggerFileInputClick}
         >
-          新增頭像
+          {languageData.avatar}
         </div>
       </div>
       <form onSubmit={handleRegisterSubmit} className="flex flex-col ">
@@ -115,41 +119,41 @@ export default function Register_Component() {
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="輸入帳號或電子郵件"
+            placeholder={languageData.placeholder.email}
             className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none sm:text-sm md:text-md lg:text-lg"
           />
         </div>
         <div className="flex items-center mt-4">
-          <img src="/register_pwd.svg" alt="Verification" className="mr-2" />
-          <div className="min-w-0 flex-1  border-b-2 border-neutral-500 flex items-center justify-between">
+          <img src="/register_pwd.svg" alt="Password" className="mr-2" />
+          <div className="min-w-0 flex-1 border-b-2 border-neutral-500 flex items-center justify-between">
             <input
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="新密碼"
-              className="min-w-0 p-2 font-semibold focus:outline-non sm:text-sm md:text-md lg:text-lg"
+              placeholder={languageData.placeholder.password}
+              className="min-w-0 p-2 font-semibold focus:outline-none sm:text-sm md:text-md lg:text-lg"
             />
             <img
               src="/register_pwd_eye.svg"
-              alt="Verification"
+              alt="Toggle visibility"
               className="mr-2 cursor-pointer"
               onClick={toggleShowPassword}
             />
           </div>
         </div>
         <div className="flex items-center mt-4">
-          <img src="/register_pwd2.svg" alt="Verification" className="mr-2" />
-          <div className="min-w-0 flex-1  border-b-2 border-neutral-500 flex items-center justify-between">
+          <img src="/register_pwd2.svg" alt="Confirm Password" className="mr-2" />
+          <div className="min-w-0 flex-1 border-b-2 border-neutral-500 flex items-center justify-between">
             <input
               type={showPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="再次輸入新密碼"
+              placeholder={languageData.placeholder.confirm_password}
               className="min-w-0 p-2 font-semibold focus:outline-none sm:text-sm md:text-md lg:text-lg"
             />
             <img
               src="/register_pwd_eye.svg"
-              alt="Verification"
+              alt="Toggle visibility"
               className="mr-2 cursor-pointer"
               onClick={toggleShowPassword}
             />
@@ -158,9 +162,8 @@ export default function Register_Component() {
         <button
           type="submit"
           className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-16"
-          onClick={handleRegisterSubmit}
         >
-          註冊
+          {languageData.button.register}
         </button>
       </form>
     </div>
