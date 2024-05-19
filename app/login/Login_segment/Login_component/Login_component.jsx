@@ -26,7 +26,7 @@ export default function Login_Component() {
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     if (!username.trim() || !password.trim()) {
-      alert("使用者名稱和密碼都是必填項。");
+      alert(languageData.must_input_password_email);
       return;
     }
     try {
@@ -49,7 +49,7 @@ export default function Login_Component() {
   const handleForgotPasswordSubmit = async (event) => {
     event.preventDefault();
     if (!email.trim()) {
-      alert("電子郵件是必填項。");
+      alert(languageData.must_input_email);
       return;
     }
 
@@ -66,25 +66,25 @@ export default function Login_Component() {
       );
 
       if (!response.ok) {
-        throw new Error("無法發送臨時密碼。");
+        throw new Error(languageData.send_temp_password_error);
       }
 
       const data = await response.json();
 
-      alert("臨時密碼已發送至您的電子郵件。");
+      alert(languageData.send_temp_password_succes);
       // 假設下一步是輸入驗證碼
       setCurrentStep("verification");
       router.push("/login?step=verification");
     } catch (error) {
       console.error("Error:", error);
-      alert("錯誤: " + error.message);
+      alert(languageData.error + error.message);
     }
   };
 
   const handleVerificationSubmit = async (event) => {
     event.preventDefault();
     if (!verification.trim()) {
-      alert("臨時密碼是必填項。");
+      alert(languageData.must_input_temp_password);
       return;
     }
 
@@ -104,28 +104,28 @@ export default function Login_Component() {
       );
 
       if (!response.ok) {
-        throw new Error("臨時密碼驗證失敗");
+        throw new Error(languageData.temp_password_error);
       }
 
       const data = await response.json();
       setAccessToken(data.access);
-      alert("臨時密碼驗證成功！");
+      alert(languageData.temp_password_vertify_success);
       setCurrentStep("newPassword");
       router.push("/login?step=newPassword");
       setShowPassword(false);
     } catch (error) {
       console.error("Error:", error);
-      alert("錯誤: " + error.message);
+      alert(languageData.error + error.message);
     }
   };
 
   const handleNewPasswordSubmit = async (event) => {
     event.preventDefault();
     if (!newPassword.trim() || !confirmPassword.trim()) {
-      alert("新密碼和確認新密碼都是必填項。");
+      alert(languageData.must_input_new_password);
       return;
     } else if (newPassword !== confirmPassword) {
-      alert("新密碼與確認密碼不匹配，請重新輸入。");
+      alert(languageData.new_password_not_same);
       return;
     }
 
@@ -145,10 +145,10 @@ export default function Login_Component() {
       );
 
       if (!response.ok) {
-        throw new Error("更新密碼失敗，請稍後再試。");
+        throw new Error(languageData.renew_password_error);
       }
 
-      alert("密碼已成功更新！");
+      alert(languageData.renew_password_success);
 
       setCurrentStep("login");
       router.push("/login");
@@ -161,7 +161,7 @@ export default function Login_Component() {
       setShowPassword(false);
     } catch (error) {
       console.error("Error:", error);
-      alert("錯誤: " + error.message);
+      alert(languageData.error + error.message);
     }
   };
 
@@ -266,7 +266,7 @@ export default function Login_Component() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="輸入電子信箱獲取臨時密碼"
+                placeholder={languageData.please_input_email_recieve}
                 className="min-w-0 flex-1 p-2 font-semibold border-b-2 border-neutral-500 focus:outline-none sm:text-sm md:text-md lg:text-lg"
               />
             </div>
@@ -274,7 +274,7 @@ export default function Login_Component() {
               type="submit"
               className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12"
             >
-              送出
+              {languageData.submit}
             </button>
           </form>
         </div>
@@ -284,7 +284,7 @@ export default function Login_Component() {
         <div className="container mx-auto p-4 bg-white w-full h-full">
           <img src="/register_logo.svg" alt="T.A.P. Logo" className="mb-4" />
           <div className="text-blue-950 text-2xl font-extrabold my-16">
-            輸入臨時密碼登入
+            {languageData.input_temp_password}
           </div>
           <form onSubmit={handleVerificationSubmit} className="flex flex-col ">
             <div className="flex items-center ">
@@ -298,7 +298,7 @@ export default function Login_Component() {
                   type={showPassword ? "text" : "password"}
                   value={verification}
                   onChange={(e) => setVerification(e.target.value)}
-                  placeholder="請輸入密碼"
+                  placeholder={languageData.input_password}
                   className="min-w-0 p-2 font-semibold focus:outline-none sm:text-sm md:text-md lg:text-lg"
                 />
                 <img
@@ -313,7 +313,7 @@ export default function Login_Component() {
               type="submit"
               className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12"
             >
-              下一步
+              {languageData.next_step}
             </button>
           </form>
         </div>
@@ -323,7 +323,7 @@ export default function Login_Component() {
         <div className="container mx-auto p-4 bg-white w-full h-full">
           <img src="/register_logo.svg" alt="T.A.P. Logo" className=" mb-4" />
           <div className="text-blue-950 text-2xl font-extrabold my-16">
-            重新設定密碼
+            {languageData.reset_password}
           </div>
           <form onSubmit={handleNewPasswordSubmit} className="flex flex-col ">
             <div className="flex items-center ">
@@ -337,7 +337,7 @@ export default function Login_Component() {
                   type={showPassword ? "text" : "password"}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="新密碼"
+                  placeholder={languageData.new_password}
                   className="min-w-0 p-2 font-semibold focus:outline-none sm:text-sm md:text-md lg:text-lg"
                 />
                 <img
@@ -359,7 +359,7 @@ export default function Login_Component() {
                   type={showPassword ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="再次輸入新密碼"
+                  placeholder={languageData.input_new_password_again}
                   className="min-w-0 p-2 font-semibold focus:outline-none sm:text-sm md:text-md lg:text-lg"
                 />
                 <img
@@ -375,7 +375,7 @@ export default function Login_Component() {
               onClick={handleNewPasswordSubmit}
               className="bg-blue-500 text-white font-semibold text-xl rounded-lg p-2 mt-12"
             >
-              送出
+              {languageData.submit}
             </button>
           </form>
         </div>
