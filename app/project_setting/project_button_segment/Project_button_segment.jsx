@@ -9,6 +9,9 @@ import { setNotification } from "@/app/redux/app/app";
 import { setcopyfaucetfromReducer } from "@/app/redux/project_setting/project_CRUD";
 import { createApiClient } from "@/utils/apiClient";
 import { setLoading } from "@/app/redux/app/app";
+import withLanguage from "./../service/withLanguage";  // 添加语言处理
+
+
 async function useCopyFaucet({ faucet_Uids, from_faucet_Uid }) {
   const apiUrl = process.env.NEXT_PUBLIC_FETCH_COPY_FAUCET_SETTING_API;
   const postApiClient = createApiClient("post", apiUrl);
@@ -20,7 +23,7 @@ async function useCopyFaucet({ faucet_Uids, from_faucet_Uid }) {
   const response = await postApiClient(apiUrl, payload);
 }
 
-export default function Project_button_Segment() {
+function Project_button_Segment({ languageData }) {
   const dispatch = useDispatch();
   const [createbuttonDisableStatus, setcreateButtonDisableStatus] = useState({
     createBuildingDisabled: false,
@@ -202,7 +205,7 @@ export default function Project_button_Segment() {
 
       <div className="lg:w-auto md:w-auto sm:w-[70%] xs:w-[49%] lg:ml-0 md:ml-10 sm:ml-32 xs:ml-48 h-40 bg-gradient-to-b from-custom-from to-custom-to rounded-xl flex flex-col mx-6 justify-center mr-2">
         <div className="basis-1/4 flex items-center justify-center">
-          <p className="text-white font-bold">新增 +</p>
+          <p className="text-white font-bold">{languageData.button.add}</p>
         </div>
         <div className="basis-3/4 justify-center items-center">
           <div className="flex justify-between items-center px-6 w-auto">
@@ -220,7 +223,7 @@ export default function Project_button_Segment() {
 
       <div className="lg:w-auto md:w-auto sm:w-[70%] xs:w-[49%] lg:ml-0 md:ml-10 sm:ml-32 xs:ml-48 h-40 bg-gradient-to-b from-[#727272] to-[#959595] rounded-xl flex flex-col mx-6 mr-2">
         <div className="basis-1/4 flex items-center justify-center">
-          <p className="text-white font-bold">刪除 X</p>
+          <p className="text-white font-bold">{languageData.button.delete}</p>
         </div>
         <div className="basis-3/4 justify-center items-center">
           <div className="flex justify-between items-center w-full px-6">
@@ -249,3 +252,4 @@ export default function Project_button_Segment() {
     </div>
   );
 }
+export default withLanguage(Project_button_Segment);

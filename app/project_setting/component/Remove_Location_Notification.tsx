@@ -2,14 +2,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/app/redux/store";
-
+import withLanguage from "./../service/withLanguage";
 import { removeLocationapi } from "@/app/redux/project_setting/project_CRUD";
+
 interface NotificationProps {
   message: string;
   onClose: () => void;
+  languageData: any;
 }
 
-export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
+const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
 
@@ -17,6 +19,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   const selected_project = useSelector(
     (state: RootState) => state.project_CRUD.selected_project
   );
+
   const handleSave = () => {
     if (selected_project) {
       dispatch(removeLocationapi(selected_project.location_uid));
@@ -25,15 +28,16 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
       console.error("project_company_name is empty or undefined.");
     }
   };
+
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-md w-full">
         <div className="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
           <p>
-            注意：
+            {languageData.message.note}
             {selected_project
-              ? `刪除位置 ${selected_project.location_name}。`
-              : "請勾選下方的欄位資料。"}
+              ? languageData.message.delete_location.replace("{locationName}", selected_project.location_name)
+              : languageData.message.select_field}
           </p>
         </div>
         <div className="flex justify-end mt-4">
@@ -45,7 +49,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
                 onMouseLeave={() => setIsSaveHovered(false)}
                 className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
               >
-                Save
+                {languageData.button.save}
                 {isSaveHovered && <div className="h-0.5 bg-black"></div>}
               </button>
               <button
@@ -54,7 +58,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
                 onMouseLeave={() => setIsCancelHovered(false)}
                 className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black ml-2"
               >
-                Cancel
+                {languageData.button.cancel}
                 {isCancelHovered && <div className="h-0.5 bg-black"></div>}
               </button>
             </>
@@ -65,7 +69,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
               onMouseLeave={() => setIsCancelHovered(false)}
               className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
             >
-              確認
+              {languageData.button.confirm}
               {isCancelHovered && <div className="h-0.5 bg-black"></div>}
             </button>
           )}
@@ -75,4 +79,4 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   );
 };
 
-export default Notification;
+export default withLanguage(Notification);

@@ -1,0 +1,13 @@
+{
+    "usage": {
+      "total_usage_water": "總流水量",
+      "total_usage_water_saved": "總用省水量"
+    },
+    "select": {
+      "completed_setup": "已設置完成的",
+      "week": "周",
+      "month": "月",
+      "year": "年"
+    }
+  }
+  

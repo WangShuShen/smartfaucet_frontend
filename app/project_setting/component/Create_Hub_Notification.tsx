@@ -1,14 +1,17 @@
 "use client";
-import React, { useState, useEffect } from "react";;
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setHubapi } from "@/app/redux/project_setting/project_CRUD";
 import { createApiClient } from "@/utils/apiClient";
+import withLanguage from "./../service/withLanguage";
+
 interface NotificationProps {
   message: string;
   onClose: () => void;
+  languageData: any;
 }
 
-export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
+const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [selectedHub, setSelectedHub] = useState<string>("");
@@ -52,13 +55,13 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
     <div className="fixed inset-0 flex justify-center items-center z-50 ">
       <div className="bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-lg w-full">
         <div className="flex items-center">
-          <label className="text-[#0C659E] mr-3 font-medium">Hub：</label>
+          <label className="text-[#0C659E] mr-3 font-medium">{languageData.label.hub}</label>
           <select
             value={selectedHub}
             onChange={(e) => setSelectedHub(e.target.value)}
             className="bg-white flex-1 p-2 rounded text-gray-800 shadow-md"
           >
-            <option value="">請選擇 Hub</option>
+            <option value="">{languageData.placeholder.select_hub}</option>
             {hubOptions.map((hubUid) => (
               <option
                 key={hubUid}
@@ -78,7 +81,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
             onMouseLeave={() => setIsSaveHovered(false)}
             className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
           >
-            Save
+            {languageData.button.save}
             {isSaveHovered && <div className="h-0.5 bg-black"></div>}
           </button>
           <button
@@ -87,7 +90,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
             onMouseLeave={() => setIsCancelHovered(false)}
             className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
           >
-            Cancel
+            {languageData.button.cancel}
             {isCancelHovered && <div className="h-0.5 bg-black"></div>}
           </button>
         </div>
@@ -96,4 +99,4 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   );
 };
 
-export default Notification;
+export default withLanguage(Notification);
