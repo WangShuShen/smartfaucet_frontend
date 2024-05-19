@@ -4,7 +4,11 @@
     "building": "任務/建築物：",
     "floor": "樓層：",
     "hub": "Hub：",
-    "location": "位置："
+    "location": "位置：",
+    "faucet": "水龍頭",
+    "id": "ID",
+    "state": "狀態",
+    "select_faucet": "選擇水龍頭"
   },
   "button": {
     "save": "儲存",

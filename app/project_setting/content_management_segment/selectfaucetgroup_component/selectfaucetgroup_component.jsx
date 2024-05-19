@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createApiClient } from "@/utils/apiClient";
 import {
@@ -6,6 +6,8 @@ import {
   selectfaucetReducer,
 } from "@/app/redux/project_setting/project_CRUD";
 import axios from "axios";
+import withLanguage from "./../../service/withLanguage"; // 確保正確導入
+
 async function fetchlistfaucet(hubUid) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API;
@@ -22,6 +24,7 @@ async function fetchlistfaucet(hubUid) {
     return null;
   }
 }
+
 async function fetchbindfaucet(location_Uid) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API;
@@ -38,6 +41,7 @@ async function fetchbindfaucet(location_Uid) {
     return null;
   }
 }
+
 async function bindfaucetapi(location_Uid, faucet_uid) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API;
@@ -55,7 +59,8 @@ async function bindfaucetapi(location_Uid, faucet_uid) {
     return null;
   }
 }
-export default function SelectFaucetGroupComponent() {
+
+const SelectFaucetGroupComponent = ({ languageData }) => {
   const dispatch = useDispatch();
   const selected_project = useSelector(
     (state) => state.project_CRUD.selected_project
@@ -98,11 +103,13 @@ export default function SelectFaucetGroupComponent() {
 
     fetchFaucets();
   }, [selected_project, refreshflag]);
+
   useEffect(() => {
     if (setcopyfaucet_status === "ready") {
       setSelectedIds([]);
     }
   }, [setcopyfaucet_status]);
+
   const handleListFaucetClick = async () => {
     const data = await fetchlistfaucet(project_CRUD.selected_project.hub_uid);
     if (data) {
@@ -132,6 +139,7 @@ export default function SelectFaucetGroupComponent() {
       setShowListFaucetButton(false);
     }
   };
+
   const handleAddButtonClick = async () => {
     const results = await Promise.all(
       selectedIds.map((faucetUid) =>
@@ -149,16 +157,16 @@ export default function SelectFaucetGroupComponent() {
             <thead>
               <tr>
                 <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                  FAUCET
+                  {languageData.label.faucet}
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                  ID
+                  {languageData.label.id}
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                  STATE
+                  {languageData.label.state}
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                  SELECT FAUCET
+                  {languageData.label.select_faucet}
                 </th>
               </tr>
             </thead>
@@ -293,3 +301,5 @@ export default function SelectFaucetGroupComponent() {
     </div>
   );
 }
+
+export default withLanguage(SelectFaucetGroupComponent);

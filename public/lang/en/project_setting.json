@@ -4,7 +4,11 @@
     "building": "Task/Building:",
     "floor": "Floor:",
     "hub": "Hub:",
-    "location": "Location:"
+    "location": "Location:",
+    "faucet": "Faucet",
+    "id": "ID",
+    "state": "State",
+    "select_faucet": "Select Faucet"
   },
   "button": {
     "save": "Save",
@@ -24,7 +28,7 @@
     "delete_hub": "Deleting hub {hubName} will also remove the following hierarchical settings. You will need to reconfigure them.",
     "delete_location": "Deleting location {locationName} will also remove the following hierarchical settings. You will need to reconfigure them.",
     "select_field": "Please select the fields below.",
-    "copied_from": "Copied settings from {copyFaucetFrom}",
+    "copied_from": "{copyFaucetFrom} device settings have been copied",
     "copied_to": "Copied to {selectFaucet}"
   }
 }
