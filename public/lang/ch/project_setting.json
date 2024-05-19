@@ -14,7 +14,12 @@
     "save": "儲存",
     "cancel": "取消",
     "confirm": "確認",
-    "done": "完成"
+    "done": "完成",
+    "save_copy": "儲存複製",
+    "copy": "複製",
+    "edit_location": "編輯位置",
+    "add": "新增 +",
+    "delete": "刪除 X"
   },
   "placeholder": {
     "select_floor": "請選擇樓層",

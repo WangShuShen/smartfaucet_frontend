@@ -14,7 +14,12 @@
     "save": "Save",
     "cancel": "Cancel",
     "confirm": "Confirm",
-    "done": "Done"
+    "done": "Done",
+    "save_copy": "Save Copy",
+    "copy": "Copy",
+    "edit_location": "Edit Location",
+    "add": "Add +",
+    "delete": "Delete X"
   },
   "placeholder": {
     "select_floor": "Please select a floor",
