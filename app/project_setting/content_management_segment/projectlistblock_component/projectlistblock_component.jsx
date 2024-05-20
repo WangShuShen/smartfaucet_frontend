@@ -1,13 +1,15 @@
+"use client";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchProject } from "@/app/redux/project_setting/project_list";
 import {
   selectprojectReducer,
   setUpdateUIDReducer,
 } from "@/app/redux/project_setting/project_CRUD";
 import { setNotification } from "@/app/redux/app/app";
-export default function ProjectListBlockComponent() {
+import withLanguage from "./../../service/withLanguage";
+
+const ProjectListBlockComponent = ({ languageData }) => {
   const dispatch = useDispatch();
   const reduxProjects = useSelector((state) => state.project.projects);
   const project_CRUD = useSelector((state) => state.project_CRUD);
@@ -28,32 +30,39 @@ export default function ProjectListBlockComponent() {
       setSelectedId(null);
     }
   }, [reduxProjects, project_CRUD]);
+
   useEffect(() => {
     setTimeout(() => {
       dispatch(fetchProject());
     }, 500);
   }, [project_CRUD, isNotification]);
+
   const handleSelectChange = (id) => {
     setSelectedId(id);
     const selectedProject = projects.find((project) => project.id === id);
     dispatch(selectprojectReducer(selectedProject));
   };
+
   const handleCompanyNameClick = (selected_name, selected_uid) => {
     dispatch(setUpdateUIDReducer(selected_uid));
     dispatch(setNotification("更改Company Management"));
   };
+
   const handleBuildingNameClick = (selected_name, selected_uid) => {
     dispatch(setUpdateUIDReducer(selected_uid));
     dispatch(setNotification("更改Building Management"));
   };
+
   const handleFloorNameClick = (selected_name, selected_uid) => {
     dispatch(setUpdateUIDReducer(selected_uid));
     dispatch(setNotification("更改Floor Management"));
   };
+
   const handleLocationNameClick = (selected_name, selected_uid) => {
     dispatch(setUpdateUIDReducer(selected_uid));
     dispatch(setNotification("更改Location Management"));
   };
+
   return (
     <div className="overflow-x-auto">
       <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
@@ -61,23 +70,20 @@ export default function ProjectListBlockComponent() {
           <table className="min-w-full leading-normal">
             <thead>
               <tr>
-                <th className="sticky top-0 z-10 px-5 py-3 bg-[#EFEFEF] text-center text-xs text-[#5F6162] uppercase tracking-wider ${hasUpdated.company ? 'bg-[#007BFF]' : 'bg-[#EFEFEF]'} text-[#5F6162]`}">
-                  選取
+                <th className="sticky top-0 z-10 px-5 py-3 bg-[#EFEFEF] text-center text-xs text-[#5F6162] uppercase tracking-wider">
+                  {languageData.label.company}
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                  專案/公司
+                  {languageData.label.building}
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                  任務/建築物
-                </th>
-                <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                  樓層
+                  {languageData.label.floor}
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 bg-[#A9CFD9] text-center text-xs text-[#5F6162] uppercase tracking-wider">
-                  Hub
+                  {languageData.label.hub}
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 bg-[#A9CFD9] text-center text-xs text-[#5F6162] uppercase tracking-wider">
-                  位置
+                  {languageData.label.location}
                 </th>
               </tr>
             </thead>
@@ -93,7 +99,7 @@ export default function ProjectListBlockComponent() {
                         onChange={() => handleSelectChange(project.id)}
                         className="sr-only"
                       />
-                      <span className="block w-4 h-4 rounded bg-[#D9D9D9] ml-14 relatives">
+                      <span className="block w-4 h-4 rounded bg-[#D9D9D9] ml-14 relative">
                         {selectedId === project?.id && (
                           <svg className="w-3 h-3" viewBox="0 0 18 24">
                             <path
@@ -153,9 +159,7 @@ export default function ProjectListBlockComponent() {
                     {project.floor_name}
                   </td>
                   <td
-                    className={
-                      "px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px] "
-                    }
+                    className="px-5 py-3 border-gray-200 text-sm text-center truncate max-w-[30px]"
                     title={project.hub_uid}
                   >
                     {project.hub_uid[0]}
@@ -196,3 +200,5 @@ export default function ProjectListBlockComponent() {
     </div>
   );
 }
+
+export default withLanguage(ProjectListBlockComponent);

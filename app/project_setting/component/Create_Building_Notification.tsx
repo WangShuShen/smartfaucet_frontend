@@ -1,13 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setBuildingapi } from "@/app/redux/project_setting/project_CRUD";
+import withLanguage from "./../service/withLanguage";
+
+
 interface NotificationProps {
   message: string;
   onClose: () => void;
 }
 
-export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
+export const Notification: React.FC<NotificationProps> = ({ message, onClose, languageData }) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -24,12 +27,14 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
     );
     onClose();
   };
+
+
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-md w-full">
         <div className="flex items-center">
           <label className="text-[#0C659E] mr-3 font-medium">
-            任務/建築物：
+            {languageData.label.building}
           </label>
           <input
             type="text"
@@ -46,7 +51,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
             onMouseLeave={() => setIsSaveHovered(false)}
             className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
           >
-            Save
+            {languageData.button.save}
             {isSaveHovered && <div className="h-0.5 bg-black"></div>}
           </button>
           <button
@@ -55,7 +60,7 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
             onMouseLeave={() => setIsCancelHovered(false)}
             className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
           >
-            Cancel
+            {languageData.button.cancel}
             {isCancelHovered && <div className="h-0.5 bg-black"></div>}
           </button>
         </div>
@@ -64,4 +69,4 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   );
 };
 
-export default Notification;
+export default withLanguage(Notification);

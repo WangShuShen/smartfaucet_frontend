@@ -1,0 +1,52 @@
+{ 
+  "title":"專案設定",
+  "label": {
+    "company": "專案/公司：",
+    "building": "任務/建築物：",
+    "floor": "樓層：",
+    "hub": "Hub：",
+    "location": "位置：",
+    "faucet": "水龍頭",
+    "id": "ID",
+    "state": "狀態",
+    "select_faucet": "選擇水龍頭"
+  },
+  "button": {
+    "save": "儲存",
+    "cancel": "取消",
+    "confirm": "確認",
+    "done": "完成",
+    "save_copy": "儲存複製",
+    "copy": "複製",
+    "edit_location": "編輯位置",
+    "add": "新增 +",
+    "delete": "刪除 X"
+  },
+  "placeholder": {
+    "select_floor": "請選擇樓層",
+    "select_hub": "請選擇 Hub"
+  },
+  "message": {
+    "note": "注意：",
+    "delete_building": "刪除任務/建築物 {buildingName} 將會連帶移除以下的階層式設置。您將需要重新進行設置。",
+    "delete_company": "刪除專案/公司 {companyName} 將會連帶移除該公司的所有階層式設置。您將需要重新進行設置。",
+    "delete_floor": "刪除樓層 {floorName} 將會連帶移除以下的階層式設置。您將需要重新進行設置。",
+    "delete_hub": "刪除 Hub {hubName} 將會連帶移除以下的階層式設置。您將需要重新進行設置。",
+    "delete_location": "刪除位置 {locationName} 將會連帶移除以下的階層式設置。您將需要重新進行設置。",
+    "select_field": "請勾選下方的欄位資料。",
+    "copied_from": "已將 {copyFaucetFrom} 裝置設定",
+    "copied_to": "複製至 {selectFaucet}"
+  },
+  "notification": {
+    "add_company": "新增專案/公司",
+    "add_building": "新增任務/建築物",
+    "add_floor": "新增樓層",
+    "add_hub": "新增HUB",
+    "add_location": "新增位置",
+    "delete_company": "刪除專案/公司",
+    "delete_building": "刪除任務/建築物",
+    "delete_floor": "刪除樓層",
+    "delete_hub": "刪除HUB",
+    "delete_location": "刪除位置"
+  }
+}

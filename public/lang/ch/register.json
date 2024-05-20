@@ -1,0 +1,21 @@
+{
+    "title": "註冊帳號",
+    "avatar": "新增頭像",
+    "placeholder": {
+      "email": "輸入帳號或電子郵件",
+      "password": "新密碼",
+      "confirm_password": "再次輸入新密碼"
+    },
+    "button": {
+      "register": "註冊"
+    },
+    "alert": {
+      "email_required": "電子郵件是必填項。",
+      "password_required": "密碼和確認新密碼都是必填項。",
+      "password_mismatch": "密碼與確認密碼不匹配，請重新輸入。",
+      "register_success": "註冊成功！",
+      "register_failed": "註冊失敗: ",
+      "error": "錯誤: "
+    }
+  }
+  

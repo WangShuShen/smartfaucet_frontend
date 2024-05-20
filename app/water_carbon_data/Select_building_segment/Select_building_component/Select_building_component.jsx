@@ -1,13 +1,14 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { createApiClient } from "@/utils/apiClient";  // 確保路徑正確
+import withLanguage from "./../../service/withLanguage";
 
-export default function SelectBuildingComponent({ onBuildingSelect }) {
+const SelectBuildingComponent = ({ onBuildingSelect, languageData }) => {
     const [buildingOptions, setBuildingOptions] = useState([]);
     const [selectedBuilding, setSelectedBuilding] = useState('');
 
     useEffect(() => {
-        const client = createApiClient('post', process.env.NEXT_PUBLIC_List_Two_Layer_API ); 
+        const client = createApiClient('post', process.env.NEXT_PUBLIC_List_Two_Layer_API); 
         client('', {}) 
         .then(response => {
             const buildings = response.data.map(item => ({
@@ -30,7 +31,7 @@ export default function SelectBuildingComponent({ onBuildingSelect }) {
 
     return (
         <div className='flex justify-end items-center mt-1 mb-4 w-full'>
-            <span className='text-sky-800 font-semibold'>已設置完成的</span>
+            <span className='text-sky-800 font-semibold'>{languageData.select.completed_setup}</span>
             <select 
                 className="bg-white border border-blue-900 border-2 text-sky-700 font-semibold rounded-md ml-5 px-2 py-0.5" 
                 value={selectedBuilding}
@@ -45,3 +46,5 @@ export default function SelectBuildingComponent({ onBuildingSelect }) {
         </div>
     );
 }
+
+export default withLanguage(SelectBuildingComponent);

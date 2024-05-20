@@ -1,15 +1,14 @@
 "use client";
 import React, { useState } from "react";
+import withLanguage from "./../service/withLanguage";
 
 interface NotificationProps {
   message: string;
   onClose: () => void;
+  languageData: any;
 }
 
-export const Notification: React.FC<NotificationProps> = ({
-  message,
-  onClose,
-}) => {
+const Notification: React.FC<NotificationProps> = ({ message, onClose, languageData }) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-sm w-full flex justify-center items-center flex-col">
@@ -23,13 +22,11 @@ export const Notification: React.FC<NotificationProps> = ({
         onMouseLeave={() => setIsHovered(false)}
         className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
       >
-        確認
-        {isHovered && (
-          <div className="h-0.5 bg-black" ></div>
-        )}
+        {languageData.button.confirm}
+        {isHovered && <div className="h-0.5 bg-black"></div>}
       </button>
     </div>
   );
 };
 
-export default Notification;
+export default withLanguage(Notification);

@@ -1,0 +1,52 @@
+{ 
+  "title":"Project setting",
+  "label": {
+    "company": "Project/Company:",
+    "building": "Task/Building:",
+    "floor": "Floor:",
+    "hub": "Hub:",
+    "location": "Location:",
+    "faucet": "Faucet",
+    "id": "ID",
+    "state": "State",
+    "select_faucet": "Select Faucet"
+  },
+  "button": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "done": "Done",
+    "save_copy": "Save Copy",
+    "copy": "Copy",
+    "edit_location": "Edit Location",
+    "add": "Add +",
+    "delete": "Delete X"
+  },
+  "placeholder": {
+    "select_floor": "Please select a floor",
+    "select_hub": "Please select a hub"
+  },
+  "message": {
+    "note": "Note:",
+    "delete_building": "Deleting task/building {buildingName} will also remove the following hierarchical settings. You will need to reconfigure them.",
+    "delete_company": "Deleting project/company {companyName} will also remove all hierarchical settings associated with this company. You will need to reconfigure them.",
+    "delete_floor": "Deleting floor {floorName} will also remove the following hierarchical settings. You will need to reconfigure them.",
+    "delete_hub": "Deleting hub {hubName} will also remove the following hierarchical settings. You will need to reconfigure them.",
+    "delete_location": "Deleting location {locationName} will also remove the following hierarchical settings. You will need to reconfigure them.",
+    "select_field": "Please select the fields below.",
+    "copied_from": "{copyFaucetFrom} device settings have been copied",
+    "copied_to": "Copied to {selectFaucet}"
+  },
+  "notification": {
+    "add_company": "Add new project/company",
+    "add_building": "Add new task/building",
+    "add_floor": "Add new floor",
+    "add_hub": "Add new hub",
+    "add_location": "Add new location",
+    "delete_company": "Delete project/company",
+    "delete_building": "Delete task/building",
+    "delete_floor": "Delete floor",
+    "delete_hub": "Delete hub",
+    "delete_location": "Delete location"
+  }
+}

@@ -1,55 +1,45 @@
 "use client";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import type { RootState } from "@/app/redux/store";
 import { createApiClient } from "@/utils/apiClient";
+import withLanguage from "./../service/withLanguage";
+
 interface NotificationProps {
   message: string;
   onClose: () => void;
+  languageData: any;
 }
-async function useUpdateAPI({ name, uid }) {
-  const apiUrl = process.env.NEXT_PUBLIC_FLOORUPDATE_API as string;
-  const postApiClient = createApiClient("post", apiUrl);
 
-  const payload = {
-    floor_name: name,
-    floor_uid: uid,
-  };
-  const response = await postApiClient(apiUrl, payload);
-}
-export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
+const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
-  const update_uid = useSelector(
-    (state: RootState) => state.project_CRUD.update_uid
-  );
+  const update_uid = useSelector((state: RootState) => state.project_CRUD.update_uid);
 
   const handleSave = () => {
     if (selectedValue) {
-      const floorWithLabel = `${selectedValue}樓`;
+      const floorWithLabel = `${selectedValue}${languageData.label.floor}`;
       useUpdateAPI({ name: floorWithLabel, uid: update_uid });
       onClose();
-    } else {
     }
   };
 
-  const options = Array.from({ length: 99 }, (_, i) =>
-    (i + 1).toString().padStart(2, "0")
-  );
+  const options = Array.from({ length: 99 }, (_, i) => (i + 1).toString().padStart(2, "0"));
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-md w-full">
         <div className="flex items-center">
-          <label className="text-[#0C659E] mr-3 font-medium">樓層：</label>
+          <label className="text-[#0C659E] mr-3 font-medium">{languageData.label.floor}</label>
           <select
             value={selectedValue ?? ""}
             onChange={(e) => setSelectedValue(e.target.value)}
-            className="flex-1 p-2 rounded text-start shadow-md appearance-none "
+            className="flex-1 p-2 rounded text-start shadow-md appearance-none"
             style={{ color: selectedValue ? "#118BBB" : "#AAAAAA" }}
           >
             <option value="" disabled selected>
-              請選擇樓層
+              {languageData.placeholder.select_floor}
             </option>
             {options.map((option) => (
               <option
@@ -70,16 +60,16 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
             onMouseLeave={() => setIsSaveHovered(false)}
             className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
           >
-            Save
+            {languageData.button.save}
             {isSaveHovered && <div className="h-0.5 bg-black"></div>}
           </button>
           <button
             onClick={onClose}
             onMouseEnter={() => setIsCancelHovered(true)}
             onMouseLeave={() => setIsCancelHovered(false)}
-            className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
+            className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black ml-2"
           >
-            Cancel
+            {languageData.button.cancel}
             {isCancelHovered && <div className="h-0.5 bg-black"></div>}
           </button>
         </div>
@@ -88,4 +78,15 @@ export const Notification: React.FC<NotificationProps> = ({ onClose }) => {
   );
 };
 
-export default Notification;
+async function useUpdateAPI({ name, uid }: { name: string; uid: string }) {
+  const apiUrl = process.env.NEXT_PUBLIC_FLOORUPDATE_API as string;
+  const postApiClient = createApiClient("post", apiUrl);
+
+  const payload = {
+    floor_name: name,
+    floor_uid: uid,
+  };
+  const response = await postApiClient(apiUrl, payload);
+}
+
+export default withLanguage(Notification);

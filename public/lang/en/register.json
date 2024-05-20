@@ -1,0 +1,21 @@
+{
+    "title": "Register Account",
+    "avatar": "Add Avatar",
+    "placeholder": {
+      "email": "Enter username or email",
+      "password": "New password",
+      "confirm_password": "Confirm new password"
+    },
+    "button": {
+      "register": "Register"
+    },
+    "alert": {
+      "email_required": "Email is required.",
+      "password_required": "Password and confirm password are required.",
+      "password_mismatch": "Passwords do not match, please re-enter.",
+      "register_success": "Registration successful!",
+      "register_failed": "Registration failed: ",
+      "error": "Error: "
+    }
+  }
+  
