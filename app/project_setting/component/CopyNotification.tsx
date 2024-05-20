@@ -1,79 +1,46 @@
 "use client";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "@/app/redux/store";
-import withLanguage from "./../service/withLanguage";
-import { removeLocationapi } from "@/app/redux/project_setting/project_CRUD";
+import withLanguage from "../service/withLanguage";
 
-interface NotificationProps {
+interface CopyNotificationProps {
   message: string;
   onClose: () => void;
-  languageData: any;
+  copyFaucetFrom?: string;
+  selectFaucet?: string;
 }
 
-const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) => {
-  const [isSaveHovered, setIsSaveHovered] = useState(false);
-  const [isCancelHovered, setIsCancelHovered] = useState(false);
-
-  const dispatch = useDispatch();
-  const selected_project = useSelector(
-    (state: RootState) => state.project_CRUD.selected_project
-  );
-
-  const handleSave = () => {
-    if (selected_project) {
-      dispatch(removeLocationapi(selected_project.location_uid));
-      onClose();
-    } else {
-      console.error("project_company_name is empty or undefined.");
-    }
-  };
-
+export const Notification: React.FC<CopyNotificationProps> = ({
+  message,
+  onClose,
+  copyFaucetFrom,
+  selectFaucet,
+  languageData,
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
   return (
-    <div className="fixed inset-0 flex justify-center items-center z-50">
-      <div className="bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-md w-full">
-        <div className="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700">
-          <p>
-            {languageData.message.note}
-            {selected_project
-              ? languageData.message.delete_location.replace("{locationName}", selected_project.location_name)
-              : languageData.message.select_field}
-          </p>
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-sm w-full flex justify-center items-center flex-col">
+      <div className="bg-white flex justify-center items-center mb-4 p-4 rounded w-4/5">
+        <p className="text-gray-800 text-center">{message}</p>
+      </div>
+      <div className="flex">
+        <div className="block">
+          <div className="text-[#5F6162]">
+            {languageData.message.already} {copyFaucetFrom} 裝置設定
+          </div>
+          <div className="flex">
+            <div className="text-[#5F6162]">複製至</div>
+            <div className="text-[#0C659E]"> {selectFaucet} </div>
+          </div>
         </div>
-        <div className="flex justify-end mt-4">
-          {selected_project ? (
-            <>
-              <button
-                onClick={handleSave}
-                onMouseEnter={() => setIsSaveHovered(true)}
-                onMouseLeave={() => setIsSaveHovered(false)}
-                className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
-              >
-                {languageData.button.save}
-                {isSaveHovered && <div className="h-0.5 bg-black"></div>}
-              </button>
-              <button
-                onClick={onClose}
-                onMouseEnter={() => setIsCancelHovered(true)}
-                onMouseLeave={() => setIsCancelHovered(false)}
-                className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black ml-2"
-              >
-                {languageData.button.cancel}
-                {isCancelHovered && <div className="h-0.5 bg-black"></div>}
-              </button>
-            </>
-          ) : (
-            <button
-              onClick={onClose}
-              onMouseEnter={() => setIsCancelHovered(true)}
-              onMouseLeave={() => setIsCancelHovered(false)}
-              className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
-            >
-              {languageData.button.confirm}
-              {isCancelHovered && <div className="h-0.5 bg-black"></div>}
-            </button>
-          )}
-        </div>
+        <button
+          onClick={onClose}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="text-[#118BBB] font-medium py-2 px-4 rounded hover:text-black"
+        >
+          Done
+          {isHovered && <div className="h-0.5 bg-black"></div>}
+        </button>
       </div>
     </div>
   );

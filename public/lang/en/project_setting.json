@@ -1,6 +1,7 @@
-{ 
-  "title":"Project setting",
+{
+  "title": "Project setting",
   "label": {
+    "select": "Select",
     "company": "Project/Company:",
     "building": "Task/Building:",
     "floor": "Floor:",
@@ -28,14 +29,16 @@
   },
   "message": {
     "note": "Note:",
+    "choose_faucet_to_copy": "Choosing faucet to copy",
     "delete_building": "Deleting task/building {buildingName} will also remove the following hierarchical settings. You will need to reconfigure them.",
     "delete_company": "Deleting project/company {companyName} will also remove all hierarchical settings associated with this company. You will need to reconfigure them.",
     "delete_floor": "Deleting floor {floorName} will also remove the following hierarchical settings. You will need to reconfigure them.",
     "delete_hub": "Deleting hub {hubName} will also remove the following hierarchical settings. You will need to reconfigure them.",
     "delete_location": "Deleting location {locationName} will also remove the following hierarchical settings. You will need to reconfigure them.",
     "select_field": "Please select the fields below.",
-    "copied_from": "{copyFaucetFrom} device settings have been copied",
-    "copied_to": "Copied to {selectFaucet}"
+    "already": "Let faucet",
+    "project_setting": "project_setting",
+    "copied_to": "Copy to"
   },
   "notification": {
     "add_company": "Add new project/company",

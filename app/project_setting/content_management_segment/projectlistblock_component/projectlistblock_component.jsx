@@ -71,6 +71,9 @@ const ProjectListBlockComponent = ({ languageData }) => {
             <thead>
               <tr>
                 <th className="sticky top-0 z-10 px-5 py-3 bg-[#EFEFEF] text-center text-xs text-[#5F6162] uppercase tracking-wider">
+                  {languageData.label.select}
+                </th>
+                <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
                   {languageData.label.company}
                 </th>
                 <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
@@ -199,6 +202,6 @@ const ProjectListBlockComponent = ({ languageData }) => {
       </div>
     </div>
   );
-}
+};
 
 export default withLanguage(ProjectListBlockComponent);

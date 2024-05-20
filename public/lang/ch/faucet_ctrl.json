@@ -1,0 +1,22 @@
+{
+  "title": "水龍頭設定",
+  "weekly_usage": "周用量",
+  "activation_time": "啟動次數",
+  "water_discharge_time": "累計出水時間",
+  "water_consumption": "累計流水量",
+  "infrared_distance_adjustment": "紅外線距離調整(公分)",
+  "water_stopping_time": "離開紅外線偵測後止水時間",
+  "water_wave_function": "選擇水波器功能",
+  "solenoid_valve_start_time": "電磁閥啟動時間",
+  "max_induce_confirm_time": "最長感應水確認時間",
+  "start_1s_automatic_switch": "啟動1S/S自動開關",
+  "carbon_reduce": "減少多少碳權",
+  "power_saving_mode": "進入省電時間",
+  "twelve_hours_automatic_flushing_mdoe": "12小時自動沖水時間",
+  "infrared_induction_test": "紅外線感應測試",
+  "maintain": "維護明細",
+  "input_comment": "輸入內容",
+  "add": "新增",
+  "restore_original_setting": "回復原廠設定",
+  "save": "存檔"
+}

@@ -5,7 +5,7 @@ const useLang = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedLang = localStorage.getItem("lang") || "ch";
+      const storedLang = localStorage.getItem("lang") || "en";
       setLang(storedLang);
     }
   }, []);

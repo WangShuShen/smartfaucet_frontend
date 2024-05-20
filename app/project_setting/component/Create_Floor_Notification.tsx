@@ -10,7 +10,10 @@ interface NotificationProps {
   languageData: any;
 }
 
-const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) => {
+const Notification: React.FC<NotificationProps> = ({
+  onClose,
+  languageData,
+}) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
@@ -21,7 +24,7 @@ const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) =>
 
   const handleSave = () => {
     if (selectedValue) {
-      const floorWithLabel = `${selectedValue}樓`;
+      const floorWithLabel = `${selectedValue} floor`;
       dispatch(
         setFloorapi({
           floor_name: floorWithLabel,
