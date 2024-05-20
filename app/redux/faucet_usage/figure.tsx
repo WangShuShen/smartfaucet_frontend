@@ -12,7 +12,7 @@ type FigureFaucetUsageState = {
   weeklyData: FigureFaucetUsageData[];
   monthlyData: FigureFaucetUsageData[];
   yearlyData: FigureFaucetUsageData[];
-  selectedTimeFrame: "周" | "月" | "年" | null;
+  selectedTimeFrame: "周" | "月" | "年" | "week" | "month" | "year" | null;
   loading: boolean;
   error: string | null;
 };

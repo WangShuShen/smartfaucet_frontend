@@ -9,12 +9,15 @@ export const useChartData = () => {
 
   switch (selectedTimeFrame) {
     case "周":
+    case "week":
       data = weeklyData;
       break;
     case "月":
+    case "month":
       data = monthlyData;
       break;
     case "年":
+    case "year":
       data = yearlyData;
       break;
     default:

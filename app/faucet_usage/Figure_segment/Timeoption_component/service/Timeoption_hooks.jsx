@@ -15,12 +15,15 @@ export const useTimeFrameDispatch = ({ faucet_uid }) => {
     dispatch(setSelectedTimeFrame(option));
     switch (option) {
       case "周":
+      case "week":
         dispatch(fetchFigureWeeklyUsage(faucet_uid));
         break;
       case "月":
+      case "month":
         dispatch(fetchFigureMonthlyUsage(faucet_uid));
         break;
       case "年":
+      case "year":
         dispatch(fetchFigureYearlyUsage(faucet_uid));
         break;
       default:

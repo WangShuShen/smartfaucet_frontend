@@ -1,0 +1,9 @@
+{
+    "title": "用水量紀錄",
+    "activation_times": "總啟動次數",
+    "water_discharge_time": "總啟動時間",
+    "water_consumption": "總流量",
+    "week": "周",
+    "month": "月",
+    "year": "年"
+}
