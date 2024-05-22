@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { createApiClient } from "@/utils/apiClient";
+import { useLanguage } from "@/utils/loadLanguage";
+import useLang from "@/app/component/useLang";
 async function fetchSelfAPI() {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_SELFLIST_API;
@@ -80,7 +82,7 @@ export default function Account_Setting_Page() {
   const handleNewPasswordSubmit = async (e) => {
     e.preventDefault();
     if (!oldPassword || !newPassword) {
-      alert("舊密碼或新密碼不能為空！");
+      alert("Original password or new password cannot be empty!");
       return;
     }
 
@@ -89,14 +91,14 @@ export default function Account_Setting_Page() {
         old_string: oldPassword,
         new_string: newPassword,
       });
-      alert("密碼更新成功！");
+      alert("Password update success.");
       setOldPassword("");
       setNewPassword("");
     } catch (error) {
       if (error.response && error.response.data) {
-        alert(`錯誤: ${error.response.data.message}`);
+        alert(`error: ${error.response.data.message}`);
       } else {
-        alert("更新密碼時發生未知錯誤。");
+        alert("An unknown error occurred while updating the password.");
       }
     }
     loadData();
@@ -116,12 +118,17 @@ export default function Account_Setting_Page() {
     }
     loadData();
   };
+  const lang = useLang();
+  const languageData = useLanguage("account_setting", lang);
+  if (!languageData) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <div className="flex items-center justify-start h-screen">
         <div className="container mx-auto p-4 bg-white lg:w-[40%] md:w-[40%] sm:w-[60%] xs:w-[80%] lg:h-[70%] md:h-[100%] sm:h-[100%] xs:h-[100%] rounded-lg">
           <div className="text-[#02253C] text-3xl font-semibold my-16 flex justify-center">
-            帳號設定
+            {languageData.top}
           </div>
           <div className="flex flex-col items-center w-full lg:px-40 md:px-5 sm:px-0 xs:px-0 -mt-12">
             <div className="relative">
@@ -162,7 +169,7 @@ export default function Account_Setting_Page() {
                   type={showPassword ? "text" : "password"}
                   value={oldPassword}
                   onChange={(e) => setOldPassword(e.target.value)}
-                  placeholder="請輸入舊密碼"
+                  placeholder={languageData.origin_password}
                   className="p-2 font-semibold focus:outline-none -ml-2"
                 />
                 <img
@@ -184,7 +191,7 @@ export default function Account_Setting_Page() {
                   type={showPassword ? "text" : "password"}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="請輸入新密碼"
+                  placeholder={languageData.new_password}
                   className="p-2 font-semibold focus:outline-none -ml-2"
                 />
                 <img
@@ -200,7 +207,7 @@ export default function Account_Setting_Page() {
               type="submit"
               className="bg-[#0096CA] text-white font-semibold text-xl rounded-lg p-2 mt-12 w-[80%]"
             >
-              送出
+              {languageData.submit}
             </button>
           </form>
         </div>

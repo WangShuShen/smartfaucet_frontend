@@ -1,0 +1,7 @@
+{
+    "title": "Account setting",
+    "top": "Password Setting",
+    "origin_password": "Enter Original Password",
+    "new_password": "Enter New Password",
+    "submit": "Submit"
+}

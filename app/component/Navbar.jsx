@@ -59,10 +59,19 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
-      await logout(refreshToken);
-      router.push("/login");
+      const result = await logout(refreshToken);
+
+      if (
+        result.success === false &&
+        (result.status === 400 || result.status === 401)
+      ) {
+        router.push("/login");
+      } else {
+        router.push("/login");
+      }
     } catch (error) {
       alert(error.message);
+      router.push("/login");
     }
   };
   if (!languageData) {
