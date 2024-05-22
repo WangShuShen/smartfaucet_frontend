@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createApiClient } from "@/utils/apiClient";
+import { useLanguage } from "@/utils/loadLanguage";
+import useLang from "@/app/component/useLang";
 interface NotificationProps {
   message: string;
   onClose: () => void;
@@ -32,12 +34,17 @@ export const Notification: React.FC<NotificationProps> = ({
     await updateMemberAPI({ email_string: email, new_password: inputValue });
     onClose();
   };
+  const lang = useLang();
+  const languageData = useLanguage("member_setting", lang);
+  if (!languageData) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-md w-full">
         <div className="flex items-center">
           <label className="text-[#0C659E] mr-3 font-medium">
-            欲更改的密碼：
+            {languageData.password_would_change}：
           </label>
           <input
             type="text"
