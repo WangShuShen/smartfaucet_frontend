@@ -72,7 +72,6 @@ export default function Register_Component() {
         alert(languageData.alert.register_failed + data.message);
       }
 
-      console.log(languageData.alert.register_success);
       alert(languageData.alert.register_success);
       router.push("/login");
     } catch (error) {

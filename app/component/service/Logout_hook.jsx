@@ -11,13 +11,15 @@ export async function logout(refreshToken) {
       localStorage.removeItem("accessToken");
       return "登出成功";
     } else {
-      throw new Error("登出失败");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("accessToken");
     }
   } catch (error) {
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("accessToken");
     console.error("Logout Error:", error);
     const errorMessage = error.response
       ? error.response.data.message
       : error.message;
-    throw new Error(errorMessage || "登出失败");
   }
 }

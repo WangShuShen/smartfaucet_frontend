@@ -19,12 +19,13 @@ class ApiFactory {
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
-
         // 如果 URL 不包含協議 (http:// 或 https://)，則加上前綴
-        if (!/^https?:\/\//i.test(config.url)) {
+        if (
+          !/^https?:\/\//i.test(config.url) &&
+          !/^http?:\/\//i.test(config.url)
+        ) {
           config.url = `${apiPrefix}${config.url}`;
         }
-
         return config;
       },
       (error) => {

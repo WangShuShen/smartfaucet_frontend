@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 
 const useLang = () => {
-  const [lang, setLang] = useState("ch");
+  const [lang, setLang] = useState("en");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedLang = localStorage.getItem("lang") || "en";
-      setLang(storedLang);
-    }
-  }, []);
+    const fetchLang = async () => {
+      if (typeof window !== "undefined") {
+        const storedLang = localStorage.getItem("lang") || "en";
+        setLang(storedLang);
+      }
+    };
+
+    fetchLang();
+  }, [lang]);
 
   return lang;
 };
