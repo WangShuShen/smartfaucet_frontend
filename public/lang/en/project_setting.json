@@ -38,7 +38,8 @@
     "select_field": "Please select the fields below.",
     "already": "Let faucet",
     "project_setting": "project_setting",
-    "copied_to": "Copy to"
+    "copied_to": "Copy to",
+    "faucet_copy_done": "Faucet copy completed"
   },
   "notification": {
     "add_company": "Add new project/company",

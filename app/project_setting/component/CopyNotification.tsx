@@ -25,10 +25,11 @@ export const Notification: React.FC<CopyNotificationProps> = ({
       <div className="flex">
         <div className="block">
           <div className="text-[#5F6162]">
-            {languageData.message.already} {copyFaucetFrom} 裝置設定
+            {languageData.message.already} {copyFaucetFrom}
+            {languageData.project_setting}
           </div>
           <div className="flex">
-            <div className="text-[#5F6162]">複製至</div>
+            <div className="text-[#5F6162]">{languageData.copied_to}</div>
             <div className="text-[#0C659E]"> {selectFaucet} </div>
           </div>
         </div>

@@ -38,7 +38,8 @@
     "select_field": "請勾選下方的欄位資料。",
     "already": "已將",
     "project_setting": "裝置設定",
-    "copied_to": "複製至"
+    "copied_to": "複製至",
+    "faucet_copy_done": "faucet複製完成"
   },
   "notification": {
     "add_company": "新增專案/公司",
