@@ -1,7 +1,7 @@
 "use client";
 import { createApiClient } from "@/utils/apiClient";
 export async function logout(refreshToken) {
-  const client = createApiClient("post", process.env.NEXT_PUBLIC_LOGOUT_API);
+  const client = createApiClient("post", "member/SignInManager/logout");
 
   try {
     const response = await client("", { refresh: refreshToken }); // 使用客户端发送请求

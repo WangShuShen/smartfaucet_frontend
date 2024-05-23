@@ -43,7 +43,7 @@ class Member {
 }
 async function fetchMemberAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_MEMBERLIST_API;
+    const apiUrl = "member/AccountManager/list";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {};
@@ -57,7 +57,7 @@ async function fetchMemberAPI() {
 }
 async function authorizeMemberAPI(email_string) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_MEMBERAUTHORIZE_API;
+    const apiUrl = "member/AccountManager/activate_deactivate";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = { email: email_string };
@@ -71,7 +71,7 @@ async function authorizeMemberAPI(email_string) {
 }
 async function unauthorizeMemberAPI(email_string) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_MEMBERUNAUTHORIZE_API;
+    const apiUrl = "member/AccountManager/activate_deactivate";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = { email: email_string };
@@ -86,7 +86,7 @@ async function unauthorizeMemberAPI(email_string) {
 
 async function deleteMemberAPI(email_string) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_MEMBERDELETE_API;
+    const apiUrl = "member/AccountManager/destroy";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = { email: email_string };

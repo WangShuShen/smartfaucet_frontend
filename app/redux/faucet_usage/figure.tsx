@@ -29,8 +29,7 @@ const initialState: FigureFaucetUsageState = {
 export const fetchFigureWeeklyUsage = createAsyncThunk(
   "figureFaucetUsage/fetchWeekly",
   async (faucetUid: string) => {
-    const apiUrl = process.env
-      .NEXT_PUBLIC_FETCH_FIGURE_WEEKLY_USAGE_API as string;
+    const apiUrl = "faucet/FaucetConsumptionManager/retrieve_week";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {
@@ -45,8 +44,7 @@ export const fetchFigureWeeklyUsage = createAsyncThunk(
 export const fetchFigureMonthlyUsage = createAsyncThunk(
   "figureFaucetUsage/fetchMonthly",
   async (faucetUid: string) => {
-    const apiUrl = process.env
-      .NEXT_PUBLIC_FETCH_FIGURE_MONTHLY_USAGE_API as string;
+    const apiUrl = "faucet/FaucetConsumptionManager/retrieve_month";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {
@@ -61,8 +59,7 @@ export const fetchFigureMonthlyUsage = createAsyncThunk(
 export const fetchFigureYearlyUsage = createAsyncThunk(
   "figureFaucetUsage/fetchYearly",
   async (faucetUid: string) => {
-    const apiUrl = process.env
-      .NEXT_PUBLIC_FETCH_FIGURE_YEARLY_USAGE_API as string;
+    const apiUrl = "faucet/FaucetConsumptionManager/retrieve_year";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {

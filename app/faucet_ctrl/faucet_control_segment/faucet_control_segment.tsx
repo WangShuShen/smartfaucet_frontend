@@ -20,7 +20,7 @@ import { useLanguage } from "@/utils/loadLanguage";
 import useLang from "@/app/component/useLang";
 async function fetchSelfAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_SELFLIST_API;
+    const apiUrl = "member/SelfManager/retrieve";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {};

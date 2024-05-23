@@ -3,6 +3,9 @@ import axios from "axios";
 
 class ApiFactory {
   createClient(method, baseURL) {
+    // 取得環境變數中的API前綴
+    const apiPrefix = `${process.env.PROTOCAL}://${process.env.HOST}:${process.env.API_PORT}/${process.env.API_ROOT}/${process.env.API_VERSION}/`;
+
     const client = axios.create({
       baseURL,
       headers: {
@@ -16,6 +19,12 @@ class ApiFactory {
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
+
+        // 如果 URL 不包含協議 (http:// 或 https://)，則加上前綴
+        if (!/^https?:\/\//i.test(config.url)) {
+          config.url = `${apiPrefix}${config.url}`;
+        }
+
         return config;
       },
       (error) => {
@@ -37,7 +46,7 @@ class ApiFactory {
           originalRequest._retry = true;
           try {
             const refreshToken = localStorage.getItem("refreshToken");
-            const refreshTokenURL = process.env.NEXT_PUBLIC_REFRESHTOKEN_API;
+            const refreshTokenURL = `${apiPrefix}member/SignInManager/refresh_token`;
             const refreshResponse = await axios.post(refreshTokenURL, {
               refresh: refreshToken,
             });
@@ -47,8 +56,8 @@ class ApiFactory {
             ] = `Bearer ${refreshResponse.data.accessToken}`;
             return client(originalRequest);
           } catch (refreshError) {
-                localStorage.removeItem("refreshToken");
-                localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            localStorage.removeItem("accessToken");
             return Promise.reject(refreshError);
           }
         }

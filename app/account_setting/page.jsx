@@ -5,7 +5,7 @@ import { useLanguage } from "@/utils/loadLanguage";
 import useLang from "@/app/component/useLang";
 async function fetchSelfAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_SELFLIST_API;
+    const apiUrl = "member/SelfManager/retrieve";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {};
@@ -19,7 +19,7 @@ async function fetchSelfAPI() {
 }
 async function fetchSelfProfileAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_SELFFIGURE_API;
+    const apiUrl = "member/SelfManager/picture";
     const getApiClient = createApiClient("get", apiUrl);
     const response = await getApiClient(apiUrl, {
       responseType: "blob",
@@ -32,7 +32,7 @@ async function fetchSelfProfileAPI() {
 }
 async function updateSelfProfileAPI(file) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_SELFUPDATEFIGURE_API;
+    const apiUrl = "member/SelfManager/update";
     const postApiClient = createApiClient("post", apiUrl);
     const formData = new FormData();
     formData.append("picture", file);
@@ -51,7 +51,7 @@ async function updateSelfProfileAPI(file) {
 
 async function updateSelfPasswordAPI({ old_string, new_string }) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_SELFUPDATEPASSWORD_API;
+    const apiUrl = "member/SelfManager/update_password";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = { old_password: old_string, new_password: new_string };

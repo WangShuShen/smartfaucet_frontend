@@ -12,9 +12,9 @@ export default function FigureSegment({ buildingId }) {
         if (!buildingId) return;
 
         const apiUrls = {
-            week: process.env.NEXT_PUBLIC_Building_Week_API,
-            month: process.env.NEXT_PUBLIC_Building_Month_API,
-            year: process.env.NEXT_PUBLIC_Building_Year_API
+          week: "faucet/FaucetConsumptionManager/building_week",
+          month: "faucet/FaucetConsumptionManager/building_month",
+          year: "faucet/FaucetConsumptionManager/building_year",
         };
 
         const client = createApiClient('post', apiUrls[timeFrame]);

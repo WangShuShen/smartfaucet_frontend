@@ -30,7 +30,7 @@ export const fetchFaucets = createAsyncThunk<
   { state: RootState }
 >("faucets/fetchFaucets", async (location, thunkAPI) => {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API as string;
+    const apiUrl = "faucet/FaucetInformationManager/location/list";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = { location_uid: location };

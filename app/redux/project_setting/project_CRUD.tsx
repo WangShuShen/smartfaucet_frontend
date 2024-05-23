@@ -74,7 +74,7 @@ export const setCompanyapi = createAsyncThunk(
       return thunkAPI.rejectWithValue("Company name is required");
     }
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_COMPANYCREATE_API as string;
+      const apiUrl = "faucet_hierarchy/ProjectCompanyManager/create";
       const postApiClient = createApiClient("post", apiUrl);
 
       const payload = {
@@ -109,7 +109,7 @@ export const setBuildingapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_BUILDINGCREATE_API as string;
+      const apiUrl = "faucet_hierarchy/BuildingManager/create";
       const postApiClient = createApiClient("post", apiUrl);
 
       const payload = {
@@ -142,7 +142,7 @@ export const setFloorapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_FLOORCREATE_API as string;
+      const apiUrl = "faucet_hierarchy/FloorManager/create";
       const postApiClient = createApiClient("post", apiUrl);
 
       const payload = {
@@ -175,7 +175,7 @@ export const setHubapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_HUBCREATE_API as string;
+      const apiUrl = "faucet_hierarchy/HubManager/bind";
       const postApiClient = createApiClient("post", apiUrl);
 
       const payload = {
@@ -208,7 +208,7 @@ export const setLocationapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_LOCATIONCREATE_API as string;
+      const apiUrl = "faucet_hierarchy/LocationManager/create";
       const postApiClient = createApiClient("post", apiUrl);
 
       const payload = {
@@ -238,7 +238,7 @@ export const removeCompanyapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_COMPANYREMOVE_API as string;
+      const apiUrl = "faucet_hierarchy/ProjectCompanyManager/delete"
       const postApiClient = createApiClient("post", apiUrl);
 
       const payload = {
@@ -267,7 +267,7 @@ export const removeBuildingapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_BUILDINGREMOVE_API as string;
+      const apiUrl = "faucet_hierarchy/BuildingManager/delete"
       const postApiClient = createApiClient("post", apiUrl);
 
       const payload = {
@@ -296,7 +296,7 @@ export const removeFloorapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_FLOORREMOVE_API as string;
+      const apiUrl = "faucet_hierarchy/FloorManager/delete"
       const postApiClient = createApiClient("post", apiUrl);
 
       const payload = {
@@ -325,7 +325,7 @@ export const removeHubapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_HUBREMOVE_API as string;
+      const apiUrl = "faucet_hierarchy/HubManager/unbind"
       const postApiClient = createApiClient("post", apiUrl);
 
       const payload = {
@@ -354,7 +354,7 @@ export const removeLocationapi = createAsyncThunk(
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_LOCATIONREMOVE_API as string;
+      const apiUrl = "faucet_hierarchy/LocationManager/delete";
       const postApiClient = createApiClient("post", apiUrl);
 
       const payload = {

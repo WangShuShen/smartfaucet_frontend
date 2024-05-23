@@ -25,7 +25,7 @@ export const useFaucetSetting = (faucetUid) => {
 
 export const saveFaucetSettings = async (faucetUid, settings) => {
   try {
-    const API_BASE_URL = process.env.NEXT_PUBLIC_FETCH_SAVE_FAUCET_SETTING_API;
+    const API_BASE_URL = "faucet/FaucetConfigurationManager/update";
 
     if (!API_BASE_URL) {
       console.error("API base URL is not defined.");
@@ -60,7 +60,7 @@ export const saveFaucetSettings = async (faucetUid, settings) => {
 
 export const resetFaucetSettings = async (faucetUid) => {
   try {
-    const API_BASE_URL = process.env.NEXT_PUBLIC_FETCH_RESET_FAUCET_SETTING_API;
+    const API_BASE_URL = "faucet/FaucetConfigurationManager/reset";
 
     const postApiClient = createApiClient("post", API_BASE_URL);
     const payload = {

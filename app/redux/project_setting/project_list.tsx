@@ -32,7 +32,7 @@ export const fetchProject = createAsyncThunk<
   { state: RootState }
 >("project/fetchHierarch", async (_, thunkAPI) => {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_PROJECTLIST_API as string;
+    const apiUrl = "faucet_hierarchy/HierarchyManager/list";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {};

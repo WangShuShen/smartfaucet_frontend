@@ -10,7 +10,7 @@ interface NotificationProps {
 }
 async function updateMemberAPI({ email_string, new_password }) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_MEMBERUPDATE_API;
+    const apiUrl = "member/AccountManager/update_password";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = { email: email_string, password: new_password };
