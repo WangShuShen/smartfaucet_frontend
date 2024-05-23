@@ -1,11 +1,14 @@
 export async function login(email, password) {
-  const response = await fetch(process.env.NEXT_PUBLIC_LOGIN_API, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  });
+  const response = await fetch(
+    `${process.env.PROTOCAL}://${process.env.HOST}:${process.env.API_PORT}/${process.env.API_ROOT}/${process.env.API_VERSION}/member/SignInManager/login`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    }
+  );
 
   const data = await response.json();
   if (response.ok) {
