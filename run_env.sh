@@ -13,6 +13,6 @@ sudo docker build -t ${FRONTEND_IMAGE_NAME} .
 
 # 運行容器並連接到特定網路，設置自動重啟策略
 echo "正在啟動容器..."
-sudo docker run -d --restart always -p ${FRONTEND_CONTAINER_PORT}:3000 --name ${FRONTEND_IMAGE_NAME} ${FRONTEND_IMAGE_NAME}
+sudo docker run -d --network ${NETWORK_NAME} --restart always -p ${FRONTEND_CONTAINER_PORT}:3000 --name ${FRONTEND_IMAGE_NAME} ${FRONTEND_IMAGE_NAME}
 
 echo "部署完成！"

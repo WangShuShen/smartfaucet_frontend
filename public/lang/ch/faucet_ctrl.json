@@ -18,5 +18,8 @@
   "input_comment": "輸入內容",
   "add": "新增",
   "restore_original_setting": "回復原廠設定",
-  "save": "存檔"
+  "save": "存檔",
+  "restore_original_setting_success": "設定已回復原廠設定",
+  "save_success": "設定已存檔",
+  "confirm": "確認"
 }

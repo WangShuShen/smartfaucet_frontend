@@ -70,7 +70,7 @@ const Navbar = () => {
         router.push("/login");
       }
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
       router.push("/login");
     }
   };

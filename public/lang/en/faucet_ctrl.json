@@ -18,5 +18,8 @@
   "input_comment": "Input content",
   "add": "Add",
   "restore_original_setting": "Restore original setting",
-  "save": "Save"
+  "save": "Save",
+  "restore_original_setting_success": "Settings have been restored to defaults",
+  "save_success": "Settings have been saved",
+  "confirm": "Confirm"
 }

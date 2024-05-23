@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
 import { useEffect } from "react";
-import FaucetItem from "./faucetitem_segment/faucetitem_segment";
-import Faucet_Control from "./faucet_control_segment/faucet_control_segment";
+
 import { useSelector } from "react-redux";
 import LoadingScreen from "@/app/component/LoadingScreen";
 import Notification from "./component/Notification";
 import { hideNotification } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+
 export default function Faucet_Ctrl_Page() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -24,10 +24,10 @@ export default function Faucet_Ctrl_Page() {
   if (loading_state) return <LoadingScreen></LoadingScreen>;
   useEffect(() => {
     if (true) {
-      // 替換 true 為你的實際條件
       router.push("/project_setting");
     }
   }, [router]);
+
   return (
     <div className="block w-[100%] m-auto">
       {isNotification && (

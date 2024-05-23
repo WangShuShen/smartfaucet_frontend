@@ -1,6 +1,6 @@
 {
     "title": "Account setting",
-    "top": "Password Setting",
+    "top": "Account Setting",
     "origin_password": "Enter Original Password",
     "new_password": "Enter New Password",
     "submit": "Submit"
