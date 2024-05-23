@@ -5,7 +5,7 @@
     "company": "專案/公司：",
     "building": "任務/建築物：",
     "floor": "樓層：",
-    "hub": "Hub：",
+    "hub": "閘道器：",
     "location": "位置：",
     "faucet": "水龍頭",
     "id": "ID",
@@ -25,11 +25,11 @@
   },
   "placeholder": {
     "select_floor": "請選擇樓層",
-    "select_hub": "請選擇 Hub"
+    "select_hub": "請選擇 閘道器"
   },
   "message": {
     "note": "注意：",
-    "choose_faucet_to_copy": "選擇要COPY的faucet",
+    "choose_faucet_to_copy": "選擇要複製的水龍頭",
     "delete_building": "刪除任務/建築物 {buildingName} 將會連帶移除以下的階層式設置。您將需要重新進行設置。",
     "delete_company": "刪除專案/公司 {companyName} 將會連帶移除該公司的所有階層式設置。您將需要重新進行設置。",
     "delete_floor": "刪除樓層 {floorName} 將會連帶移除以下的階層式設置。您將需要重新進行設置。",
@@ -45,12 +45,12 @@
     "add_company": "新增專案/公司",
     "add_building": "新增任務/建築物",
     "add_floor": "新增樓層",
-    "add_hub": "新增HUB",
+    "add_hub": "新增閘道器",
     "add_location": "新增位置",
     "delete_company": "刪除專案/公司",
     "delete_building": "刪除任務/建築物",
     "delete_floor": "刪除樓層",
-    "delete_hub": "刪除HUB",
+    "delete_hub": "刪除閘道器",
     "delete_location": "刪除位置"
   }
 }

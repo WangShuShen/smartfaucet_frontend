@@ -1,4 +1,5 @@
 {
+    "title": "Water & Carbon Data",
     "usage": {
       "total_usage_water": "Total Water Usage",
       "total_usage_water_saved": "Total Water Saved"
@@ -8,7 +9,6 @@
       "week": "Week",
       "month": "Month",
       "year": "Year"
-    },
-    "title": "Water & Carbon Data"
+    }
   }
   

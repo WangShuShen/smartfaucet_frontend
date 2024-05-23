@@ -1,4 +1,5 @@
 {
+  "title": "用水及碳排數據",
   "usage": {
     "total_usage_water": "總流水量",
     "total_usage_water_saved": "總用省水量"
@@ -8,6 +9,6 @@
     "week": "周",
     "month": "月",
     "year": "年"
-  },
-  "title": "用水及碳排數據"
+  }
+  
 }
