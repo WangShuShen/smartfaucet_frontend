@@ -1,9 +1,10 @@
 // Toggle_switch_Component.js
 import React, { useState } from "react";
-
+import { setLang } from "@/app/redux/lang/langSlice";
+import { useDispatch } from "react-redux";
 export default function Toggle_switch_Component({ onToggle }) {
   const [isEnabled, setIsEnabled] = useState(false);
-
+  const dispatch = useDispatch();
   const toggleSwitch = () => {
     setIsEnabled(!isEnabled);
     onToggle(isEnabled); // Pass the new state as argument
@@ -11,10 +12,10 @@ export default function Toggle_switch_Component({ onToggle }) {
 
   // Define a dummy function for language toggling
   const toggleEN = () => {
-    localStorage.setItem("lang", "en");
+    dispatch(setLang("en"));
   };
   const toggleCH = () => {
-    localStorage.setItem("lang", "ch");
+    dispatch(setLang("ch"));
   };
 
   return (

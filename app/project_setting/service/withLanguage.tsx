@@ -6,12 +6,13 @@ const withLanguage = (WrappedComponent: React.ComponentType<any>) => {
   return (props: any) => {
     const lang = useLang();
     const languageData = useLanguage("project_setting", lang);
-
     if (!languageData) {
       return <div>Loading...</div>;
     }
 
-    return <WrappedComponent {...props} languageData={languageData} lang={lang} />;
+    return (
+      <WrappedComponent {...props} languageData={languageData} lang={lang} />
+    );
   };
 };
 

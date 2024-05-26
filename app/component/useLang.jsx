@@ -1,17 +1,22 @@
-import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setLang } from "@/app/redux/lang/langSlice";
+import { useEffect } from "react";
 
 const useLang = () => {
-  const [lang, setLang] = useState("en");
+  const lang = useSelector((state) => state.lang);
+  const dispatch = useDispatch();
+
+  const changeLang = (newLang) => {
+    dispatch(setLang(newLang));
+  };
 
   useEffect(() => {
-    const fetchLang = async () => {
-      if (typeof window !== "undefined") {
-        const storedLang = localStorage.getItem("lang") || "en";
-        setLang(storedLang);
+    if (typeof window !== "undefined") {
+      const storedLang = localStorage.getItem("lang");
+      if (storedLang !== lang && storedLang) {
+        changeLang(storedLang);
       }
-    };
-
-    fetchLang();
+    }
   }, [lang]);
 
   return lang;
