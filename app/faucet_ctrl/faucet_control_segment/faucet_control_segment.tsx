@@ -16,9 +16,11 @@ import type { RootState } from "@/app/redux/store";
 import { setNotification } from "@/app/redux/app/app";
 import { useDispatch } from "react-redux";
 import { createApiClient } from "@/utils/apiClient";
+import { useLanguage } from "@/utils/loadLanguage";
+import useLang from "@/app/component/useLang";
 async function fetchSelfAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_SELFLIST_API;
+    const apiUrl = "member/SelfManager/retrieve";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {};
@@ -156,6 +158,9 @@ export default function Faucet_Control_Segment({ location }) {
   const faucet_status = useSelector(
     (state: RootState) => state.faucetinfo.faucet_info?.faucet_status
   );
+  const { faucetDetail, loading_detail, error_detail } = useFaucetSetting(
+    faucetuid || ""
+  );
   const [role, setRole] = useState("");
   const disabledStyle = {
     opacity:
@@ -181,6 +186,11 @@ export default function Faucet_Control_Segment({ location }) {
   useEffect(() => {
     loadData();
   }, []);
+  const lang = useLang();
+  const languageData = useLanguage("faucet_ctrl", lang);
+  if (!languageData) {
+    return <div>Loading...</div>;
+  }
   async function loadData() {
     const response = await fetchSelfAPI();
     setRole(response.role);
@@ -202,9 +212,7 @@ export default function Faucet_Control_Segment({ location }) {
       console.error("No faucet setting to save.");
     }
   };
-  const { faucetDetail, loading_detail, error_detail } = useFaucetSetting(
-    faucetuid || ""
-  );
+
   if (loading_detail)
     return (
       <div className="flex justify-center">
@@ -250,6 +258,7 @@ export default function Faucet_Control_Segment({ location }) {
   const infraredDistanceValue = faucetDetail
     ? Number(faucetDetail?.faucet_ctrl.infraredDistance)
     : 10;
+
   return (
     <div
       className="flex justify-center items-center mt-2 justify-around"
@@ -260,24 +269,24 @@ export default function Faucet_Control_Segment({ location }) {
           <Slider
             min={10}
             max={25}
-            label="紅外線距離調整(公分)"
+            label={languageData.infrared_distance_adjustment}
             val={infraredDistanceValue}
             settingKey="infraredDistance"
           />
           <ControlButton
             options={updatedOptionsMap.waterShutoffDelay}
-            segmentTitle="離開紅外線偵測後止水時間"
+            segmentTitle={languageData.water_stopping_time}
             settingKey="waterShutoffDelay"
           />
           <ControlButton
             options={updatedOptionsMap.flowRate}
-            segmentTitle="選擇水波器功能"
+            segmentTitle={languageData.water_wave_function}
             settingKey="flowRate"
             style={disabledStyle_role}
           />
           <ControlButton
             options={updatedOptionsMap.solenoidActivationDuration}
-            segmentTitle="電磁閥啟動時間"
+            segmentTitle={languageData.solenoid_valve_start_time}
             settingKey="solenoidActivationDuration"
             style={disabledStyle_role}
           />
@@ -286,7 +295,7 @@ export default function Faucet_Control_Segment({ location }) {
           <div className="flex-1  p-4">
             <ControlButton
               options={updatedOptionsMap.maxIRWaterCheckDuration}
-              segmentTitle="最長感應水確認時間"
+              segmentTitle={languageData.max_induce_confirm_time}
               settingKey="maxIRWaterCheckDuration"
             />
           </div>
@@ -294,18 +303,18 @@ export default function Faucet_Control_Segment({ location }) {
             <div className="flex flex-grow-2  p-2 flex-col">
               <ControlButton
                 options={updatedOptionsMap.auto1secStartStopSwitch}
-                segmentTitle="啟動1S/S自動開關"
+                segmentTitle={languageData.start_1s_automatic_switch}
                 settingKey="auto1secStartStopSwitch"
               />
               <ControlButton
                 options={updatedOptionsMap.carbonCreditReduction}
-                segmentTitle="減少多少碳權"
+                segmentTitle={languageData.start_1s_automatic_switch}
                 settingKey="carbonCreditReduction"
               />
               <div className="flex justify-start items-center">
                 <ControlButton
                   options={updatedOptionsMap.energySavingMode}
-                  segmentTitle="進入省電時間"
+                  segmentTitle={languageData.power_saving_mode}
                   settingKey="energySavingMode"
                   style={disabledStyle_role}
                 />
@@ -324,23 +333,26 @@ export default function Faucet_Control_Segment({ location }) {
             <div className="flex flex-grow-2  p-2 flex-col">
               <ControlButton
                 options={updatedOptionsMap.autoFlushing12hr}
-                segmentTitle="12小時自動沖水時間"
+                segmentTitle={languageData.twelve_hours_automatic_flushing_mdoe}
                 settingKey="autoFlushing12hr"
               />
               <ControlButton
                 options={updatedOptionsMap.irSensingTest}
-                segmentTitle="紅外線感應測試"
+                segmentTitle={languageData.infrared_induction_test}
                 settingKey="irSensingTest"
               />
               <InputButton
-                label="維護明細"
-                placeholder="輸入內容"
-                buttonText="新增"
+                label={languageData.maintain}
+                placeholder={languageData.input_comment}
+                buttonText={languageData.add}
               />
             </div>
             <div className="flex flex-grow-1 p-2 flex-col h-full justify-end items-start ">
-              <Button label="回復原廠設定" onClick={handleResetClick} />
-              <Button label="存檔" onClick={handleSaveClick} />
+              <Button
+                label={languageData.restore_original_setting}
+                onClick={handleResetClick}
+              />
+              <Button label={languageData.save} onClick={handleSaveClick} />
             </div>
           </div>
         </div>

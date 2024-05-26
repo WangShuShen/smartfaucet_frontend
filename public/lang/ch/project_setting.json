@@ -1,6 +1,7 @@
-{ 
-  "title":"專案設定",
+{
+  "title": "專案設定",
   "label": {
+    "select": "選取",
     "company": "專案/公司：",
     "building": "任務/建築物：",
     "floor": "樓層：",
@@ -28,14 +29,17 @@
   },
   "message": {
     "note": "注意：",
+    "choose_faucet_to_copy": "選擇要COPY的faucet",
     "delete_building": "刪除任務/建築物 {buildingName} 將會連帶移除以下的階層式設置。您將需要重新進行設置。",
     "delete_company": "刪除專案/公司 {companyName} 將會連帶移除該公司的所有階層式設置。您將需要重新進行設置。",
     "delete_floor": "刪除樓層 {floorName} 將會連帶移除以下的階層式設置。您將需要重新進行設置。",
     "delete_hub": "刪除 Hub {hubName} 將會連帶移除以下的階層式設置。您將需要重新進行設置。",
     "delete_location": "刪除位置 {locationName} 將會連帶移除以下的階層式設置。您將需要重新進行設置。",
     "select_field": "請勾選下方的欄位資料。",
-    "copied_from": "已將 {copyFaucetFrom} 裝置設定",
-    "copied_to": "複製至 {selectFaucet}"
+    "already": "已將",
+    "project_setting": "裝置設定",
+    "copied_to": "複製至",
+    "faucet_copy_done": "faucet複製完成"
   },
   "notification": {
     "add_company": "新增專案/公司",

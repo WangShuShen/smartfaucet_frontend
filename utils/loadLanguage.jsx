@@ -9,7 +9,7 @@ class LanguageLoader {
       return LanguageLoader.instance;
     }
 
-    this.language = localStorage.getItem("lang") || "ch"; // Default language is 'ch'
+    this.language = localStorage.getItem("lang") || "en"; // Default language is 'en'
     LanguageLoader.instance = this;
   }
 

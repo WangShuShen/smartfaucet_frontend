@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useFaucetInfo, useFaucetUsage } from "./service/faucetinfo_hooks";
 import { setLoading } from "@/app/redux/app/app";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useLanguage } from "@/utils/loadLanguage";
+import useLang from "@/app/component/useLang";
 export default function FaucetInfo(faucetUid) {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -15,7 +15,12 @@ export default function FaucetInfo(faucetUid) {
   const { faucet_info, loading_info, error_info } = useFaucetInfo(faucetUid);
   const { latestUpdate, loading_usage, error_usage } =
     useFaucetUsage(faucetUid);
+  const lang = useLang();
+  const languageData = useLanguage("faucet_ctrl", lang);
 
+  if (!languageData) {
+    return <div>Loading...</div>;
+  }
   if (loading_info || loading_usage)
     return <span className="loading loading-bars loading-lg mt-24"></span>;
 
@@ -44,7 +49,7 @@ export default function FaucetInfo(faucetUid) {
       dispatch(setLoading(true));
       router.push(`/faucet_usage/${faucet_info?.faucet_uid}/${specification}`);
     } else {
-      alert("請選擇Faucet！");
+      alert("Please choose faucet！");
     }
   };
   return (
@@ -71,13 +76,15 @@ export default function FaucetInfo(faucetUid) {
         </div>
       </div>
       <div className="block ">
-        <p className="text-[#118BBB] font-sans font-bold ">FACILITY BY WEEK</p>
+        <p className="text-[#118BBB] font-sans font-bold ">
+          {languageData.weekly_usage}
+        </p>
         <div className="bg-[#118BBB] h-0.5 w-5/6"></div>
       </div>
       <div className="block mt-2">
         <div className="flex mt-2">
           <p className="text-[#5F6162] font-sans font-bold text-xs">
-            啟動次數 ▸
+            {languageData.activation_time} ▸
           </p>
           <p className="text-[#118BBB] font-sans font-bold text-xs">
             {latestUpdate?.total_usage_count}
@@ -85,7 +92,7 @@ export default function FaucetInfo(faucetUid) {
         </div>
         <div className="flex mt-2">
           <p className="text-[#5F6162] font-sans font-bold text-xs">
-            累計出水時間(min) ▸
+            {languageData.water_discharge_time}(min) ▸
           </p>
           <p className="text-[#118BBB] font-sans font-bold text-xs">
             {latestUpdate?.total_usage_time}
@@ -93,7 +100,7 @@ export default function FaucetInfo(faucetUid) {
         </div>
         <div className="flex mt-2">
           <p className="text-[#5F6162] font-sans font-bold text-xs">
-            累計流水量(gal) ▸
+            {languageData.water_consumption}(gal) ▸
           </p>
           <p className="text-[#118BBB] font-sans font-bold text-xs">
             {latestUpdate?.total_usage_water}

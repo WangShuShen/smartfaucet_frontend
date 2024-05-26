@@ -9,11 +9,10 @@ import { setNotification } from "@/app/redux/app/app";
 import { setcopyfaucetfromReducer } from "@/app/redux/project_setting/project_CRUD";
 import { createApiClient } from "@/utils/apiClient";
 import { setLoading } from "@/app/redux/app/app";
-import withLanguage from "./../service/withLanguage";  // 添加语言处理
-
+import withLanguage from "./../service/withLanguage"; // 添加语言处理
 
 async function useCopyFaucet({ faucet_Uids, from_faucet_Uid }) {
-  const apiUrl = process.env.NEXT_PUBLIC_FETCH_COPY_FAUCET_SETTING_API;
+  const apiUrl = "faucet/FaucetConfigurationManager/duplicate";
   const postApiClient = createApiClient("post", apiUrl);
 
   const payload = {

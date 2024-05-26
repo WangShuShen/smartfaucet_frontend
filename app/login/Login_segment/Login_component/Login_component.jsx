@@ -52,10 +52,9 @@ export default function Login_Component() {
       alert(languageData.must_input_email);
       return;
     }
-
     try {
       const response = await fetch(
-        process.env.NEXT_PUBLIC_Send_Temp_Password_API,
+        `${process.env.PROTOCAL}://${process.env.HOST}:${process.env.API_PORT}/${process.env.API_ROOT}/${process.env.API_VERSION}/member/SignInManager/send_temp_password`,
         {
           method: "POST",
           headers: {
@@ -90,7 +89,7 @@ export default function Login_Component() {
 
     try {
       const response = await fetch(
-        process.env.NEXT_PUBLIC_Send_Verify_Temp_Password_API,
+        `${process.env.PROTOCAL}://${process.env.HOST}:${process.env.API_PORT}/${process.env.API_ROOT}/${process.env.API_VERSION}/member/SignInManager/verify_temp_password`,
         {
           method: "POST",
           headers: {
@@ -131,7 +130,7 @@ export default function Login_Component() {
 
     try {
       const response = await fetch(
-        process.env.NEXT_PUBLIC_Update_Password_API,
+        `${process.env.PROTOCAL}://${process.env.HOST}:${process.env.API_PORT}/${process.env.API_ROOT}/${process.env.API_VERSION}/member/SignInManager/update_password`,
         {
           method: "POST",
           headers: {

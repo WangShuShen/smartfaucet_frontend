@@ -10,7 +10,7 @@ import withLanguage from "./../../service/withLanguage"; // 確保正確導入
 
 async function fetchlistfaucet(hubUid) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTUNBINDFAUCET_API;
+    const apiUrl = "faucet/FaucetInformationManager/hub/list_unbound";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {
@@ -27,7 +27,7 @@ async function fetchlistfaucet(hubUid) {
 
 async function fetchbindfaucet(location_Uid) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_LISTLOCATIONFAUCET_API;
+    const apiUrl = "faucet/FaucetInformationManager/location/list";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {
@@ -44,7 +44,7 @@ async function fetchbindfaucet(location_Uid) {
 
 async function bindfaucetapi(location_Uid, faucet_uid) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_BINDLOCATIONFAUCET_API;
+    const apiUrl = "faucet/FaucetInformationManager/location/bind";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {
@@ -300,6 +300,6 @@ const SelectFaucetGroupComponent = ({ languageData }) => {
       </div>
     </div>
   );
-}
+};
 
 export default withLanguage(SelectFaucetGroupComponent);

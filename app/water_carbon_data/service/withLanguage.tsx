@@ -7,15 +7,15 @@ const withLanguage = (WrappedComponent: React.ComponentType<any>) => {
     const lang = useLang();
     const languageData = useLanguage("water_carbon_data", lang);
 
-    useEffect(() => {
-      console.log("Language data:", languageData);
-    }, [languageData]);
+    useEffect(() => {}, [languageData]);
 
     if (!languageData) {
       return <div>Loading...</div>;
     }
 
-    return <WrappedComponent {...props} languageData={languageData} lang={lang} />;
+    return (
+      <WrappedComponent {...props} languageData={languageData} lang={lang} />
+    );
   };
 };
 

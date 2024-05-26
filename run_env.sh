@@ -1,21 +1,18 @@
 #!/bin/bash
 
 # 設定容器名稱
-CONTAINER_NAME="smart_faucet_frontend"
+source .env.local
 
-sudo docker stop ${CONTAINER_NAME}
-sudo docker rm ${CONTAINER_NAME}
-
-# 執行npm build
-echo "正在建構前端應用..."
-# npm run build
+# 停止並刪除現有容器
+sudo docker stop ${FRONTEND_IMAGE_NAME}
+sudo docker rm ${FRONTEND_IMAGE_NAME}
 
 # 建立 Docker 鏡像
 echo "正在建立 Docker 鏡像..."
-sudo docker build -t ${CONTAINER_NAME} .
+sudo docker build -t ${FRONTEND_IMAGE_NAME} .
 
-# 運行容器
+# 運行容器並連接到特定網路，設置自動重啟策略
 echo "正在啟動容器..."
-sudo docker run -d -p 39684:3000 --name ${CONTAINER_NAME} ${CONTAINER_NAME}
+sudo docker run -d --network ${NETWORK_NAME} --restart always -p ${FRONTEND_CONTAINER_PORT}:3000 --name ${FRONTEND_IMAGE_NAME} ${FRONTEND_IMAGE_NAME}
 
 echo "部署完成！"

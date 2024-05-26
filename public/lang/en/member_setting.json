@@ -1,0 +1,12 @@
+{
+    "title": "Member setting",
+    "auth_user": "Authorized User",
+    "unauth_user": "Unregistered User",
+    "change_password": "Change Password",
+    "remove_user": "Remove User",
+    "select": "Select",
+    "user_account": "User Account",
+    "status": "Status",
+    "last_time_login": "Last Login Time",
+    "password_would_change": "Password"
+}

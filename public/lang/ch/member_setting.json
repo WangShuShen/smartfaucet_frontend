@@ -1,0 +1,12 @@
+{
+    "title": "系統人員設定資訊",
+    "auth_user": "授權使用者",
+    "unauth_user": "註銷使用者",
+    "change_password": "更改密碼",
+    "remove_user": "刪除使用者",
+    "select": " 選取",
+    "user_account": "使用者帳號",
+    "status": "狀態",
+    "last_time_login": "上次登入時間",
+    "password_would_change":"欲更改的密碼"
+}

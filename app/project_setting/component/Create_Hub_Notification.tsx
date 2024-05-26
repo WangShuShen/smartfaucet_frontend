@@ -11,7 +11,10 @@ interface NotificationProps {
   languageData: any;
 }
 
-const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) => {
+const Notification: React.FC<NotificationProps> = ({
+  onClose,
+  languageData,
+}) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [selectedHub, setSelectedHub] = useState<string>("");
@@ -24,7 +27,7 @@ const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) =>
   useEffect(() => {
     const fetchHubUids = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_HUBLIST_API as string;
+        const apiUrl = "faucet_hierarchy/HubManager/list_unbound";
         const postApiClient = createApiClient("post", apiUrl);
 
         const payload = {};
@@ -55,7 +58,9 @@ const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) =>
     <div className="fixed inset-0 flex justify-center items-center z-50 ">
       <div className="bg-[#D9D9D9] rounded-lg shadow-xl p-6 max-w-lg w-full">
         <div className="flex items-center">
-          <label className="text-[#0C659E] mr-3 font-medium">{languageData.label.hub}</label>
+          <label className="text-[#0C659E] mr-3 font-medium">
+            {languageData.label.hub}
+          </label>
           <select
             value={selectedHub}
             onChange={(e) => setSelectedHub(e.target.value)}

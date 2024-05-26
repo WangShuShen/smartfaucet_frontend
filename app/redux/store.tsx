@@ -7,6 +7,7 @@ import faucetInfoReducer from "./faucet_ctrl/faucet_info";
 import appReducer from "./app/app";
 import projectReducer from "./project_setting/project_list";
 import project_CRUD_SliceReducer from "./project_setting/project_CRUD";
+import langReducer from "./lang/langSlice";
 export const makeStore = () => {
   return configureStore({
     reducer: {
@@ -18,6 +19,7 @@ export const makeStore = () => {
       app: appReducer,
       project: projectReducer,
       project_CRUD: project_CRUD_SliceReducer,
+      lang: langReducer,
     },
   });
 };

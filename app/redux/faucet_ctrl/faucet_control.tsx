@@ -42,7 +42,7 @@ export const fetchFaucetSetting = createAsyncThunk<
     return thunkAPI.rejectWithValue("faucetUid is null or empty");
   }
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_FETCH_FAUCET_SETTING_API as string;
+    const apiUrl = "faucet/FaucetConfigurationManager/retrieve";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {

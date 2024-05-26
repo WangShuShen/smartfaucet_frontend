@@ -79,7 +79,7 @@ const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) =>
 };
 
 async function useUpdateAPI({ name, uid }: { name: string; uid: string }) {
-  const apiUrl = process.env.NEXT_PUBLIC_FLOORUPDATE_API as string;
+  const apiUrl = "faucet_hierarchy/FloorManager/update";
   const postApiClient = createApiClient("post", apiUrl);
 
   const payload = {

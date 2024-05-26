@@ -8,9 +8,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { logout } from "./service/Logout_hook";
 import { createApiClient } from "@/utils/apiClient";
+import { useLanguage } from "@/utils/loadLanguage";
+import useLang from "@/app/component/useLang";
 async function fetchSelfAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_SELFLIST_API;
+    const apiUrl = "member/SelfManager/retrieve";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {};
@@ -24,7 +26,7 @@ async function fetchSelfAPI() {
 }
 async function fetchSelfProfileAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_SELFFIGURE_API;
+    const apiUrl = "member/SelfManager/picture";
     const getApiClient = createApiClient("get", apiUrl);
     const response = await getApiClient(apiUrl, {
       responseType: "blob",
@@ -41,6 +43,9 @@ const Navbar = () => {
   const [role, setRole] = useState("");
   const [profile, setProfile] = useState(null);
   const router = useRouter();
+  const lang = useLang();
+  const languageData = useLanguage("layout", lang);
+
   useEffect(() => {
     loadData();
   }, []);
@@ -54,13 +59,24 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
-      await logout(refreshToken);
-      router.push("/login");
+      const result = await logout(refreshToken);
+
+      if (
+        result.success === false &&
+        (result.status === 400 || result.status === 401)
+      ) {
+        router.push("/login");
+      } else {
+        router.push("/login");
+      }
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
+      router.push("/login");
     }
   };
-
+  if (!languageData) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <div
@@ -118,7 +134,7 @@ const Navbar = () => {
               className="btn bg-sky-200 hover:bg-sky-600 px-4 py-2 rounded-full font-bold z-10 w-24 lg:text-lg md:text-md sm:text-sm xs:text-xs"
               onClick={handleLogout}
             >
-              登出
+              {languageData.logout}
             </button>
           </div>
         </div>
@@ -126,18 +142,20 @@ const Navbar = () => {
         {/* Mobile Menu */}
         <AnimatedMenu isOpen={isOpen}>
           <div className="my-20 overflow-y-auto max-h-200">
-            <AnimatedLink href="/project_setting">專案設定</AnimatedLink>
+            <AnimatedLink href="/project_setting">
+              {languageData.project_setting}
+            </AnimatedLink>
             <AnimatedLink href="/water_carbon_data">
-              用水和碳排數據
+              {languageData.water_carbon_data}
             </AnimatedLink>
             {role === "manager" && (
               <AnimatedLink href="/member_setting">
-                系統人員設定資訊
+                {languageData.member_setting}
               </AnimatedLink>
             )}
-            <AnimatedAccountSetting href="/account_setting">
-              帳號設定
-            </AnimatedAccountSetting>
+            <AnimatedLink href="/account_setting">
+              {languageData.account_setting}
+            </AnimatedLink>
           </div>
         </AnimatedMenu>
       </nav>

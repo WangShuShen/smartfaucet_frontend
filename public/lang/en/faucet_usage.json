@@ -1,0 +1,9 @@
+{
+    "title": "Water consumption record",
+    "activation_times": "Activation times",
+    "water_discharge_time": "Water discharge time",
+    "water_consumption": "Totle water consumption",
+    "week": "week",
+    "month": "month",
+    "year": "year"
+}

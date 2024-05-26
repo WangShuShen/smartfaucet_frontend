@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { createApiClient } from "@/utils/apiClient";
 import Notification from "./component/Revise_Password_Notification.tsx";
+import { useLanguage } from "@/utils/loadLanguage";
+import useLang from "@/app/component/useLang";
 class Member {
   constructor(memberData) {
     this.id = memberData.email;
@@ -13,13 +15,13 @@ class Member {
   }
 
   get isActiveText() {
-    return this.isActive ? "有效" : "無效";
+    return this.isActive ? "With permission" : "no permission";
   }
 
   get formattedLastLogin() {
     return this.lastLogin
       ? new Date(this.lastLogin).toLocaleString()
-      : "從未登入";
+      : "Never login before...";
   }
 
   async fetchProfileImage() {
@@ -41,7 +43,7 @@ class Member {
 }
 async function fetchMemberAPI() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_MEMBERLIST_API;
+    const apiUrl = "member/AccountManager/list";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = {};
@@ -55,7 +57,7 @@ async function fetchMemberAPI() {
 }
 async function authorizeMemberAPI(email_string) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_MEMBERAUTHORIZE_API;
+    const apiUrl = "member/AccountManager/activate_deactivate";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = { email: email_string };
@@ -69,7 +71,7 @@ async function authorizeMemberAPI(email_string) {
 }
 async function unauthorizeMemberAPI(email_string) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_MEMBERUNAUTHORIZE_API;
+    const apiUrl = "member/AccountManager/activate_deactivate";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = { email: email_string };
@@ -84,7 +86,7 @@ async function unauthorizeMemberAPI(email_string) {
 
 async function deleteMemberAPI(email_string) {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_MEMBERDELETE_API;
+    const apiUrl = "member/AccountManager/destroy";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = { email: email_string };
@@ -151,6 +153,11 @@ export default function Member_Setting_Page() {
   const handleCloseNotification = () => {
     setisNotification(false);
   };
+  const lang = useLang();
+  const languageData = useLanguage("member_setting", lang);
+  if (!languageData) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       {isNotification && (
@@ -167,28 +174,28 @@ export default function Member_Setting_Page() {
           className="btn lg:btn-lg xs:btn-sm bg-[#118BBB] mr-2"
           disabled={!selectedId}
         >
-          授權使用者
+          {languageData.auth_user}
         </button>
         <button
           onClick={handleUnauthorize}
           className="btn lg:btn-lg xs:btn-sm bg-[#118BBB] mr-2"
           disabled={!selectedId}
         >
-          註銷使用者
+          {languageData.unauth_user}
         </button>
         <button
           onClick={handleChangePassword}
           className="btn lg:btn-lg xs:btn-sm bg-[#118BBB] mr-2"
           disabled={!selectedId}
         >
-          更改密碼
+          {languageData.change_password}
         </button>
         <button
           onClick={handleDelete}
           className="btn lg:btn-lg xs:btn-sm bg-[#118BBB] mr-2"
           disabled={!selectedId}
         >
-          刪除使用者
+          {languageData.remove_user}
         </button>
       </div>
       <div className="flex justify-center item-center ">
@@ -199,16 +206,16 @@ export default function Member_Setting_Page() {
                 <thead>
                   <tr>
                     <th className="sticky top-0 z-10 px-5 py-3 bg-[#EFEFEF] text-center text-xs text-[#5F6162] uppercase tracking-wider ${hasUpdated.company ? 'bg-[#007BFF]' : 'bg-[#EFEFEF]'} text-[#5F6162]`}">
-                      選取
+                      {languageData.select}
                     </th>
                     <th className="sticky top-0 z-10 px-5 py-3 text-start text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                      使用者帳號
+                      {languageData.user_account}
                     </th>
                     <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                      狀態
+                      {languageData.status}
                     </th>
                     <th className="sticky top-0 z-10 px-5 py-3 text-center text-xs uppercase tracking-wider bg-[#A9CFD9] text-[#5F6162]">
-                      上次登入時間
+                      {languageData.last_time_login}
                     </th>
                   </tr>
                 </thead>

@@ -26,7 +26,7 @@ export const fetchLatestUsage = createAsyncThunk<
   { state: RootState }
 >("faucets/fetchFaucetsUsage", async (faucetUid: string, thunkAPI) => {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_FACUETCONSUMPTION_API as string;
+    const apiUrl = "faucet/FaucetConsumptionManager/retrieve_update";
     const postApiClient = createApiClient("post", apiUrl);
 
     const payload = { faucet_uid: faucetUid };

@@ -12,7 +12,7 @@ interface NotificationProps {
 }
 
 async function useUpdateAPI({ name, uid }) {
-  const apiUrl = process.env.NEXT_PUBLIC_COMPANYUPDATE_API as string;
+  const apiUrl = "faucet_hierarchy/ProjectCompanyManager/update";
   const postApiClient = createApiClient("post", apiUrl);
 
   const payload = {
@@ -22,7 +22,10 @@ async function useUpdateAPI({ name, uid }) {
   const response = await postApiClient(apiUrl, payload);
 }
 
-const Notification: React.FC<NotificationProps> = ({ onClose, languageData }) => {
+const Notification: React.FC<NotificationProps> = ({
+  onClose,
+  languageData,
+}) => {
   const [isSaveHovered, setIsSaveHovered] = useState(false);
   const [isCancelHovered, setIsCancelHovered] = useState(false);
   const [inputValue, setInputValue] = useState("");

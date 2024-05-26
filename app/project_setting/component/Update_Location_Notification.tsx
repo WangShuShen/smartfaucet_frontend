@@ -11,7 +11,7 @@ interface NotificationProps {
 }
 
 async function useUpdateAPI({ name, uid }) {
-  const apiUrl = process.env.NEXT_PUBLIC_LOCATIONUPDATE_API as string;
+  const apiUrl = "faucet_hierarchy/LocationManager/update";
   const postApiClient = createApiClient("post", apiUrl);
 
   const payload = {

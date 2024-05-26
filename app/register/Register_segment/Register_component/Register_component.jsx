@@ -62,17 +62,19 @@ export default function Register_Component() {
     }
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_Signup_API, {
-        method: "POST",
-        body: formData, // 注意，我们不设置 'Content-Type': 'multipart/form-data'，浏览器会自动设置
-      });
+      const response = await fetch(
+        `${process.env.PROTOCAL}://${process.env.HOST}:${process.env.API_PORT}/${process.env.API_ROOT}/${process.env.API_VERSION}/member/SignUpManager/signup`,
+        {
+          method: "POST",
+          body: formData, // 注意，我们不设置 'Content-Type': 'multipart/form-data'，浏览器会自动设置
+        }
+      );
       if (!response.ok) {
         const data = await response.json();
         console.error(languageData.alert.register_failed, data.message); // 假设后端返回了具体的错误消息
         alert(languageData.alert.register_failed + data.message);
       }
 
-      console.log(languageData.alert.register_success);
       alert(languageData.alert.register_success);
       router.push("/login");
     } catch (error) {
@@ -89,7 +91,9 @@ export default function Register_Component() {
     <div className="container mx-auto p-4 bg-white w-full h-full">
       <div className="flex items-end space-x-2 ">
         <img src="/register_logo.svg" alt="T.A.P. Logo" className="" />
-        <div className="text-blue-950 text-xl font-extrabold">{languageData.title}</div>
+        <div className="text-blue-950 text-xl font-extrabold">
+          {languageData.title}
+        </div>
       </div>
       <div className="text-center">
         <input
@@ -142,7 +146,11 @@ export default function Register_Component() {
           </div>
         </div>
         <div className="flex items-center mt-4">
-          <img src="/register_pwd2.svg" alt="Confirm Password" className="mr-2" />
+          <img
+            src="/register_pwd2.svg"
+            alt="Confirm Password"
+            className="mr-2"
+          />
           <div className="min-w-0 flex-1 border-b-2 border-neutral-500 flex items-center justify-between">
             <input
               type={showPassword ? "text" : "password"}
